@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "806667950412",
+    "project_id": "takenotes-flutter-project",
+    "storage_bucket": "takenotes-flutter-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806667950412:android:469303693dcedca1ae97e9",
+        "android_client_info": {
+          "package_name": "com.atencia.takenote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806667950412-pq8puajoahc5550qh5gtp0va7qpe8kom.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIstsjKlzlNyLM-q2UW_--8QvLUmjFw8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806667950412-pq8puajoahc5550qh5gtp0va7qpe8kom.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
