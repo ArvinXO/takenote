@@ -10,7 +10,7 @@ void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Take Note',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
