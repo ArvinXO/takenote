@@ -38,7 +38,14 @@ class HomePage extends StatelessWidget {
             case ConnectionState.done:
               final user = FirebaseAuth.instance.currentUser;
               if (user?.emailVerified ?? false) {}
-              return const Text('Done');
+              return Center(
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  padding: EdgeInsets.all(40),
+                  color: Colors.red,
+                ),
+              );
             default:
               return const Text('Loading.....');
           }
