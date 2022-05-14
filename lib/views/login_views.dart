@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -72,22 +73,38 @@ class _LoginViewState extends State<LoginView> {
                 final userCredential = await FirebaseAuth.instance
                     .signInWithEmailAndPassword(
                         email: email, password: password);
-                print(userCredential.additionalUserInfo);
-                print(userCredential);
-                print(_email.text);
-                print(_password.text);
+                if (kDebugMode) {
+                  print(userCredential.additionalUserInfo);
+                }
+                if (kDebugMode) {
+                  print(userCredential);
+                }
+                if (kDebugMode) {
+                  print(_email.text);
+                }
+                if (kDebugMode) {
+                  print(_password.text);
+                }
               } on FirebaseException catch (e) {
                 if (e.code == 'user-not-found') {
-                  print('$e.code');
+                  if (kDebugMode) {
+                    print('$e.code');
+                  }
                 } else if (e.code == 'Wrong Password') {
-                  print('Wrong Password');
+                  if (kDebugMode) {
+                    print('Wrong Password');
+                  }
                 } else {
-                  print('Something else happened');
-                  print(e.code);
+                  if (kDebugMode) {
+                    print('Something else happened');
+                  }
+                  if (kDebugMode) {
+                    print(e.code);
+                  }
                 }
               }
             },
-            child: const Text('Login'),
+            child: const Card(color: Colors.red, child: Text('Login')),
           ),
           TextButton(
               onPressed: () {
