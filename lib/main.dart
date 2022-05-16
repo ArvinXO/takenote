@@ -14,7 +14,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       title: 'Take Note',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blueGrey,
       ),
       home: const HomePage(),
       routes: {
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                 return const VerifiyEmailView();
               }
             } else {
-              return LoginView();
+              return const LoginView();
             }
             // if (user?.emailVerified ?? false) {
             // } else {
@@ -53,11 +53,30 @@ class HomePage extends StatelessWidget {
             //   return const VerifiyEmailView();
             // }
             // return const Text('Done.....');
-            return const LoginView();
+            return const NotesView();
           default:
             return const CircularProgressIndicator();
         }
       },
+    );
+  }
+}
+
+class NotesView extends StatefulWidget {
+  const NotesView({Key? key}) : super(key: key);
+
+  @override
+  State<NotesView> createState() => _NotesViewState();
+}
+
+class _NotesViewState extends State<NotesView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Take Notes'),
+      ),
+      body: const Text('Hello'),
     );
   }
 }
