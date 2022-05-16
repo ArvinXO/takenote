@@ -70,21 +70,10 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                final userCredential = await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                        email: email, password: password);
-                if (kDebugMode) {
-                  print(userCredential.additionalUserInfo);
-                }
-                if (kDebugMode) {
-                  print(userCredential);
-                }
-                if (kDebugMode) {
-                  print(_email.text);
-                }
-                if (kDebugMode) {
-                  print(_password.text);
-                }
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: email, password: password);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/notes/', (route) => false);
               } on FirebaseException catch (e) {
                 if (e.code == 'user-not-found') {
                   if (kDebugMode) {
@@ -94,24 +83,18 @@ class _LoginViewState extends State<LoginView> {
                   if (kDebugMode) {
                     print('Wrong Password');
                   }
-                } else {
-                  if (kDebugMode) {
-                    print('Something else happened');
-                  }
-                  if (kDebugMode) {
-                    print(e.code);
-                  }
-                }
+                } else {}
               }
             },
-            child: const Card(color: Colors.red, child: Text('Login')),
+            child: const Text('Login'),
           ),
           TextButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/register/', (route) => false);
-              },
-              child: const Text('Not registered yet? Register here'))
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/register/', (route) => false);
+            },
+            child: const Text('Not registered yet? Register here'),
+          ),
         ],
       ),
     );
