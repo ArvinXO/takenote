@@ -5,7 +5,6 @@ import 'package:takenote/views/login_views.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:takenote/views/register_view.dart';
 import 'package:takenote/views/verify_email_view.dart';
-import 'dart:developer' as devtools show log;
 
 import 'firebase_options.dart';
 
@@ -27,6 +26,7 @@ void main() {
     ),
   );
 }
+//
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
