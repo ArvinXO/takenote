@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/firebase_options.dart';
 
+import '../utilities/show_error_dialog.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -77,14 +79,23 @@ class _LoginViewState extends State<LoginView> {
                     .pushNamedAndRemoveUntil(notesRoute, (route) => false);
               } on FirebaseException catch (e) {
                 if (e.code == 'user-not-found') {
-                  if (kDebugMode) {
-                    print('$e.code');
-                  }
-                } else if (e.code == 'Wrong Password') {
-                  if (kDebugMode) {
-                    print('Wrong Password');
-                  }
-                } else {}
+                  await showErrorDialog(context, 'User not found');
+                } else if (e.code == 'wrong-password') {
+                  await showErrorDialog(
+                    context,
+                    'Wrong credentials',
+                  );
+                } else {
+                  await showErrorDialog(
+                    context,
+                    'Error: ${e.code}',
+                  );
+                }
+              } catch (e) {
+                await showErrorDialog(
+                  context,
+                  e.toString(),
+                );
               }
             },
             child: const Text('Login'),
@@ -100,4 +111,3 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
-}
