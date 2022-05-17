@@ -15,7 +15,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       title: 'Take Note',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.green,
       ),
       home: const HomePage(),
       routes: {

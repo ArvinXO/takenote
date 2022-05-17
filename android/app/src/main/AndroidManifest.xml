@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.atencia.takenote">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:label="takenote"
         android:name="${applicationName}"
@@ -32,3 +33,5 @@
             android:value="2" />
     </application>
 </manifest>
+
+
