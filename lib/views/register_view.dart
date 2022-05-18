@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:takenote/constants/routes.dart';
+import 'package:takenote/utilities/show_error_dialog.dart';
 
 import '../firebase_options.dart';
 
@@ -34,7 +35,7 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Register"),
+        title: const Text("Register"),
       ),
       body: Column(
         children: [
@@ -65,37 +66,52 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           TextButton(
             onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
               await Firebase.initializeApp(
                 options: DefaultFirebaseOptions.currentPlatform,
               );
-              final email = _email.text;
-              final password = _password.text;
               try {
                 await FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: email, password: password);
+                final user = FirebaseAuth.instance.currentUser;
+                await user?.sendEmailVerification();
+                Navigator.of(context).pushNamed(verifyEmailRoute);
               } on FirebaseAuthException catch (e) {
-                if (e.code == 'weak-password') {
-                  print('You have entered a Weak password');
+                if (e.code == 'user-not-found') {
+                  await showErrorDialog(context, 'User not found');
                 } else if (e.code == 'email-already-in-use') {
-                  print('You have entered an email already in use');
+                  await showErrorDialog(
+                    context,
+                    'Email already in use',
+                  );
+                } else if (e.code == 'weak-password') {
+                  await showErrorDialog(
+                    context,
+                    'Weak password',
+                  );
                 } else if (e.code == 'invalid-email') {
-                  print('Invalid email entered');
+                  await showErrorDialog(
+                    context,
+                    'Invalid email entered',
+                  );
                 }
-                print(e.code);
+              } catch (e) {
+                await showErrorDialog(
+                  context,
+                  e.toString(),
+                );
               }
-
-              print(UserCredential);
-              print(_email.text);
-              print(_password.text);
             },
             child: const Text('Register'),
           ),
           TextButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(loginRoute, (route) => false);
-              },
-              child: Text('Back to login')),
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+            },
+            child: const Text('Back to login'),
+          ),
         ],
       ),
     );

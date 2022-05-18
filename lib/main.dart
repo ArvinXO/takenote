@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:takenote/views/login_views.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,6 +21,7 @@ void main() {
         '/login/': (context) => const LoginView(),
         '/register/': (context) => const RegisterView(),
         '/notes/': (context) => const NotesView(),
+        '/verify-email/': (context) => const VerifiyEmailView(),
       },
     ),
   );
