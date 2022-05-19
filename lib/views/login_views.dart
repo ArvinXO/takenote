@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:takenote/constants/kConstants.dart';
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/firebase_options.dart';
 
