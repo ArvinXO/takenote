@@ -1,7 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:takenote/services/auth/firebase_auth_provider.dart';
 
-import '../../firebase_options.dart';
 import 'auth_provider.dart';
 import 'auth_user.dart';
 

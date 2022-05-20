@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:takenote/constants/kConstants.dart';
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 
@@ -54,6 +53,7 @@ class _LoginViewState extends State<LoginView> {
                 hintText: 'Enter your email here'),
           ),
           TextField(
+            controller: _password,
             obscureText: true,
             showCursor: true,
             textAlign: TextAlign.center,
@@ -63,7 +63,6 @@ class _LoginViewState extends State<LoginView> {
                   icon: const Icon(Icons.clear),
                 ),
                 hintText: 'Enter your password here'),
-            controller: _password,
           ),
           TextButton(
             onPressed: () async {
