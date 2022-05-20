@@ -1,9 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:takenote/services/auth/firebase_auth_provider.dart';
+
+import '../../firebase_options.dart';
 import 'auth_provider.dart';
 import 'auth_user.dart';
 
-abstract class AuthService implements AuthProvider {
+class AuthService implements AuthProvider {
   final AuthProvider provider;
   const AuthService(this.provider);
+
+  //return instance of auth service
+  factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
+
+  @override
+  Future<void> initialize() => provider.initialize();
 
   @override
   Future<AuthUser> createUser({
