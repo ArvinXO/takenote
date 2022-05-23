@@ -26,12 +26,12 @@ void main() {
       expect(provider.currentUser, null);
     });
     test(
-      'Should be able to initialize in less than 3 seconds',
+      'Should be able to initialize in less than 2 seconds',
       () async {
         await provider.initialize();
         expect(provider.initialize(), true);
       },
-      timeout: const Timeout(Duration(seconds: 3)),
+      timeout: const Timeout(Duration(seconds: 2)),
     );
     test('Create user should delegate log in func', () async {
       final badEmailUser = provider.createUser(
@@ -40,20 +40,19 @@ void main() {
       );
       expect(badEmailUser,
           throwsA(const TypeMatcher<UserNotFoundAuthException>()));
+
+      final badPass = provider.createUser(
+        email: 'someone@bar.com',
+        password: 'foobar',
+      );
+      expect(badPass, throwsA(const TypeMatcher<WrongPasswordAuthException>()));
+      final user = await provider.createUser(
+        email: 'foo',
+        password: 'bar',
+      );
+      expect(provider.currentUser, user);
+      expect(user.isEmailVerified, false);
     });
-
-    final badPass = provider.createUser(
-      email: 'someone@bar.com',
-      password: 'foobar',
-    );
-    expect(badPass, throwsA(const TypeMatcher<WrongPasswordAuthException>()));
-
-    final user = await provider.createUser(
-      email: 'foo',
-      password: 'bar',
-    );
-    expect(provider.currentUser, user);
-    expect(user.isEmailVerified, false);
     test('Logged in user should be able to verify', () {
       provider.sendEmailVerification();
       final user = provider.currentUser;
