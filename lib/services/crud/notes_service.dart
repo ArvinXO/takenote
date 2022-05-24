@@ -1,12 +1,37 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' show join;
-
 import 'crud_exceptions.dart';
 
 class NotesService {
   Database? _db;
+
+  List<DatabaseNote> _notes = [];
+  //Controller for lists in DatabaseNote
+  final _notesStreamController =
+      StreamController<List<DatabaseNote>>.broadcast();
+
+  Future<DatabaseNote> updateNotes({
+    required DatabaseNote note,
+    required String text,
+  }) async {
+    final db = _getDatabaseOrThrow();
+
+    await getNote(id: note.id);
+
+    final updatesCount = await db.update(notesTable, {
+      textColumn: text,
+      isSyncedWithCloudColumn: 0,
+    });
+    if (updatesCount == 0) {
+      throw CouldNotUpdateNotesException();
+    } else {
+      return await getNote(id: note.id);
+    }
+  }
 
   Future<int> deleteAllNotes({required int id}) async {
     final db = _getDatabaseOrThrow();
@@ -117,25 +142,6 @@ class NotesService {
     return notes.map(
       (noteRow) => DatabaseNote.fromRow(noteRow),
     );
-  }
-
-  Future<DatabaseNote> updateNotes({
-    required DatabaseNote note,
-    required String text,
-  }) async {
-    final db = _getDatabaseOrThrow();
-
-    await getNote(id: note.id);
-
-    final updatesCount = await db.update(notesTable, {
-      textColumn: text,
-      isSyncedWithCloudColumn: 0,
-    });
-    if (updatesCount == 0) {
-      throw CouldNotUpdateNotesException();
-    } else {
-      return await getNote(id: note.id);
-    }
   }
 
   Database _getDatabaseOrThrow() {
