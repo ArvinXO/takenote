@@ -41,10 +41,12 @@ class _NotesViewState extends State<NotesView> {
           ),
         ],
       ),
-      body: Column(
-        children: const [
-          Text("hello"),
-        ],
+      body: Card(
+        child: Column(
+          children: const [
+            Text("hello"),
+          ],
+        ),
       ),
     );
   }
