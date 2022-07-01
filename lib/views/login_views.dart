@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:takenote/constants/kConstants.dart';
 
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/services/auth/auth_service.dart';
@@ -39,30 +40,40 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: Column(
         children: [
-          TextField(
-            controller: _email,
-            enableSuggestions: false,
-            autocorrect: false,
-            showCursor: true,
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  onPressed: _email.clear,
-                  icon: const Icon(Icons.clear),
-                ),
-                hintText: 'Enter your email here'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _email,
+              enableSuggestions: false,
+              autocorrect: false,
+              showCursor: true,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.email),
+                  suffixIcon: IconButton(
+                    onPressed: _email.clear,
+                    icon: const Icon(Icons.clear),
+                  ),
+                  labelText: 'Email',
+                  hintText: 'Enter your email here'),
+            ),
           ),
-          TextField(
-            controller: _password,
-            obscureText: true,
-            showCursor: true,
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-                suffix: IconButton(
-                  onPressed: _password.clear,
-                  icon: const Icon(Icons.clear),
-                ),
-                hintText: 'Enter your password here'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _password,
+              obscureText: true,
+              showCursor: true,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.lock),
+                  suffix: IconButton(
+                    onPressed: _password.clear,
+                    icon: const Icon(Icons.clear),
+                  ),
+                  labelText: 'Password',
+                  hintText: 'Enter your password here'),
+            ),
           ),
           TextButton(
             onPressed: () async {
@@ -100,7 +111,26 @@ class _LoginViewState extends State<LoginView> {
                 );
               }
             },
-            child: const Text('Login'),
+            child: Container(
+              height: 50,
+              width: 100,
+              decoration: gradientButton,
+              child: const Center(
+                child: Text(
+                  'Login',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              //TODO FORGOT PASSWORD SCREEN GOES HERE
+            },
+            child: const Text(
+              'Forgot Password',
+              style: TextStyle(color: Colors.blue, fontSize: 15),
+            ),
           ),
           TextButton(
             onPressed: () {

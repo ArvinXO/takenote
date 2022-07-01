@@ -4,6 +4,8 @@ import 'package:takenote/services/auth/auth_exceptions.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 import 'package:takenote/utilities/show_error_dialog.dart';
 
+import '../constants/kConstants.dart';
+
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
 
@@ -34,33 +36,44 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register"),
+        backgroundColor: Colors.blue,
       ),
       body: Column(
         children: [
-          TextField(
-            controller: _email,
-            enableSuggestions: false,
-            autocorrect: false,
-            showCursor: true,
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  onPressed: _email.clear,
-                  icon: const Icon(Icons.clear),
-                ),
-                hintText: 'Enter your email here'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _email,
+              enableSuggestions: false,
+              autocorrect: false,
+              showCursor: true,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.email),
+                  suffixIcon: IconButton(
+                    onPressed: _email.clear,
+                    icon: const Icon(Icons.clear),
+                  ),
+                  labelText: 'Email',
+                  hintText: 'Enter your email here'),
+            ),
           ),
-          TextField(
-            obscureText: true,
-            showCursor: true,
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-                suffix: IconButton(
-                  onPressed: _password.clear,
-                  icon: const Icon(Icons.clear),
-                ),
-                hintText: 'Enter your password here'),
-            controller: _password,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              obscureText: true,
+              showCursor: true,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.lock),
+                  suffix: IconButton(
+                    onPressed: _password.clear,
+                    icon: const Icon(Icons.clear),
+                  ),
+                  labelText: 'Password',
+                  hintText: 'Enter your password here'),
+              controller: _password,
+            ),
           ),
           TextButton(
             onPressed: () async {
@@ -96,7 +109,17 @@ class _RegisterViewState extends State<RegisterView> {
                 );
               }
             },
-            child: const Text('Register'),
+            child: Container(
+              height: 50,
+              width: 100,
+              decoration: gradientButton.copyWith(color: Colors.blue),
+              child: const Center(
+                child: Text(
+                  'Register',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ),
+            ),
           ),
           TextButton(
             onPressed: () {
