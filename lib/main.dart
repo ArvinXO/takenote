@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:takenote/constants/routes.dart';
 import 'package:takenote/views/login_views.dart';
+import 'package:takenote/views/notes/new_note_view.dart';
 import 'package:takenote/views/register_view.dart';
 import 'package:takenote/views/verify_email_view.dart';
 
@@ -17,10 +19,12 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView(),
-        '/notes/': (context) => const NotesView(),
-        '/verify-email/': (context) => const VerifiyEmailView(),
+        //
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        notesRoute: (context) => const NotesView(),
+        verifyEmailRoute: (context) => const VerifiyEmailView(),
+        newNoteRoute: (context) => const NewNoteView(),
       },
     ),
   );
