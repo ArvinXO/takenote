@@ -34,7 +34,7 @@ final gradientButton = BoxDecoration(
   //     Colors.teal,
   //   ],
   // ),
-  boxShadow: [
+  boxShadow: const [
     BoxShadow(color: Colors.green, spreadRadius: 1),
   ],
 );
