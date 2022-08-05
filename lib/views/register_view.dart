@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/services/auth/auth_exceptions.dart';
 import 'package:takenote/services/auth/auth_service.dart';
-import 'package:takenote/utilities/show_error_dialog.dart';
+import 'package:takenote/utilities/dialogs/error_dialog.dart';
 
 import '../constants/kConstants.dart';
 
