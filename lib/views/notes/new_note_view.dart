@@ -36,9 +36,7 @@ class _NewNoteViewState extends State<NewNoteView> {
 
   void _setupTextControllerListener() {
     _textController.addListener(_textControllerListener);
-    _textController.removeListener(
-      (_textControllerListener),
-    );
+    _textController.removeListener(_textControllerListener);
   }
 
   Future<DatabaseNote> createNewNote() async {
@@ -88,14 +86,21 @@ class _NewNoteViewState extends State<NewNoteView> {
             case ConnectionState.done:
               _note = snapshot.data as DatabaseNote;
               _setupTextControllerListener();
-              return TextField(
-                controller: _textController,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Start typing...',
-                ),
+              return Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextField(
+                    controller: _textController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Start typing...',
+                    ),
+                  ),
+                ],
               );
 
             default:

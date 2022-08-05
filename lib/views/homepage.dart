@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
             // return const Text('Done.....');
             return const NotesView();
           default:
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
         }
       },
     );

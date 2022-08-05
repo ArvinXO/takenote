@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart'
+    show MissingPlatformDirectoryException, getApplicationDocumentsDirectory;
 import 'package:path/path.dart' show join;
 import 'crud_exceptions.dart';
 
@@ -16,11 +17,15 @@ class NotesService {
   // Create private singleton
   //Goes to factory - 3 layer singleton.
   static final NotesService _shared = NotesService._sharedInstance();
-  NotesService._sharedInstance();
+  NotesService._sharedInstance() {
+    _notesStreamController =
+        StreamController<List<DatabaseNote>>.broadcast(onListen: () {
+      _notesStreamController.sink.add(_notes);
+    });
+  }
   factory NotesService() => _shared;
 
-  final _notesStreamController =
-      StreamController<List<DatabaseNote>>.broadcast();
+  late final StreamController<List<DatabaseNote>> _notesStreamController;
 
   Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
 
@@ -32,6 +37,7 @@ class NotesService {
       final createdUser = await createUser(email: email);
       return createdUser;
     } catch (e) {
+      return Future.error(e);
       rethrow;
     }
   }
@@ -323,7 +329,8 @@ const createUserTable = '''CREATE TABLE IF NOT EXISTS "user" (
 	"email"	INTEGER NOT NULL UNIQUE,
 	PRIMARY KEY("id" AUTOINCREMENT) 
  );''';
-const createNoteTable = '''CREATE TABLE IF NOT EXISTS "notes" (
+
+const createNoteTable = '''CREATE TABLE IF NOT EXISTS "note" (
 	"user_id"	INTEGER NOT NULL,
 	"id"	INTEGER NOT NULL,
 	"text"	TEXT,
