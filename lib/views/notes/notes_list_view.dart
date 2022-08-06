@@ -26,6 +26,8 @@ class NotesListView extends StatelessWidget {
           direction: DismissDirection.endToStart,
           key: Key(note.text),
           onDismissed: (direction) {
+            onDeleteNote(note);
+
             // Add undo functionality
 
             // setState(
