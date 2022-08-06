@@ -38,7 +38,6 @@ class NotesService {
       return createdUser;
     } catch (e) {
       return Future.error(e);
-      rethrow;
     }
   }
 

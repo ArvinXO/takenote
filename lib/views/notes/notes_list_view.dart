@@ -3,14 +3,18 @@ import 'package:takenote/utilities/dialogs/delete_dialog.dart';
 
 import '../../services/crud/notes_service.dart';
 
-typedef DeleteNoteCallBack = void Function(DatabaseNote note);
+typedef NoteCallBack = void Function(DatabaseNote note);
 
 class NotesListView extends StatelessWidget {
+  final NoteCallBack? onNoteTap;
   final List<DatabaseNote> notes;
-  final DeleteNoteCallBack onDeleteNote;
-  const NotesListView(
-      {Key? key, required this.notes, required this.onDeleteNote})
-      : super(key: key);
+  final NoteCallBack onDeleteNote;
+  const NotesListView({
+    Key? key,
+    required this.notes,
+    required this.onDeleteNote,
+    required this.onNoteTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +81,9 @@ class NotesListView extends StatelessWidget {
               },
               icon: const Icon(Icons.delete, color: Colors.grey),
             ),
-            onTap: () {},
+            onTap: () {
+              onNoteTap!(note);
+            },
           ),
         );
       },
