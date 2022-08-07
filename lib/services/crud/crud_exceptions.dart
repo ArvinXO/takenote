@@ -1,21 +1,21 @@
-class DatabaseAlreadyOpenException implements Exception {}
+// class DatabaseAlreadyOpenException implements Exception {}
 
-class UnableToGetDocumentsDirectory implements Exception {}
+// class UnableToGetDocumentsDirectory implements Exception {}
 
-class DatabaseIsNotOpenException implements Exception {}
+// class DatabaseIsNotOpenException implements Exception {}
 
-class CouldNotDeleteUserException implements Exception {}
+// class CouldNotDeleteUserException implements Exception {}
 
-class UserAlreadyExistsException implements Exception {}
+// class UserAlreadyExistsException implements Exception {}
 
-class CouldNotFindUserException implements Exception {}
+// class CouldNotFindUserException implements Exception {}
 
-class CouldNotDeleteNoteException implements Exception {}
+// class CouldNotDeleteNoteException implements Exception {}
 
-class CouldNotFindNotesException implements Exception {}
+// class CouldNotFindNotesException implements Exception {}
 
-class CouldNotGetAllNotesException implements Exception {}
+// class CouldNotGetAllNotesException implements Exception {}
 
-class CouldNotUpdateNotesException implements Exception {}
+// class CouldNotUpdateNotesException implements Exception {}
 
-class UserShouldBeSetBeforeReadingAllNotesException implements Exception {}
+// class UserShouldBeSetBeforeReadingAllNotesException implements Exception {}

@@ -124,9 +124,7 @@ class _LoginViewState extends State<LoginView> {
             ),
           ),
           TextButton(
-            onPressed: () {
-              //TODO FORGOT PASSWORD SCREEN GOES HERE
-            },
+            onPressed: () {},
             child: const Text(
               'Forgot Password',
               style: TextStyle(color: Colors.blue, fontSize: 15),

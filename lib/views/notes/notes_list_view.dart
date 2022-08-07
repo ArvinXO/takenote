@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:takenote/services/cloud/cloud_note.dart';
 import 'package:takenote/utilities/dialogs/delete_dialog.dart';
 
-import '../../services/crud/notes_service.dart';
-
-typedef NoteCallBack = void Function(DatabaseNote note);
+typedef NoteCallBack = void Function(CloudNote note);
 
 class NotesListView extends StatelessWidget {
-  final NoteCallBack? onNoteTap;
-  final List<DatabaseNote> notes;
+  final Iterable<CloudNote> notes;
   final NoteCallBack onDeleteNote;
+  final NoteCallBack onNoteTap;
+
   const NotesListView({
     Key? key,
     required this.notes,
@@ -21,59 +21,32 @@ class NotesListView extends StatelessWidget {
     return ListView.builder(
       itemCount: notes.length,
       itemBuilder: (context, index) {
-        final note = notes[index];
+        final note = notes.elementAt(index);
+        //wrap with dismissible to allow swipe to delete
         return Dismissible(
-          direction: DismissDirection.endToStart,
-          key: Key(note.text),
+          key: Key(note.documentId),
           onDismissed: (direction) {
             onDeleteNote(note);
-
-            // Add undo functionality
-
-            // setState(
-            //   () {
-            //     String deletedItem = note.text;
-            //     SnackBar(
-            //       content: Text("Deleted \"$deletedItem\""),
-            //       action: SnackBarAction(
-            //         label: "UNDO",
-            //         onPressed: () => setState(
-            //           () => _notesService.updateNotes(
-            //               note: note, text: deletedItem),
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // );
-
-            final snackBar = SnackBar(
-                content: const Text('Deleted note'),
-                backgroundColor: (const Color.fromARGB(205, 212, 8, 8)),
-                action: SnackBarAction(
-                  label: 'Undo',
-                  onPressed: () {},
-                ));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            // _notesService.deleteNote(id: note.id);
           },
+          //Red background when swiped with delete text
           background: Container(
             color: Colors.red,
-            child: ListTile(
-              trailing: IconButton(
-                onPressed: () async {
-                  final shouldDelete = await showDeleteDialog(context);
-                  if (shouldDelete) {
-                    onDeleteNote(note);
-                  }
-                },
-                icon: const Icon(Icons.delete),
+            child: const ListTile(
+              title: Text(
+                'Deleting...',
+                textAlign: TextAlign.right,
+                style: TextStyle(color: Colors.white),
               ),
-              title: const Text('Note deleted'),
             ),
           ),
+
           child: ListTile(
-            title: Text(note.text,
-                maxLines: 1, softWrap: true, overflow: TextOverflow.ellipsis),
+            title: Text(
+              note.text,
+              maxLines: 1,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+            ),
             trailing: IconButton(
               onPressed: () async {
                 final shouldDelete = await showDeleteDialog(context);
@@ -84,7 +57,7 @@ class NotesListView extends StatelessWidget {
               icon: const Icon(Icons.delete, color: Colors.grey),
             ),
             onTap: () {
-              onNoteTap!(note);
+              onNoteTap(note);
             },
           ),
         );
