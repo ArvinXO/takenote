@@ -86,24 +86,37 @@ class _RegisterViewState extends State<RegisterView> {
                   password: password,
                 );
                 AuthService.firebase().sendEmailVerification();
+                if (!mounted) {
+                  return;
+                }
                 Navigator.of(context).pushNamed(verifyEmailRoute);
               } on WeakPasswordAuthException {
-                await showErrorDialog(
-                  context,
-                  'Weak Password',
-                );
+                await Future.delayed(const Duration(seconds: 1));
+                if (!mounted) return;
+                {
+                  showErrorDialog(
+                    context,
+                    'Weak Password',
+                  );
+                }
               } on EmailAlreadyInUseAuthException {
-                await showErrorDialog(
+                await Future.delayed(const Duration(seconds: 1));
+                if (!mounted) return;
+                showErrorDialog(
                   context,
                   'Email already in use',
                 );
               } on InvalidEmailAuthException {
-                await showErrorDialog(
+                await await Future.delayed(const Duration(seconds: 1));
+                if (!mounted) return;
+                showErrorDialog(
                   context,
                   'Invalid Email',
                 );
               } on GenericAuthException {
-                await showErrorDialog(
+                await Future.delayed(const Duration(seconds: 1));
+                if (!mounted) return;
+                showErrorDialog(
                   context,
                   'Authentication error',
                 );
@@ -132,4 +145,8 @@ class _RegisterViewState extends State<RegisterView> {
       ),
     );
   }
+}
+
+void navVerifyEmailRoute(BuildContext context) {
+  Navigator.of(context).pushNamed(verifyEmailRoute);
 }

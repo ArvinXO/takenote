@@ -31,6 +31,7 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView> {
           TextButton(
             onPressed: () async {
               await AuthService.firebase().provider.logOut();
+              if (!mounted) return;
               Navigator.of(context)
                   .pushNamedAndRemoveUntil(registerRoute, (route) => false);
             },
