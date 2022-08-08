@@ -4,6 +4,7 @@ import 'package:takenote/constants/kConstants.dart';
 
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
+import 'package:takenote/services/auth/bloc/auth_state.dart';
 
 import '../services/auth/auth_exceptions.dart';
 import '../services/auth/bloc/auth_event.dart';
@@ -77,42 +78,38 @@ class _LoginViewState extends State<LoginView> {
                   hintText: 'Enter your password here'),
             ),
           ),
-          TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              try {
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) async {
+              if (state is AuthStateLoggedOut) {
+                if (state.exception is UserNotFoundAuthException) {
+                  await showErrorDialog(context, 'User not found');
+                } else if (state.exception is WrongPasswordAuthException) {
+                  await showErrorDialog(context, 'Wrong password');
+                } else if (state.exception is GenericAuthException) {
+                  await showErrorDialog(context, 'Authentication error');
+                }
+              }
+            },
+            child: TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
                 context.read<AuthBloc>().add(
                       AuthEventLogIn(
                         email,
                         password,
                       ),
                     );
-              } on UserNotFoundAuthException {
-                await showErrorDialog(
-                  context,
-                  'User not found',
-                );
-              } on WrongPasswordAuthException {
-                await showErrorDialog(
-                  context,
-                  'Wrong Password',
-                );
-              } on GenericAuthException {
-                await showErrorDialog(
-                  context,
-                  'Authentication error',
-                );
-              }
-            },
-            child: Container(
-              height: 50,
-              width: 100,
-              decoration: gradientButton,
-              child: const Center(
-                child: Text(
-                  'Login',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+              },
+              child: Container(
+                height: 50,
+                width: 100,
+                decoration: gradientButton,
+                child: const Center(
+                  child: Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
                 ),
               ),
             ),
