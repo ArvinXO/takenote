@@ -26,10 +26,7 @@ void main() {
       ),
       routes: {
         //
-        loginRoute: (context) => const LoginView(),
-        registerRoute: (context) => const RegisterView(),
-        notesRoute: (context) => const NotesView(),
-        verifyEmailRoute: (context) => const VerifiyEmailView(),
+        // Routes for the app
         createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
       },
     ),
