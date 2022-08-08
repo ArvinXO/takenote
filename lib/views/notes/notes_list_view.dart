@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
 import 'package:takenote/utilities/dialogs/delete_dialog.dart';
 
@@ -28,6 +29,10 @@ class NotesListView extends StatelessWidget {
           onDismissed: (direction) {
             onDeleteNote(note);
           },
+          confirmDismiss: (direction) async {
+            final result = await showDeleteDialog(context);
+            return result;
+          },
           //Red background when swiped with delete text
           background: Container(
             color: Colors.red,
@@ -41,6 +46,20 @@ class NotesListView extends StatelessWidget {
           ),
 
           child: ListTile(
+            //onlongpress to share
+            onLongPress: () {
+              Share.share(note.text);
+            },
+            tileColor: Colors.white,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: const BorderSide(
+                color: Colors.black,
+                width: 1,
+              ),
+            ),
             title: Text(
               note.text,
               maxLines: 1,
