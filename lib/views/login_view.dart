@@ -39,7 +39,8 @@ class _LoginViewState extends State<LoginView> {
       listener: (context, state) async {
         if (state is AuthStateLoggedOut) {
           if (state.exception is UserNotFoundAuthException) {
-            await showErrorDialog(context, 'User not found');
+            await showErrorDialog(
+                context, 'Cannot find user with entered credentials.');
           } else if (state.exception is WrongPasswordAuthException) {
             await showErrorDialog(context, 'Wrong password');
           } else if (state.exception is GenericAuthException) {
@@ -51,82 +52,93 @@ class _LoginViewState extends State<LoginView> {
         appBar: AppBar(
           title: const Text('Login'),
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _email,
-                enableSuggestions: false,
-                autocorrect: false,
-                showCursor: true,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.email),
-                    suffixIcon: IconButton(
-                      onPressed: _email.clear,
-                      icon: const Icon(Icons.clear),
-                    ),
-                    labelText: 'Email',
-                    hintText: 'Enter your email here'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _password,
-                obscureText: true,
-                showCursor: true,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.lock),
-                    suffix: IconButton(
-                      onPressed: _password.clear,
-                      icon: const Icon(Icons.clear),
-                    ),
-                    labelText: 'Password',
-                    hintText: 'Enter your password here'),
-              ),
-            ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                context.read<AuthBloc>().add(
-                      AuthEventLogIn(
-                        email,
-                        password,
+        body: Padding(
+          padding: const EdgeInsets.all(11.0),
+          child: Expanded(
+            child: Column(
+              children: [
+                const Center(
+                    child:
+                        Text('Please log in to your account to continue...')),
+                TextField(
+                  controller: _email,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  showCursor: true,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.email),
+                      suffixIcon: IconButton(
+                        onPressed: _email.clear,
+                        icon: const Icon(Icons.clear),
                       ),
-                    );
-              },
-              child: Container(
-                height: 50,
-                width: 100,
-                decoration: gradientButton,
-                child: const Center(
-                  child: Text(
-                    'Login',
-                    style: TextStyle(color: Colors.white, fontSize: 15),
+                      labelText: 'Email',
+                      hintText: 'Enter your email here'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _password,
+                    obscureText: true,
+                    showCursor: true,
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.lock),
+                        suffix: IconButton(
+                          onPressed: _password.clear,
+                          icon: const Icon(Icons.clear),
+                        ),
+                        labelText: 'Password',
+                        hintText: 'Enter your password here'),
                   ),
                 ),
-              ),
+                TextButton(
+                  onPressed: () async {
+                    //Dismiss keyboard
+                    FocusScope.of(context).unfocus();
+                    final email = _email.text;
+                    final password = _password.text;
+                    context.read<AuthBloc>().add(
+                          AuthEventLogIn(
+                            email,
+                            password,
+                          ),
+                        );
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    decoration: gradientButton,
+                    child: const Center(
+                      child: Text(
+                        'Login',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(
+                          const AuthEventForgotPassword(),
+                        );
+                  },
+                  child: const Text(
+                    'Forgot Password',
+                    style: TextStyle(color: Colors.blue, fontSize: 15),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(
+                          const AuthEventShouldRegister(),
+                        );
+                  },
+                  child: const Text('Not registered yet? Register here'),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Forgot Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                context.read<AuthBloc>().add(
-                      const AuthEventShouldRegister(),
-                    );
-              },
-              child: const Text('Not registered yet? Register here'),
-            ),
-          ],
+          ),
         ),
       ),
     );

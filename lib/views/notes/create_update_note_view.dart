@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:takenote/constants/kConstants.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 import 'package:takenote/services/cloud/firebase_cloud_storage.dart';
 import 'package:takenote/utilities/dialogs/cannot_share_empty_note_dialog.dart';
@@ -114,9 +115,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
 
               return Column(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  k24SizedBox,
                   TextField(
                     controller: _textController,
                     keyboardType: TextInputType.multiline,

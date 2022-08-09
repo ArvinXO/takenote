@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/kConstants.dart';
+
 typedef CloseDialog = void Function();
 
 CloseDialog showLoadingDialog({
@@ -10,8 +12,9 @@ CloseDialog showLoadingDialog({
     content: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        k10SizedBox,
         const CircularProgressIndicator(),
-        const SizedBox(height: 10),
+        k10SizedBox,
         Text(text),
       ],
     ),
@@ -21,5 +24,8 @@ CloseDialog showLoadingDialog({
     barrierDismissible: false,
     builder: (context) => dialog,
   );
+
+  //fix this
+
   return () => Navigator.of(context).pop();
 }

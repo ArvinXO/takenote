@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:takenote/constants/kConstants.dart';
 import 'package:takenote/helpers/loading/loading_screen_controller.dart';
 
 class LoadingScreen {
@@ -41,41 +42,43 @@ class LoadingScreen {
 
     final overlay = OverlayEntry(builder: (context) {
       return Material(
-        color: Colors.black.withAlpha(140),
-        child: Container(
-          constraints: BoxConstraints(
-            maxHeight: size.width * 0.8,
-            maxWidth: size.width * 0.8,
-            minWidth: size.width * 0.5,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 10),
-                  const CircularProgressIndicator(),
-                  const SizedBox(height: 20),
-                  StreamBuilder(
-                    stream: textStream.stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Text(
-                          snapshot.data as String,
-                          textAlign: TextAlign.center,
-                        );
-                      } else {
-                        return Container();
-                      }
-                    },
-                  ),
-                ],
+        color: Colors.black.withAlpha(40),
+        child: Center(
+          child: Container(
+            constraints: BoxConstraints(
+              maxHeight: size.width * 0.8,
+              maxWidth: size.width * 0.8,
+              minWidth: size.width * 0.5,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    k10SizedBox,
+                    const CircularProgressIndicator(),
+                    k20SizedBox,
+                    StreamBuilder(
+                      stream: textStream.stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Text(
+                            snapshot.data as String,
+                            textAlign: TextAlign.center,
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

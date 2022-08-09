@@ -56,3 +56,14 @@ const kFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+const k8pad = EdgeInsets.all(8.0);
+const k10pad = EdgeInsets.all(10.0);
+const k10SizedBox = SizedBox(height: 10.0);
+const k20SizedBox = SizedBox(height: 20.0);
+const k24SizedBox = SizedBox(height: 24.0);
+
+const kButtonTextStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 20.0,
+);
