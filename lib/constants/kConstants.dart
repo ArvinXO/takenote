@@ -15,7 +15,19 @@ const kTextFieldPass = TextField(
   decoration: InputDecoration(),
 );
 
-final gradientButton = BoxDecoration(
+const kBoxShadowBlue = BoxShadow(
+  color: Colors.blue,
+  blurRadius: 10,
+  spreadRadius: 5,
+);
+
+const kBoxShadowGreen = BoxShadow(
+  color: Colors.green,
+  blurRadius: 10,
+  spreadRadius: 5,
+);
+
+final BoxDecoration gradientButton = BoxDecoration(
   borderRadius: BorderRadius.circular(20),
   color: Colors.green,
   // gradient: const LinearGradient(

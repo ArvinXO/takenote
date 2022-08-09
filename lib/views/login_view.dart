@@ -108,7 +108,11 @@ class _LoginViewState extends State<LoginView> {
                   child: Container(
                     height: 50,
                     width: 100,
-                    decoration: gradientButton,
+                    decoration: gradientButton.copyWith(
+                      boxShadow: [
+                        kBoxShadowGreen,
+                      ],
+                    ),
                     child: const Center(
                       child: Text(
                         'Login',

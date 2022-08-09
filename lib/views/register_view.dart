@@ -128,6 +128,15 @@ class _RegisterViewState extends State<RegisterView> {
                         width: 100,
                         decoration: gradientButton.copyWith(
                           color: Colors.blue,
+                          border: //copywith is used to override the border of the button
+                              Border.all(
+                            //Blue alpha border
+                            color: Colors.blue.withAlpha(100),
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            kBoxShadowBlue,
+                          ],
                         ),
                         child: const Center(
                           child: Text(
