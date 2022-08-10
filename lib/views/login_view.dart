@@ -37,6 +37,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
+        //Screen size mediaQuery is used to get the height and width of the screen
         if (state is AuthStateLoggedOut) {
           if (state.exception is UserNotFoundAuthException) {
             await showErrorDialog(
