@@ -43,6 +43,11 @@ dependencies:
   flutter_bloc: ^8.0.1
   equatable: ^2.0.3
   flutter_launcher_icons: ^0.10.0
+  flutter_slidable: ^2.0.0
+  liquid_progress_indicator: ^0.4.0
+  open_mail_app: ^0.4.5
+
+
 
 
 
@@ -62,8 +67,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-#  assets:
-#    - assets/icons/
+  assets:
+    - /Users/vino/Desktop/takenote/assets/icon/images/green/
+    - /Users/vino/Desktop/takenote/assets/icon/images/blue/
+    - /Users/vino/Desktop/takenote/assets/icon/images/
+    - /Users/vino/Desktop/takenote/assets/icon/
+    - /Users/vino/Desktop/takenote/assets/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

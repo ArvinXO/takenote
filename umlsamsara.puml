@@ -1,0 +1,399 @@
+@startuml
+set namespaceSeparator ::
+
+class "takenote::enums::menu_action.dart::MenuAction" {
+  +int index
+  {static} +List<MenuAction> values
+  {static} +MenuAction logout
+}
+
+"takenote::enums::menu_action.dart::MenuAction" o-- "takenote::enums::menu_action.dart::MenuAction"
+"dart::core::Enum" <|-- "takenote::enums::menu_action.dart::MenuAction"
+
+class "takenote::firebase_options.dart::DefaultFirebaseOptions" {
+  {static} +FirebaseOptions web
+  {static} +FirebaseOptions android
+  {static} +FirebaseOptions ios
+  {static} +FirebaseOptions macos
+  {static} +FirebaseOptions currentPlatform
+}
+
+"takenote::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
+
+class "takenote::components::background.dart::Background" {
+  +Widget child
+  +Widget build()
+}
+
+"takenote::components::background.dart::Background" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "takenote::components::background.dart::Background"
+
+class "takenote::views::homepage.dart::HomePage" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "takenote::views::homepage.dart::HomePage"
+
+class "takenote::views::forgot_password_view.dart::ForgotPasswordView" {
+  +State<ForgotPasswordView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "takenote::views::forgot_password_view.dart::ForgotPasswordView"
+
+class "takenote::views::forgot_password_view.dart::_ForgotPasswordViewState" {
+  -TextEditingController _controller
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"takenote::views::forgot_password_view.dart::_ForgotPasswordViewState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "takenote::views::forgot_password_view.dart::_ForgotPasswordViewState"
+
+class "takenote::views::login_view.dart::LoginView" {
+  +State<LoginView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "takenote::views::login_view.dart::LoginView"
+
+class "takenote::views::login_view.dart::_LoginViewState" {
+  -TextEditingController _email
+  -TextEditingController _password
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"takenote::views::login_view.dart::_LoginViewState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "takenote::views::login_view.dart::_LoginViewState"
+
+class "takenote::views::notes_view.dart::NotesView" {
+  +State<NotesView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "takenote::views::notes_view.dart::NotesView"
+
+class "takenote::views::notes_view.dart::_NotesViewState" {
+  -FirebaseCloudStorage _notesService
+  +String userId
+  +void initState()
+  +Widget build()
+}
+
+"takenote::views::notes_view.dart::_NotesViewState" o-- "takenote::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage"
+"flutter::src::widgets::framework.dart::State" <|-- "takenote::views::notes_view.dart::_NotesViewState"
+
+class "takenote::views::notes::notes_list_view.dart::NotesListView" {
+  +Iterable<CloudNote> notes
+  +void Function(CloudNote) onDeleteNote
+  +void Function(CloudNote) onNoteTap
+  +Widget build()
+}
+
+"takenote::views::notes::notes_list_view.dart::NotesListView" o-- "takenote::views::notes::notes_list_view.dart::void Function(CloudNote)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "takenote::views::notes::notes_list_view.dart::NotesListView"
+
+class "takenote::views::notes::create_update_note_view.dart::CreateUpdateNoteView" {
+  +State<CreateUpdateNoteView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "takenote::views::notes::create_update_note_view.dart::CreateUpdateNoteView"
+
+class "takenote::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState" {
+  -CloudNote? _note
+  -FirebaseCloudStorage _notesService
+  -TextEditingController _textController
+  +void initState()
+  -void _textControllerListener()
+  -void _setupTextControllerListener()
+  +Future<CloudNote> createOrGetExistingNote()
+  -void _deleteNoteIfTextIsEmpty()
+  -void _saveNoteIfTextIsNotEmpty()
+  +void dispose()
+  +Widget build()
+}
+
+"takenote::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState" o-- "takenote::services::cloud::cloud_note.dart::CloudNote"
+"takenote::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState" o-- "takenote::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage"
+"takenote::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "takenote::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState"
+
+class "takenote::views::verify_email_view.dart::VerifiyEmailView" {
+  +State<VerifiyEmailView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "takenote::views::verify_email_view.dart::VerifiyEmailView"
+
+class "takenote::views::verify_email_view.dart::_VerifiyEmailViewState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "takenote::views::verify_email_view.dart::_VerifiyEmailViewState"
+
+class "takenote::views::register_view.dart::RegisterView" {
+  +State<RegisterView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "takenote::views::register_view.dart::RegisterView"
+
+class "takenote::views::register_view.dart::_RegisterViewState" {
+  -TextEditingController _email
+  -TextEditingController _password
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"takenote::views::register_view.dart::_RegisterViewState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "takenote::views::register_view.dart::_RegisterViewState"
+
+class "takenote::helpers::loading::loading_screen.dart::LoadingScreen" {
+  {static} -LoadingScreen _shared
+  +LoadingScreenController? controller
+  +void show()
+  +void hide()
+  +LoadingScreenController showOverlay()
+}
+
+"takenote::helpers::loading::loading_screen.dart::LoadingScreen" o-- "takenote::helpers::loading::loading_screen.dart::LoadingScreen"
+"takenote::helpers::loading::loading_screen.dart::LoadingScreen" o-- "takenote::helpers::loading::loading_screen_controller.dart::LoadingScreenController"
+
+class "takenote::helpers::loading::loading_screen_controller.dart::LoadingScreenController" {
+  +bool Function() close
+  +bool Function(String) update
+}
+
+"takenote::helpers::loading::loading_screen_controller.dart::LoadingScreenController" o-- "takenote::helpers::loading::loading_screen_controller.dart::bool Function()"
+"takenote::helpers::loading::loading_screen_controller.dart::LoadingScreenController" o-- "takenote::helpers::loading::loading_screen_controller.dart::bool Function(String)"
+
+class "takenote::services::auth::auth_user.dart::AuthUser" {
+  +String id
+  +String email
+  +bool isEmailVerified
+}
+
+abstract class "takenote::services::auth::auth_provider.dart::AuthProvider" {
+  +AuthUser? currentUser
+  +Future<void> initialize()
+  +Future<AuthUser> logIn()
+  +Future<AuthUser> createUser()
+  +Future<void> logOut()
+  +Future<void> sendEmailVerification()
+  +Future<void> sendPasswordResetEmail()
+}
+
+"takenote::services::auth::auth_provider.dart::AuthProvider" o-- "takenote::services::auth::auth_user.dart::AuthUser"
+
+class "takenote::services::auth::auth_service.dart::AuthService" {
+  +AuthProvider provider
+  +AuthUser? currentUser
+  +Future<void> initialize()
+  +Future<AuthUser> createUser()
+  +Future<AuthUser> logIn()
+  +Future<void> logOut()
+  +Future<void> sendEmailVerification()
+  +Future<void> sendPasswordResetEmail()
+}
+
+"takenote::services::auth::auth_service.dart::AuthService" o-- "takenote::services::auth::auth_provider.dart::AuthProvider"
+"takenote::services::auth::auth_service.dart::AuthService" o-- "takenote::services::auth::auth_user.dart::AuthUser"
+"takenote::services::auth::auth_provider.dart::AuthProvider" <|-- "takenote::services::auth::auth_service.dart::AuthService"
+
+class "takenote::services::auth::firebase_auth_provider.dart::FirebaseAuthProvider" {
+  +AuthUser? currentUser
+  +Future<void> initialize()
+  +Future<AuthUser> createUser()
+  +Future<AuthUser> logIn()
+  +Future<void> logOut()
+  +Future<void> sendEmailVerification()
+  +Future<void> sendPasswordResetEmail()
+}
+
+"takenote::services::auth::firebase_auth_provider.dart::FirebaseAuthProvider" o-- "takenote::services::auth::auth_user.dart::AuthUser"
+"takenote::services::auth::auth_provider.dart::AuthProvider" <|-- "takenote::services::auth::firebase_auth_provider.dart::FirebaseAuthProvider"
+
+class "takenote::services::auth::auth_exceptions.dart::UserNotFoundAuthException" {
+}
+
+"dart::core::Exception" <|-- "takenote::services::auth::auth_exceptions.dart::UserNotFoundAuthException"
+
+class "takenote::services::auth::auth_exceptions.dart::WrongPasswordAuthException" {
+}
+
+"dart::core::Exception" <|-- "takenote::services::auth::auth_exceptions.dart::WrongPasswordAuthException"
+
+class "takenote::services::auth::auth_exceptions.dart::WeakPasswordAuthException" {
+}
+
+"dart::core::Exception" <|-- "takenote::services::auth::auth_exceptions.dart::WeakPasswordAuthException"
+
+class "takenote::services::auth::auth_exceptions.dart::EmailAlreadyInUseAuthException" {
+}
+
+"dart::core::Exception" <|-- "takenote::services::auth::auth_exceptions.dart::EmailAlreadyInUseAuthException"
+
+class "takenote::services::auth::auth_exceptions.dart::InvalidEmailAuthException" {
+}
+
+"dart::core::Exception" <|-- "takenote::services::auth::auth_exceptions.dart::InvalidEmailAuthException"
+
+class "takenote::services::auth::auth_exceptions.dart::GenericAuthException" {
+}
+
+"dart::core::Exception" <|-- "takenote::services::auth::auth_exceptions.dart::GenericAuthException"
+
+class "takenote::services::auth::auth_exceptions.dart::UserNotLoggedInAuthException" {
+}
+
+"dart::core::Exception" <|-- "takenote::services::auth::auth_exceptions.dart::UserNotLoggedInAuthException"
+
+abstract class "takenote::services::auth::bloc::auth_event.dart::AuthEvent" {
+}
+
+class "takenote::services::auth::bloc::auth_event.dart::AuthEventInitialize" {
+}
+
+"takenote::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "takenote::services::auth::bloc::auth_event.dart::AuthEventInitialize"
+
+class "takenote::services::auth::bloc::auth_event.dart::AuthEventLogIn" {
+  +String email
+  +String password
+}
+
+"takenote::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "takenote::services::auth::bloc::auth_event.dart::AuthEventLogIn"
+
+class "takenote::services::auth::bloc::auth_event.dart::AuthEventSendEmailVerification" {
+}
+
+"takenote::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "takenote::services::auth::bloc::auth_event.dart::AuthEventSendEmailVerification"
+
+class "takenote::services::auth::bloc::auth_event.dart::AuthEventRegister" {
+  +String email
+  +String password
+}
+
+"takenote::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "takenote::services::auth::bloc::auth_event.dart::AuthEventRegister"
+
+class "takenote::services::auth::bloc::auth_event.dart::AuthEventShouldRegister" {
+}
+
+"takenote::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "takenote::services::auth::bloc::auth_event.dart::AuthEventShouldRegister"
+
+class "takenote::services::auth::bloc::auth_event.dart::AuthEventForgotPassword" {
+  +String? email
+}
+
+"takenote::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "takenote::services::auth::bloc::auth_event.dart::AuthEventForgotPassword"
+
+class "takenote::services::auth::bloc::auth_event.dart::AuthEventLogOut" {
+}
+
+"takenote::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "takenote::services::auth::bloc::auth_event.dart::AuthEventLogOut"
+
+class "takenote::services::auth::bloc::auth_bloc.dart::AuthBloc" {
+}
+
+"bloc::src::bloc.dart::Bloc" <|-- "takenote::services::auth::bloc::auth_bloc.dart::AuthBloc"
+
+abstract class "takenote::services::auth::bloc::auth_state.dart::AuthState" {
+  +bool isLoading
+  +String? loadingText
+}
+
+class "takenote::services::auth::bloc::auth_state.dart::AuthStateUninitialized" {
+}
+
+"takenote::services::auth::bloc::auth_state.dart::AuthState" <|-- "takenote::services::auth::bloc::auth_state.dart::AuthStateUninitialized"
+
+class "takenote::services::auth::bloc::auth_state.dart::AuthStateRegistering" {
+  +Exception? exception
+}
+
+"takenote::services::auth::bloc::auth_state.dart::AuthState" <|-- "takenote::services::auth::bloc::auth_state.dart::AuthStateRegistering"
+
+class "takenote::services::auth::bloc::auth_state.dart::AuthStateForgotPassword" {
+  +Exception? exception
+  +bool hasSentEmail
+}
+
+"takenote::services::auth::bloc::auth_state.dart::AuthState" <|-- "takenote::services::auth::bloc::auth_state.dart::AuthStateForgotPassword"
+
+class "takenote::services::auth::bloc::auth_state.dart::AuthStateLoggedIn" {
+  +AuthUser user
+}
+
+"takenote::services::auth::bloc::auth_state.dart::AuthStateLoggedIn" o-- "takenote::services::auth::auth_user.dart::AuthUser"
+"takenote::services::auth::bloc::auth_state.dart::AuthState" <|-- "takenote::services::auth::bloc::auth_state.dart::AuthStateLoggedIn"
+
+class "takenote::services::auth::bloc::auth_state.dart::AuthStateNeedsVerification" {
+}
+
+"takenote::services::auth::bloc::auth_state.dart::AuthState" <|-- "takenote::services::auth::bloc::auth_state.dart::AuthStateNeedsVerification"
+
+class "takenote::services::auth::bloc::auth_state.dart::AuthStateLoggedOut" {
+  +Exception? exception
+  +List<Object?> props
+}
+
+"takenote::services::auth::bloc::auth_state.dart::AuthState" <|-- "takenote::services::auth::bloc::auth_state.dart::AuthStateLoggedOut"
+"equatable::src::equatable_mixin.dart::EquatableMixin" <|-- "takenote::services::auth::bloc::auth_state.dart::AuthStateLoggedOut"
+
+class "takenote::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" {
+}
+
+"dart::core::Exception" <|-- "takenote::services::cloud::cloud_storage_exceptions.dart::CloudStorageException"
+
+class "takenote::services::cloud::cloud_storage_exceptions.dart::CouldNotCreateNoteException" {
+}
+
+"takenote::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" <|-- "takenote::services::cloud::cloud_storage_exceptions.dart::CouldNotCreateNoteException"
+
+class "takenote::services::cloud::cloud_storage_exceptions.dart::CouldNotGetAllNotesException" {
+}
+
+"takenote::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" <|-- "takenote::services::cloud::cloud_storage_exceptions.dart::CouldNotGetAllNotesException"
+
+class "takenote::services::cloud::cloud_storage_exceptions.dart::CouldNotUpdateNoteException" {
+}
+
+"takenote::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" <|-- "takenote::services::cloud::cloud_storage_exceptions.dart::CouldNotUpdateNoteException"
+
+class "takenote::services::cloud::cloud_storage_exceptions.dart::CouldNotDeleteNoteException" {
+}
+
+"takenote::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" <|-- "takenote::services::cloud::cloud_storage_exceptions.dart::CouldNotDeleteNoteException"
+
+class "takenote::services::cloud::cloud_note.dart::CloudNote" {
+  +String documentId
+  +String ownerUserId
+  +String text
+}
+
+class "takenote::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage" {
+  +CollectionReference<Map<String, dynamic>> notes
+  {static} -FirebaseCloudStorage _shared
+  +Stream<Iterable<CloudNote>> allNotes()
+  +Future<CloudNote> createNewNote()
+  +Future<Iterable<CloudNote>> getNotes()
+  +Future<void> updateNote()
+  +Future<void> deleteNote()
+}
+
+"takenote::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage" o-- "cloud_firestore::cloud_firestore.dart::CollectionReference<Map<String, dynamic>>"
+"takenote::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage" o-- "takenote::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage"
+
+class "takenote::widgets::dismissible_widget.dart::DismissibleWidget" {
+  +T item
+  +Widget child
+  +void Function(DismissDirection) onDismissed
+  +Widget build()
+  +Widget buildSwipeActionLeft()
+  +Widget buildSwipeActionRight()
+}
+
+"takenote::widgets::dismissible_widget.dart::DismissibleWidget" o-- "flutter::src::widgets::framework.dart::Widget"
+"takenote::widgets::dismissible_widget.dart::DismissibleWidget" o-- "flutter::src::widgets::dismissible.dart::void Function(DismissDirection)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "takenote::widgets::dismissible_widget.dart::DismissibleWidget"
+
+
+@enduml

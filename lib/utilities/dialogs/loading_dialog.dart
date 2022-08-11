@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/kConstants.dart';
+import '../../constants/k_constants.dart';
 
 typedef CloseDialog = void Function();
 

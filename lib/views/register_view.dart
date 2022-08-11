@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:takenote/components/background_blue.dart';
 import 'package:takenote/services/auth/auth_exceptions.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
 import 'package:takenote/utilities/dialogs/error_dialog.dart';
 
-import '../constants/kConstants.dart';
+import '../constants/k_constants.dart';
 import '../services/auth/bloc/auth_event.dart';
 
 class RegisterView extends StatefulWidget {
@@ -36,6 +37,8 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    Size sizeQuery = MediaQuery.of(context).size;
+
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateRegistering) {
@@ -51,54 +54,98 @@ class _RegisterViewState extends State<RegisterView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Register"),
-          backgroundColor: Colors.blue,
-        ),
-        body: Padding(
-          padding: k8pad,
+        backgroundColor: Colors.black,
+        resizeToAvoidBottomInset: false,
+        body: BlueBackground(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Center(
-                child: Text(
-                  'Please register to your account to continue...',
+              SizedBox(
+                height: sizeQuery.height * 0.12,
+              ),
+              Hero(
+                tag: "logo",
+                child: Image.asset(
+                  'assets/icon/icon.png',
+                  width: sizeQuery.width * 0.30,
                 ),
               ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(
+                  horizontal: sizeQuery.width * 0.07,
+                  vertical: sizeQuery.height * 0.01,
+                ),
+                child: const Text(
+                  'REGISTER',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              SizedBox(height: sizeQuery.height * 0.01),
               Padding(
-                padding: k8pad,
+                padding: k3010LRpad,
                 child: TextField(
                   controller: _email,
                   enableSuggestions: false,
                   autocorrect: false,
                   showCursor: true,
-                  autofocus: true,
+                  keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.email),
+                      //overflow text if text is too long
+                      constraints:
+                          BoxConstraints(maxHeight: sizeQuery.height * 0.08),
+                      //black border
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                          width: 2,
+                        ),
+                      ),
+                      fillColor: Colors.white,
+                      prefixIcon: const Icon(
+                        Icons.email,
+                      ),
                       suffixIcon: IconButton(
                         onPressed: _email.clear,
                         icon: const Icon(Icons.clear),
                       ),
-                      labelText: 'Email',
-                      hintText: 'Enter your email here'),
+                      hintText: 'Email'),
                 ),
               ),
+              SizedBox(height: sizeQuery.height * 0.00001),
               Padding(
-                padding: k8pad,
+                padding: k3010LRpad,
                 child: TextField(
+                  //white background
+                  controller: _password,
                   obscureText: true,
-                  showCursor: true,
                   textAlign: TextAlign.center,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  clipBehavior: Clip.antiAlias,
                   decoration: InputDecoration(
+                      constraints:
+                          BoxConstraints(maxHeight: sizeQuery.height * 0.08),
+                      //white background
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      fillColor: Colors.white,
                       prefixIcon: const Icon(Icons.lock),
                       suffix: IconButton(
                         onPressed: _password.clear,
                         icon: const Icon(Icons.clear),
                       ),
-                      labelText: 'Password',
-                      hintText: 'Enter your password here'),
-                  controller: _password,
+                      hintText: 'Password'),
                 ),
               ),
               Center(
@@ -109,10 +156,7 @@ class _RegisterViewState extends State<RegisterView> {
                         final email = _email.text;
                         final password = _password.text;
                         await AuthService.firebase().initialize();
-                        //                 if (!mounted) {
-                        //   return;
-                        // }
-                        // Navigator.of(context).pushNamed(verifyEmailRoute);
+
                         if (!mounted) {
                           return;
                         }
@@ -123,28 +167,7 @@ class _RegisterViewState extends State<RegisterView> {
                               ),
                             );
                       },
-                      child: Container(
-                        height: 50,
-                        width: 100,
-                        decoration: gradientButton.copyWith(
-                          color: Colors.blue,
-                          border: //copywith is used to override the border of the button
-                              Border.all(
-                            //Blue alpha border
-                            color: Colors.blue.withAlpha(100),
-                            width: 2,
-                          ),
-                          boxShadow: [
-                            kBoxShadowBlue,
-                          ],
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Register',
-                            style: kButtonTextStyle,
-                          ),
-                        ),
-                      ),
+                      child: kRegisterContainer,
                     ),
                     k10SizedBox,
                     TextButton(

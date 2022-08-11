@@ -74,7 +74,10 @@ class MockAuthProvider implements AuthProvider {
     await Future.delayed(
       const Duration(seconds: 1),
     );
-    return logIn(email: email, password: password);
+    return logIn(
+      email: email,
+      password: password,
+    );
   }
 
   @override

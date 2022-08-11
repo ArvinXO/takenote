@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:takenote/constants/kConstants.dart';
+import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/helpers/loading/loading_screen_controller.dart';
 
 class LoadingScreen {
@@ -62,7 +62,7 @@ class LoadingScreen {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     k10SizedBox,
-                    const CircularProgressIndicator(),
+                    //liquid progress indicator
                     k20SizedBox,
                     StreamBuilder(
                       stream: textStream.stream,

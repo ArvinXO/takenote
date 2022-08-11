@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:takenote/constants/kConstants.dart';
+import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 import 'package:takenote/services/cloud/firebase_cloud_storage.dart';
 import 'package:takenote/utilities/dialogs/cannot_share_empty_note_dialog.dart';
@@ -18,7 +18,6 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   CloudNote? _note;
   late final FirebaseCloudStorage _notesService;
   late final TextEditingController _textController;
-  String appbarTitleString = '';
 
   @override
   void initState() {
@@ -90,8 +89,10 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Notes'),
-        //sharebutton
+        title: // WidgetNote is not null if we are updating an existing note
+            context.getArgument<CloudNote>() == null
+                ? const Text('Create a new note')
+                : const Text('Update your note'),
         actions: [
           IconButton(
             onPressed: () async {
@@ -120,9 +121,13 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                     controller: _textController,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Start typing...',
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText:
+                          //Existing note is not null and text is not empty then show text else show placeholder
+                          _note != null && _textController.text.isNotEmpty
+                              ? 'Edit note'
+                              : 'Enter note',
                     ),
                   ),
                 ],
