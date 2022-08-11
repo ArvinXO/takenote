@@ -156,16 +156,22 @@ class _RegisterViewState extends State<RegisterView> {
                         final email = _email.text;
                         final password = _password.text;
                         await AuthService.firebase().initialize();
-
                         if (!mounted) {
                           return;
                         }
-                        context.read<AuthBloc>().add(
-                              AuthEventRegister(
-                                email,
-                                password,
-                              ),
-                            );
+                        //if email or password is empty
+                        if (email.isEmpty || password.isEmpty) {
+                          await showErrorDialog(
+                              context, 'Email or password is empty');
+                          return;
+                        } else {
+                          context.read<AuthBloc>().add(
+                                AuthEventRegister(
+                                  email,
+                                  password,
+                                ),
+                              );
+                        }
                       },
                       child: kRegisterContainer,
                     ),
