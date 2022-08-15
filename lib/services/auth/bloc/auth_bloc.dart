@@ -100,7 +100,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             loadingText: 'Please wait while I log you in...',
           ),
         );
-        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 3));
         final email = event.email;
         final password = event.password;
         try {
@@ -151,7 +151,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             const AuthStateLoggedOut(
               exception: null,
               isLoading: false,
-              loadingText: 'Please wait while I log you out...',
             ),
           );
         } on Exception catch (e) {

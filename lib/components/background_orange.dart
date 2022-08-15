@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class BlueBackground extends StatelessWidget {
+class OrangeBackground extends StatelessWidget {
   final Widget child;
 
-  const BlueBackground({
+  const OrangeBackground({
     Key? key,
     required this.child,
   }) : super(key: key);
@@ -21,20 +21,20 @@ class BlueBackground extends StatelessWidget {
           Positioned(
             top: 0,
             right: 0,
-            child: Image.asset("assets/icon/images/blue/top1.png",
+            child: Image.asset("assets/icon/images/orange/top1.png",
                 width: size.width),
           ),
           Positioned(
             top: -90,
             right: 0,
-            child: Image.asset("assets/icon/images/blue/top2.png",
+            child: Image.asset("assets/icon/images/orange/top2.png",
                 width: size.width),
           ),
           Positioned(
             top: 50,
             right: 30,
-            child: Image.asset("assets/icon/images/blue/reg.png",
-                width: size.width * 0.35, height: 130),
+            child: Image.asset("assets/icon/images/orange/forgotpass.png",
+                width: size.width * 0.45, height: 130),
           ),
           Positioned(
             bottom: -90,
@@ -42,7 +42,7 @@ class BlueBackground extends StatelessWidget {
             child: Opacity(
               opacity: 0.4,
               child: Image.asset(
-                "assets/icon/images/blue/bottom1.png",
+                "assets/icon/images/orange/bottom1.png",
                 width: size.width,
                 height: size.height * 0.49,
               ),
@@ -54,7 +54,7 @@ class BlueBackground extends StatelessWidget {
             child: Opacity(
               opacity: 0.8,
               child: Image.asset(
-                "assets/icon/images/blue/bottom2.png",
+                "assets/icon/images/orange/bottom2.png",
                 width: size.width,
                 height: size.height * 0.13,
               ),

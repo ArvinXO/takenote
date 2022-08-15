@@ -7,6 +7,10 @@ final kGreenBackground = Colors.green.withOpacity(
 final kBlueBackground = Colors.blue.withOpacity(
   0.06,
 );
+
+final kOrangeBackground = Colors.orange.withOpacity(
+  0.9,
+);
 const kCards = BorderRadius.only(
   bottomLeft: Radius.circular(5),
   bottomRight: Radius.circular(5),
@@ -88,7 +92,7 @@ final kLoginContainer = Container(
   ),
   child: const Center(
     child: Text(
-      'Login',
+      'LOGIN',
       style: TextStyle(
         color: Colors.white,
         fontSize: 15,
@@ -112,7 +116,7 @@ final kRegisterContainer = Container(
   ),
   child: const Center(
     child: Text(
-      'Register',
+      'REGISTER',
       style: TextStyle(
         color: Colors.white,
         fontSize: 15,
@@ -176,7 +180,7 @@ final kSendVerificationContainer = Container(
     mainAxisAlignment: MainAxisAlignment.center,
     children: const <Widget>[
       Text(
-        'Resend verification',
+        'RESEND VERIFICATION',
         style: TextStyle(
           color: Colors.white,
           fontSize: 15,
@@ -213,7 +217,7 @@ final kRestartContainer = Container(
     mainAxisAlignment: MainAxisAlignment.center,
     children: const <Widget>[
       Text(
-        'Restart',
+        'RESTART',
         style: TextStyle(
           color: Colors.white,
           fontSize: 15,
@@ -228,5 +232,95 @@ final kRestartContainer = Container(
       ),
       //space between the icon and the text
     ],
+  ),
+);
+final kSendResetLinkContainer = Container(
+  height: 50,
+  width: 200,
+  decoration: BoxDecoration(
+    // add icon to the button
+
+    borderRadius: BorderRadius.circular(20),
+    color: Colors.deepOrangeAccent,
+    boxShadow: const [
+      BoxShadow(
+        color: Colors.deepOrangeAccent,
+        spreadRadius: 1,
+      ),
+    ],
+  ),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: const <Widget>[
+      Text(
+        'SEND',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 15,
+        ),
+      ),
+      SizedBox(width: 5),
+
+      Icon(
+        Icons.send_rounded,
+        color: Colors.white,
+        size: 20,
+      ),
+      //space between the icon and the text
+    ],
+  ),
+);
+
+final kBackToLoginContainer = Container(
+  height: 80,
+  width: 250,
+  constraints: const BoxConstraints(
+    maxWidth: 250,
+  ),
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(20),
+    border: Border.all(
+      color: Colors.green,
+      width: 2,
+    ),
+    color: Colors.green,
+    boxShadow: const [
+      BoxShadow(
+        color: Colors.green,
+        spreadRadius: 1,
+      ),
+    ],
+  ),
+  child: const Center(
+    child: Text(
+      'BACK TO LOGIN',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 15,
+      ),
+    ),
+  ),
+);
+
+final kForgotPasswordContainerDecoration = InputDecoration(
+  label: const Padding(
+    padding: EdgeInsets.all(8.0),
+    child: Text(
+      'Email',
+      style: TextStyle(color: Colors.black),
+    ),
+  ),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: const BorderSide(
+      width: 2,
+      color: Colors.white,
+    ),
+  ),
+  enabledBorder: const UnderlineInputBorder(
+    borderSide: BorderSide(color: Colors.deepOrangeAccent),
+  ),
+  focusedBorder: const UnderlineInputBorder(
+    borderSide: BorderSide(color: Colors.deepOrangeAccent),
   ),
 );

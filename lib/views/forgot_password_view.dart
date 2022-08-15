@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:takenote/components/background_orange.dart';
+import 'package:takenote/constants/k_Constants.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
@@ -31,6 +33,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   @override
   Widget build(BuildContext context) {
+    Size sizeQuery = MediaQuery.of(context).size;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateForgotPassword) {
@@ -47,53 +50,79 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             if (!mounted) {
               return;
             }
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.exception.toString()),
-              ),
-            );
           }
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Forgot Password',
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(18.0),
+        backgroundColor: const Color.fromRGBO(255, 205, 128, 0.95),
+        resizeToAvoidBottomInset: false,
+        body: OrangeBackground(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Please enter your email address and we will send you a link to reset your password.',
+              SizedBox(
+                height: sizeQuery.height * 0.22,
               ),
-              TextField(
-                //Email
-                controller: _controller,
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                autofocus: true,
-
-                decoration: const InputDecoration(
-                  labelText: 'Your Email address...',
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(
+                  horizontal: sizeQuery.width * 0.07,
+                  vertical: sizeQuery.height * 0.01,
+                ),
+                child: const Text(
+                  'FORGOT PASSWORD',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.left,
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  final email = _controller.text;
-                  context
-                      .read<AuthBloc>()
-                      .add(AuthEventForgotPassword(email: email));
-                },
-                child: const Text('Send password reset link'),
+              SizedBox(height: sizeQuery.height * 0.01),
+              Padding(
+                padding: k3010LRpad,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white,
+                  ),
+                  child: TextField(
+                    //Email
+                    controller: _controller,
+                    keyboardType: TextInputType.emailAddress,
+                    autocorrect: false,
+                    cursorColor: Colors.orange,
+                    decoration: kForgotPasswordContainerDecoration,
+                  ),
+                ),
               ),
-              TextButton(
-                onPressed: () {
-                  FocusScope.of(context).unfocus();
-                  context.read<AuthBloc>().add(const AuthEventLogOut());
-                },
-                child: const Text('Back to login page'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      final email = _controller.text;
+                      context
+                          .read<AuthBloc>()
+                          .add(AuthEventForgotPassword(email: email));
+                    },
+                    child: kSendResetLinkContainer,
+                  ),
+                ],
+              ),
+              SizedBox(height: sizeQuery.height * 0.15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      context.read<AuthBloc>().add(const AuthEventLogOut());
+                    },
+                    child: kBackToLoginContainer,
+                  ),
+                ],
               ),
             ],
           ),

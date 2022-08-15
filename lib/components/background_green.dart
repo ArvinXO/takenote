@@ -19,7 +19,7 @@ class GreenBackground extends StatelessWidget {
         alignment: Alignment.center,
         children: <Widget>[
           Positioned(
-            top: -190,
+            top: 0,
             right: 0,
             child: Image.asset("assets/icon/images/green/top1.png",
                 width: size.width),
@@ -30,21 +30,21 @@ class GreenBackground extends StatelessWidget {
             child: Image.asset("assets/icon/images/green/top2.png",
                 width: size.width),
           ),
-          // Positioned(
-          //   top: 50,
-          //   right: 30,
-          //   child: Image.asset("assets/icon/images/green/main.png",
-          //       width: size.width * 0.25),
-          // ),
+          Positioned(
+            top: 40,
+            right: 30,
+            child: Image.asset("assets/icon/images/green/signin.png",
+                width: size.width * 0.35, height: 130),
+          ),
           Positioned(
             bottom: -90,
-            right: 0,
+            right: 10,
             child: Opacity(
               opacity: 0.4,
               child: Image.asset(
                 "assets/icon/images/green/bottom1.png",
                 width: size.width,
-                height: size.height * 0.29,
+                height: size.height * 0.49,
               ),
             ),
           ),

@@ -46,9 +46,9 @@ class LoadingScreen {
         child: Center(
           child: Container(
             constraints: BoxConstraints(
-              maxHeight: size.width * 0.8,
+              maxHeight: size.width * 0.9,
               maxWidth: size.width * 0.8,
-              minWidth: size.width * 0.5,
+              minWidth: size.width * 0.7,
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -61,8 +61,14 @@ class LoadingScreen {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    k10SizedBox,
+                    k20SizedBox,
                     //liquid progress indicator
+                    const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.green,
+                      ),
+                    ),
+
                     k20SizedBox,
                     StreamBuilder(
                       stream: textStream.stream,

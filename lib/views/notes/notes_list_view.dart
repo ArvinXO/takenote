@@ -45,39 +45,50 @@ class NotesListView extends StatelessWidget {
             ),
           ),
 
-          child: ListTile(
-            //onlongpress to share
-            onLongPress: () {
-              Share.share(note.text);
-            },
-            tileColor: Colors.white,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: const BorderSide(
-                color: Colors.black,
-                width: 1,
+          child: Card(
+            elevation: 3,
+            child: ListTile(
+              leading: CircleAvatar(
+                maxRadius: 12,
+                child: Text(
+                  // note index + 1 to start at 1 instead of 0
+                  '${index + 1}',
+                ),
               ),
-            ),
-            title: Text(
-              note.text,
-              maxLines: 1,
-              softWrap: true,
-              overflow: TextOverflow.ellipsis,
-            ),
-            trailing: IconButton(
-              onPressed: () async {
-                final shouldDelete = await showDeleteDialog(context);
-                if (shouldDelete) {
-                  onDeleteNote(note);
-                }
+
+              //onlongpress to share
+              onLongPress: () {
+                Share.share(note.text);
               },
-              icon: const Icon(Icons.delete, color: Colors.grey),
+              tileColor: Colors.white,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: const BorderSide(
+                  color: Colors.black,
+                  width: 1,
+                ),
+              ),
+              title: Text(
+                note.text,
+                maxLines: 1,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+              ),
+              trailing: IconButton(
+                onPressed: () async {
+                  final shouldDelete = await showDeleteDialog(context);
+                  if (shouldDelete) {
+                    onDeleteNote(note);
+                  }
+                },
+                icon: const Icon(Icons.delete, color: Colors.grey),
+              ),
+              onTap: () {
+                onNoteTap(note);
+              },
             ),
-            onTap: () {
-              onNoteTap(note);
-            },
           ),
         );
       },

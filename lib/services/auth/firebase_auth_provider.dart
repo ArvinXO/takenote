@@ -103,7 +103,14 @@ class FirebaseAuthProvider implements AuthProvider {
   Future<void> sendEmailVerification() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null && user.emailVerified == false) {
-      await user.sendEmailVerification();
+      try {
+        await user.sendEmailVerification();
+      } on FirebaseAuthException catch (e) {
+        switch (e.code) {
+          case 'firebase_auth/too-many-requests':
+            throw TooManyVerificationEmailRequests();
+        }
+      }
     } else {
       throw UserNotVerifiedAuthException();
     }
@@ -129,3 +136,21 @@ class FirebaseAuthProvider implements AuthProvider {
     }
   }
 }
+
+// User not verified and too many requests to send verification email
+  // @override
+  // Future<void> sendEmailVerification() async {
+  //   final user = FirebaseAuth.instance.currentUser;
+  //   if (user != null && user.emailVerified == false) {
+  //     try {
+  //       await user.sendEmailVerification();
+  //     } on FirebaseAuthException catch (e) {
+  //       switch (e.code) {
+  //         case 'firebase_auth/too-many-requests':
+  //           throw TooManyVerificationEmailRequests();
+  //       }
+  //     }
+  //   } else {
+  //     throw UserNotVerifiedAuthException();
+  //   }
+  // }

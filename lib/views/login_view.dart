@@ -57,7 +57,7 @@ class _LoginViewState extends State<LoginView> {
         }
       },
       child: Scaffold(
-        backgroundColor: kGreenBackground,
+        backgroundColor: const Color.fromRGBO(239, 246, 236, 0.98),
         resizeToAvoidBottomInset: false,
         body: GreenBackground(
           child: Column(

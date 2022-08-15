@@ -54,7 +54,7 @@ class _RegisterViewState extends State<RegisterView> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color.fromRGBO(233, 242, 249, 0.99),
         resizeToAvoidBottomInset: false,
         body: BlueBackground(
           child: Column(

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_mail_app/open_mail_app.dart';
 import 'package:takenote/components/background_blue.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
-import 'package:takenote/utilities/dialogs/error_dialog.dart';
 import 'package:takenote/utilities/dialogs/resend_verification_dialog.dart';
+import 'package:takenote/widgets/random_button_widget.dart';
 
 import '../constants/k_constants.dart';
 
@@ -16,7 +15,30 @@ class VerifiyEmailView extends StatefulWidget {
   State<VerifiyEmailView> createState() => _VerifiyEmailViewState();
 }
 
-class _VerifiyEmailViewState extends State<VerifiyEmailView> {
+class _VerifiyEmailViewState extends State<VerifiyEmailView>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+        vsync: this, // the SingleTickerProviderStateMixin
+        duration: const Duration(seconds: 1))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) _controller.forward(from: 0);
+      })
+      ..addListener(() {
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size sizeQuery = MediaQuery.of(context).size;
@@ -36,44 +58,8 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView> {
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
-            Container(
-              width: sizeQuery.width * 0.25,
-              height: sizeQuery.height * 0.09,
-              decoration: BoxDecoration(
-                color: Colors.blueGrey,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: IconButton(
-                onPressed: () async {
-                  // Android: Will open mail app or show native picker.
-                  // iOS: Will open mail app if single mail app found.
-                  var result = await OpenMailApp.openMailApp(
-                    nativePickerTitle: 'Select mail app to open mail',
-                  );
-
-                  // If no mail apps found, show error
-                  if (!result.didOpen && !result.canOpen) {
-                    if (!mounted) {}
-                    showErrorDialog(context, 'No mail apps found');
-
-                    // iOS: if multiple mail apps found, show dialog to select.
-                    // There is no native intent/default app system in iOS so
-                    // you have to do it yourself.
-                  }
-                },
-                tooltip: 'Open mail app',
-                icon: const Icon(Icons.mail,
-                    color: Colors.white,
-                    size: 100,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 10,
-                        color: Colors.blue,
-                        offset: Offset(5, 5),
-                      ),
-                    ]),
-              ),
-            ),
+            const SizedBox(
+                width: 100, height: 100, child: AnimatedContainerDemo()),
             SizedBox(
               height: sizeQuery.height * 0.09,
             ),
@@ -82,9 +68,12 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView> {
                 left: 60,
                 right: 60,
               ),
-              child: Text(
-                "If you haven't verified your email yet, please press the button below",
-                style: TextStyle(color: Colors.white, fontSize: 14),
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "If you haven't verified your email yet, please press the button below",
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
               ),
             ),
             SizedBox(
