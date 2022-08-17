@@ -5,6 +5,10 @@ abstract class AuthEvent {
   const AuthEvent();
 }
 
+class AuthEventUninitialized extends AuthEvent {
+  const AuthEventUninitialized();
+}
+
 class AuthEventInitialize extends AuthEvent {
   const AuthEventInitialize();
 }

@@ -13,6 +13,10 @@ abstract class AuthState {
   });
 }
 
+class AuthStateInitialize extends AuthState {
+  const AuthStateInitialize() : super(isLoading: true);
+}
+
 class AuthStateUninitialized extends AuthState {
   const AuthStateUninitialized({required bool isLoading})
       : super(isLoading: isLoading);

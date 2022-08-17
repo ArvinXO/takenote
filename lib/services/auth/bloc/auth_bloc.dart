@@ -6,6 +6,7 @@ import 'package:takenote/services/auth/bloc/auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(AuthProvider provider)
       : super(const AuthStateUninitialized(isLoading: true)) {
+    //Should Register
     on<AuthEventShouldRegister>((event, emit) {
       emit(const AuthStateRegistering(
         exception: null,
@@ -66,6 +67,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           exception: e,
         ));
       }
+    });
+
+    //UNINITIALIZED
+    on<AuthEventUninitialized>((event, emit) {
+      emit(const AuthStateUninitialized(isLoading: false));
     });
 
     //Initialize

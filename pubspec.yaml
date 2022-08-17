@@ -47,6 +47,8 @@ dependencies:
   liquid_progress_indicator: ^0.4.0
   open_mail_app: ^0.4.5
   animated_background: ^2.0.0
+  flutter_animated_splash: ^0.0.10
+  video_player: ^2.4.6
 
 
 
@@ -69,6 +71,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - /Users/vino/Desktop/takenote/assets/videos/
     - /Users/vino/Desktop/takenote/assets/icon/images/orange/
     - /Users/vino/Desktop/takenote/assets/icon/images/green/
     - /Users/vino/Desktop/takenote/assets/icon/images/blue/

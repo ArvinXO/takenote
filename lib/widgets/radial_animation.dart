@@ -17,8 +17,16 @@ class AnimatedContainerDemoState extends State<AnimatedContainerDemo>
   @override
   void initState() {
     _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 5));
-    _controller.repeat();
+        AnimationController(vsync: this, duration: const Duration(seconds: 5))
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              _controller.reverse();
+            } else if (status == AnimationStatus.dismissed) {
+              _controller.forward();
+            }
+          });
+
+    _controller.forward();
     super.initState();
   }
 
@@ -91,16 +99,20 @@ class AnimatedContainerDemoState extends State<AnimatedContainerDemo>
                         }
                       },
                       tooltip: 'Open mail app',
-                      icon: const Icon(Icons.mail,
-                          color: Colors.white,
-                          size: 70,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 60,
-                              color: Colors.blue,
-                              offset: Offset(5, 5),
-                            ),
-                          ]),
+                      icon: ScaleTransition(
+                        scale: Tween<double>(begin: 0.75, end: 1.0)
+                            .animate(_controller),
+                        child: const Icon(Icons.mail,
+                            color: Colors.white,
+                            size: 70,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 60,
+                                color: Colors.blue,
+                                offset: Offset(5, 5),
+                              ),
+                            ]),
+                      ),
                     ),
                   ),
                 ),

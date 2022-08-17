@@ -4,7 +4,7 @@ import 'package:takenote/components/background_blue.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/utilities/dialogs/resend_verification_dialog.dart';
-import 'package:takenote/widgets/random_button_widget.dart';
+import 'package:takenote/widgets/radial_animation.dart';
 
 import '../constants/k_constants.dart';
 
