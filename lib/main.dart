@@ -20,13 +20,14 @@ void main() {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Take Note',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
         home: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             if (state is AuthStateUninitialized) {
-              return const SplashScreen();
+              return const AnimatedSwitcher(
+                duration: Duration(milliseconds: 300),
+                switchOutCurve: Curves.easeInOut,
+                child: SplashScreen(),
+              );
             }
             if (state is AuthStateLoggedIn) {
               return const HomePage();

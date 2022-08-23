@@ -66,8 +66,8 @@ class _RegisterViewState extends State<RegisterView> {
               Hero(
                 tag: "logo",
                 child: Image.asset(
-                  'assets/icon/icon.png',
-                  width: sizeQuery.width * 0.30,
+                  'assets/icon/icontext.png',
+                  width: sizeQuery.width * 0.5,
                 ),
               ),
               Container(
@@ -76,15 +76,7 @@ class _RegisterViewState extends State<RegisterView> {
                   horizontal: sizeQuery.width * 0.07,
                   vertical: sizeQuery.height * 0.01,
                 ),
-                child: const Text(
-                  'REGISTER',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
+                child: kRegisterText,
               ),
               SizedBox(height: sizeQuery.height * 0.01),
               Padding(
@@ -188,7 +180,7 @@ class _RegisterViewState extends State<RegisterView> {
                         //       const AuthEventShouldRegister(),
                         //     );
                       },
-                      child: const Text('Back to login'),
+                      child: kBackToLogin,
                     ),
                   ],
                 ),

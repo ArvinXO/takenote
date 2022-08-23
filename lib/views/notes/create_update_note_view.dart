@@ -89,6 +89,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: context.getArgument<CloudNote>() == null
+            ? kJungleGreen
+            : kBdazalledBlue,
         title: // WidgetNote is not null if we are updating an existing note
             context.getArgument<CloudNote>() == null
                 ? const Text('Create a new note')

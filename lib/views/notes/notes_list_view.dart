@@ -20,6 +20,7 @@ class NotesListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      //refresh the list when the user scrolls to the top
       itemCount: notes.length,
       itemBuilder: (context, index) {
         final note = notes.elementAt(index);
@@ -49,7 +50,7 @@ class NotesListView extends StatelessWidget {
             elevation: 3,
             child: ListTile(
               leading: CircleAvatar(
-                maxRadius: 12,
+                maxRadius: 22,
                 child: Text(
                   // note index + 1 to start at 1 instead of 0
                   '${index + 1}',
@@ -64,7 +65,7 @@ class NotesListView extends StatelessWidget {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(78),
                 side: const BorderSide(
                   color: Colors.black,
                   width: 1,

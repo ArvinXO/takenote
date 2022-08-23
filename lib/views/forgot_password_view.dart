@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:takenote/components/background_orange.dart';
-import 'package:takenote/constants/k_Constants.dart';
+import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
@@ -54,7 +54,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         }
       },
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(255, 205, 128, 0.95),
+        backgroundColor: kTuscany.withOpacity(0.3),
         resizeToAvoidBottomInset: false,
         body: OrangeBackground(
           child: Column(

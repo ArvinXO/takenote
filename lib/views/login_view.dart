@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:takenote/components/background_green.dart';
+import 'package:takenote/constants/k_constants.dart';
 
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
 
-import '../constants/k_Constants.dart';
 import '../services/auth/auth_exceptions.dart';
 import '../services/auth/bloc/auth_event.dart';
 import '../utilities/dialogs/error_dialog.dart';
@@ -70,8 +70,8 @@ class _LoginViewState extends State<LoginView> {
               Hero(
                 tag: "logo",
                 child: Image.asset(
-                  'assets/icon/icon.png',
-                  width: sizeQuery.width * 0.30,
+                  'assets/icon/icontext.png',
+                  width: sizeQuery.width * 0.5,
                 ),
               ),
 
@@ -87,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.green,
+                    color: kJungleGreen,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -205,7 +205,7 @@ class _LoginViewState extends State<LoginView> {
                     },
                     child: const Text(
                       'Forgot Password',
-                      style: TextStyle(color: Colors.blue, fontSize: 15),
+                      style: TextStyle(color: kRichBlackFogra, fontSize: 15),
                     ),
                   ),
                 ],

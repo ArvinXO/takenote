@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_mail_app/open_mail_app.dart';
+import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/utilities/dialogs/error_dialog.dart';
 
 //Animated container
@@ -73,7 +74,7 @@ class AnimatedContainerDemoState extends State<AnimatedContainerDemo>
                     width: sizeQuery.width * 0.25,
                     height: sizeQuery.height * 0.09,
                     decoration: BoxDecoration(
-                      color: Colors.blueGrey,
+                      color: kBdazalledBlue,
                       borderRadius: BorderRadius.circular(10),
                       gradient: SweepGradient(
                           startAngle: 0.6,
@@ -108,7 +109,7 @@ class AnimatedContainerDemoState extends State<AnimatedContainerDemo>
                             shadows: [
                               Shadow(
                                 blurRadius: 60,
-                                color: Colors.blue,
+                                color: kOxfordBlue,
                                 offset: Offset(5, 5),
                               ),
                             ]),

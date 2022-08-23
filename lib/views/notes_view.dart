@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
@@ -33,7 +34,9 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBdazalledBlue,
       appBar: AppBar(
+        backgroundColor: kOxfordBlue,
         title: const Text('Your Notes'),
         actions: [
           IconButton(

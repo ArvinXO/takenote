@@ -1,16 +1,61 @@
 import 'package:flutter/material.dart';
 
-final kGreenBackground = Colors.green.withOpacity(
-  0.06,
-);
+const Color kJungleGreen = Color.fromRGBO(31, 171, 137, 1);
+const Color kRichBlackFogra = Color.fromRGBO(13, 27, 42, 1);
+const Color kOxfordBlue = Color.fromRGBO(27, 38, 59, 1);
+const Color kBdazalledBlue = Color.fromRGBO(65, 90, 119, 1);
+const Color kPlatinum = Color.fromRGBO(224, 225, 221, 1);
+const Color kTuscany = Color.fromRGBO(205, 162, 171, 1);
+
+final Color kGreenBackground =
+    const Color.fromRGBO(31, 171, 137, 0).withOpacity(0.65);
 
 final kBlueBackground = Colors.blue.withOpacity(
   0.06,
 );
 
-final kOrangeBackground = Colors.orange.withOpacity(
-  0.9,
+final kOrangeBackground = kTuscany.withOpacity(0.65);
+
+final kBackToLogin = Container(
+  height: 50,
+  width: 200,
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(20),
+    color: Colors.transparent,
+    border: Border.all(
+      color: kOxfordBlue,
+      width: 2,
+    ),
+  ),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: const [
+      Text(
+        'Back to Login',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: kJungleGreen,
+        ),
+      ),
+      Icon(
+        Icons.arrow_forward,
+        color: kJungleGreen,
+      ),
+    ],
+  ),
 );
+
+const kRegisterText = Text(
+  'REGISTER',
+  style: TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: kBdazalledBlue,
+  ),
+  textAlign: TextAlign.left,
+);
+
 const kCards = BorderRadius.only(
   bottomLeft: Radius.circular(5),
   bottomRight: Radius.circular(5),
@@ -27,27 +72,27 @@ const kTextFieldPass = TextField(
 );
 
 const kBoxShadowBlue = BoxShadow(
-  color: Colors.blue,
+  color: kBdazalledBlue,
   blurRadius: 10,
   spreadRadius: 5,
 );
 
 const kBoxShadowGreen = BoxShadow(
-  color: Colors.green,
+  color: kJungleGreen,
   blurRadius: 10,
   spreadRadius: 5,
 );
 
 final BoxDecoration gradientButton = BoxDecoration(
   borderRadius: BorderRadius.circular(20),
-  color: Colors.green,
+  color: kJungleGreen,
   boxShadow: const [
-    BoxShadow(color: Colors.green, spreadRadius: 1),
+    BoxShadow(color: kJungleGreen, spreadRadius: 1),
   ],
 );
 
 const kFieldDecoration = InputDecoration(
-  fillColor: Colors.deepOrangeAccent,
+  fillColor: kTuscany,
   filled: true,
   hintText: '',
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -82,7 +127,7 @@ final kLoginContainer = Container(
   width: 100,
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(20),
-    color: Colors.green,
+    color: kJungleGreen,
     boxShadow: const [
       BoxShadow(
         color: Colors.white,
@@ -106,10 +151,10 @@ final kRegisterContainer = Container(
   width: 100,
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(20),
-    color: Colors.blue,
+    color: kBdazalledBlue,
     boxShadow: const [
       BoxShadow(
-        color: Colors.blue,
+        color: kBdazalledBlue,
         spreadRadius: 1,
       ),
     ],
@@ -142,10 +187,10 @@ final kSendEmailVerificationContainer = Container(
   width: 200,
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(20),
-    color: Colors.blue,
+    color: kBdazalledBlue,
     boxShadow: const [
       BoxShadow(
-        color: Colors.blue,
+        color: kBdazalledBlue,
         spreadRadius: 1,
       ),
     ],
@@ -168,10 +213,11 @@ final kSendVerificationContainer = Container(
     // add icon to the button
 
     borderRadius: BorderRadius.circular(20),
-    color: Colors.blue,
+    color: kBdazalledBlue,
+
     boxShadow: const [
       BoxShadow(
-        color: Colors.blue,
+        color: kBdazalledBlue,
         spreadRadius: 1,
       ),
     ],
@@ -205,10 +251,11 @@ final kRestartContainer = Container(
     // add icon to the button
 
     borderRadius: BorderRadius.circular(20),
-    color: Colors.blue,
+    color: kBdazalledBlue,
+
     boxShadow: const [
       BoxShadow(
-        color: Colors.blue,
+        color: kBdazalledBlue,
         spreadRadius: 1,
       ),
     ],
@@ -241,10 +288,10 @@ final kSendResetLinkContainer = Container(
     // add icon to the button
 
     borderRadius: BorderRadius.circular(20),
-    color: Colors.deepOrangeAccent,
+    color: kPlatinum,
     boxShadow: const [
       BoxShadow(
-        color: Colors.deepOrangeAccent,
+        color: kPlatinum,
         spreadRadius: 1,
       ),
     ],
@@ -255,15 +302,16 @@ final kSendResetLinkContainer = Container(
       Text(
         'SEND',
         style: TextStyle(
-          color: Colors.white,
+          color: kBdazalledBlue,
           fontSize: 15,
+          fontWeight: FontWeight.bold,
         ),
       ),
       SizedBox(width: 5),
 
       Icon(
         Icons.send_rounded,
-        color: Colors.white,
+        color: kOxfordBlue,
         size: 20,
       ),
       //space between the icon and the text
@@ -280,13 +328,13 @@ final kBackToLoginContainer = Container(
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(20),
     border: Border.all(
-      color: Colors.green,
+      color: kJungleGreen,
       width: 2,
     ),
-    color: Colors.green,
+    color: kJungleGreen,
     boxShadow: const [
       BoxShadow(
-        color: Colors.green,
+        color: kJungleGreen,
         spreadRadius: 1,
       ),
     ],
@@ -318,9 +366,13 @@ final kForgotPasswordContainerDecoration = InputDecoration(
     ),
   ),
   enabledBorder: const UnderlineInputBorder(
-    borderSide: BorderSide(color: Colors.deepOrangeAccent),
+    borderSide: BorderSide(
+      color: kTuscany,
+    ),
   ),
   focusedBorder: const UnderlineInputBorder(
-    borderSide: BorderSide(color: Colors.deepOrangeAccent),
+    borderSide: BorderSide(
+      color: kTuscany,
+    ),
   ),
 );

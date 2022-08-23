@@ -49,6 +49,5 @@ class _AnimatedScrollViewItemState extends State<AnimatedScrollViewItem>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

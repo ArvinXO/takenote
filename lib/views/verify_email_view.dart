@@ -43,25 +43,29 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView>
   Widget build(BuildContext context) {
     Size sizeQuery = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: kGreenBackground,
+      backgroundColor: kBlueBackground,
       resizeToAvoidBottomInset: false,
       body: BlueBackground(
         child: Column(
           children: [
             SizedBox(
-              height: sizeQuery.height * 0.14,
+              height: sizeQuery.height * 0.12,
             ),
             const Padding(
-              padding: EdgeInsets.all(68.0),
+              padding: EdgeInsets.all(98.0),
               child: Text(
                 "We've sent you an email for verification, please open it to verify your account!",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             const SizedBox(
                 width: 100, height: 100, child: AnimatedContainerDemo()),
             SizedBox(
-              height: sizeQuery.height * 0.09,
+              height: sizeQuery.height * 0.02,
             ),
             const Padding(
               padding: EdgeInsets.only(
@@ -69,7 +73,7 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView>
                 right: 60,
               ),
               child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(28.0),
                 child: Text(
                   "If you haven't verified your email yet, please press the button below",
                   style: TextStyle(color: Colors.white, fontSize: 14),
