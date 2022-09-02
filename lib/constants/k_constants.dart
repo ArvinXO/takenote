@@ -376,3 +376,13 @@ final kForgotPasswordContainerDecoration = InputDecoration(
     ),
   ),
 );
+
+const textLogoutStyle = Text(
+  textAlign: TextAlign.center,
+  'Log out',
+  style: TextStyle(
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  ),
+);

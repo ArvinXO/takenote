@@ -46,6 +46,14 @@ class _NotesViewState extends State<NotesView> {
             icon: const Icon(Icons.add),
           ),
           PopupMenuButton<MenuAction>(
+            // rounded corners
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            elevation: 10,
+            offset: const Offset(0, 50),
+            color: kJungleGreen,
+
             onSelected: (value) async {
               switch (value) {
                 case MenuAction.logout:
@@ -64,7 +72,7 @@ class _NotesViewState extends State<NotesView> {
               return const [
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
-                  child: Text('Log out'),
+                  child: textLogoutStyle,
                 ),
               ];
             },
