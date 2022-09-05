@@ -43,6 +43,8 @@ class _IntroductionPageState extends State<IntroductionPage> {
   @override
   void initState() {
     super.initState();
+    //If user is initialized then skip the onboarding
+
     // getPref();
     _pageController = PageController();
   }

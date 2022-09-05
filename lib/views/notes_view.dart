@@ -13,6 +13,8 @@ import 'package:takenote/views/notes/notes_list_view.dart';
 
 import '../enums/menu_action.dart';
 
+enum ViewType { Tile, Grid }
+
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
 
@@ -24,6 +26,7 @@ class _NotesViewState extends State<NotesView> {
   late final FirebaseCloudStorage _notesService;
   String get userId => AuthService.firebase().currentUser!.id;
   bool isGridView = false;
+  bool isTileView = true;
 
   @override
   void initState() {
@@ -197,6 +200,7 @@ class _NotesViewState extends State<NotesView> {
                       arguments: note,
                     );
                   },
+                  notesService: _notesService,
                 );
               } else if (snapshot.hasData && !isGridView) {
                 final allNotes = snapshot.data as Iterable<CloudNote>;
@@ -211,6 +215,7 @@ class _NotesViewState extends State<NotesView> {
                       arguments: note,
                     );
                   },
+                  notesService: _notesService,
                 );
               } else {
                 return const Center(

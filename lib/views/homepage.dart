@@ -5,7 +5,7 @@ import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
 import 'package:takenote/views/forgot_password_view.dart';
-import 'package:takenote/views/notes_view.dart';
+import 'package:takenote/views/notes/app_view.dart';
 import 'package:takenote/views/onboarding_view.dart';
 import 'package:takenote/views/register_view.dart';
 import 'package:takenote/views/verify_email_view.dart';
@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
-          return const NotesView();
+          return const AppView();
         } else if (state is AuthStateNeedsVerification) {
           return const VerifiyEmailView();
         } else if (state is AuthStateLoggedOut) {
