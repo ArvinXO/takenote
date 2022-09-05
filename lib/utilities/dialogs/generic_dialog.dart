@@ -14,7 +14,15 @@ Future<T?> showGenericDialog<T>({
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(title),
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        // CURVED
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+
         content: Text(content),
         actions: options.keys.map((optionTitle) {
           final value = options[optionTitle];

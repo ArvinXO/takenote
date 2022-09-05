@@ -4,6 +4,7 @@ import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../services/auth/bloc/auth_bloc.dart';
+import '../../services/auth/bloc/auth_state.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -37,7 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
     //
     setState(() {
       //AuthEventInitialize
-      BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
+      if (BlocProvider.of<AuthBloc>(context).state is AuthStateUninitialized) {
+        BlocProvider.of<AuthBloc>(context).add(const AuthEventInitializing());
+      } else {
+        BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
+      }
     });
   }
 

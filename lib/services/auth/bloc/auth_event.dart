@@ -13,6 +13,10 @@ class AuthEventInitialize extends AuthEvent {
   const AuthEventInitialize();
 }
 
+class AuthEventInitializing extends AuthEvent {
+  const AuthEventInitializing();
+}
+
 class AuthEventLogIn extends AuthEvent {
   final String email;
   final String password;

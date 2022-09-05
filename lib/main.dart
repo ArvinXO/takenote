@@ -8,6 +8,8 @@ import 'package:takenote/views/forgot_password_view.dart';
 import 'package:takenote/views/homepage.dart';
 import 'package:takenote/views/login_view.dart';
 import 'package:takenote/views/notes/create_update_note_view.dart';
+import 'package:takenote/views/notes/settings_view.dart';
+import 'package:takenote/views/onboarding_view.dart';
 import 'package:takenote/views/register_view.dart';
 import 'package:takenote/views/verify_email_view.dart';
 import 'constants/routes.dart';
@@ -20,6 +22,7 @@ void main() {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Take Note',
+        // Show splash screen while loading then show introduction
         home: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             if (state is AuthStateUninitialized) {
@@ -35,6 +38,8 @@ void main() {
               return const VerifiyEmailView();
             } else if (state is AuthStateLoggedOut) {
               return const LoginView();
+            } else if (state is AuthStateInitializing) {
+              return const IntroductionPage();
             } else if (state is AuthStateForgotPassword) {
               return const ForgotPasswordView();
             } else if (state is AuthStateRegistering) {
@@ -50,6 +55,7 @@ void main() {
           //
           // Routes for the app
           createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
+          settingsRoute: (context) => const SettingsView(),
         },
       ),
     ),

@@ -58,7 +58,7 @@ class NotesListView extends StatelessWidget {
                   elevation: 3,
                   child: ListTile(
                     leading: CircleAvatar(
-                      maxRadius: 22,
+                      maxRadius: 14,
                       child: Text(
                         // note index + 1 to start at 1 instead of 0
                         '${index + 1}',
@@ -69,7 +69,6 @@ class NotesListView extends StatelessWidget {
                     onLongPress: () {
                       Share.share(note.text);
                     },
-                    tileColor: Colors.white,
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     shape: RoundedRectangleBorder(

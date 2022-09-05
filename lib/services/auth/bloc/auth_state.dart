@@ -22,6 +22,10 @@ class AuthStateUninitialized extends AuthState {
       : super(isLoading: isLoading);
 }
 
+class AuthStateInitializing extends AuthState {
+  const AuthStateInitializing() : super(isLoading: true);
+}
+
 class AuthStateRegistering extends AuthState {
   final Exception? exception;
 

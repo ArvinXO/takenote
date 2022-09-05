@@ -386,3 +386,8 @@ const textLogoutStyle = Text(
     fontWeight: FontWeight.bold,
   ),
 );
+
+const gridCross = 1;
+const gridCross2 = 2;
+const gridCross3 = 3;
+const gridCross4 = 4;

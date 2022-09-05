@@ -96,6 +96,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+
+    on<AuthEventInitializing>((event, emit) {
+      emit(const AuthStateInitializing());
+    });
+
     //Login
     on<AuthEventLogIn>(
       ((event, emit) async {
