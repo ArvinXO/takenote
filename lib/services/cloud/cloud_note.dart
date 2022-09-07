@@ -12,20 +12,21 @@ class CloudNote {
   final int noteArchived;
   final int noteColor;
 
-  CloudNote({
-    required this.documentId,
-    required this.ownerUserId,
-    required this.noteText,
-    required this.noteDate,
-    required this.noteTitle,
-    required this.noteArchived,
-    required this.noteColor,
-  });
+  CloudNote(
+    this.documentId,
+    this.ownerUserId,
+    this.noteText,
+    this.noteDate,
+    this.noteTitle,
+    this.noteArchived,
+    this.noteColor,
+  );
 
   CloudNote.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
       : documentId = snapshot.id,
         ownerUserId = snapshot.data()[ownerUserIdFieldName],
         noteText = snapshot.data()[textFieldName] as String,
+        // noteDate format is dd/mm/yyyy hh:mm
         noteDate = snapshot.data()[dateFieldName] as String,
         noteTitle = snapshot.data()[titleFieldName] as String,
         noteArchived = snapshot.data()[archivedFieldName] as int,

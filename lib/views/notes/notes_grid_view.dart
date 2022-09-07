@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
 import 'package:takenote/services/cloud/firebase_cloud_storage.dart';
 import 'package:takenote/views/notes/animated_scroll_view_item.dart';
 
+import '../../constants/k_constants.dart';
 import '../../utilities/color_pallette.dart';
+import '../../utilities/dialogs/cannot_share_empty_note_dialog.dart';
 import '../../utilities/dialogs/delete_dialog.dart';
 import '../../utilities/note_colours.dart';
 
@@ -46,88 +49,186 @@ class _NotesGridViewState extends State<NotesGridView> {
       return;
     }
 
+    await _notesService.archiveNote(
+      documentId: note.documentId,
+      archived: 1,
+    );
+
     await _notesService.updateNoteColor(
       documentId: note.documentId,
       color: note.noteColor,
-      archived: note.noteArchived,
-      date: note.noteDate,
-      text: note.noteText,
-      title: note.noteTitle,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedScrollViewItem(
-      child: SafeArea(
-          bottom: false,
-          child: GridView.custom(
-            gridDelegate: SliverQuiltedGridDelegate(
-              crossAxisCount: 2,
-              mainAxisSpacing: 4,
-              crossAxisSpacing: 4,
-              repeatPattern: QuiltedGridRepeatPattern.inverted,
-              pattern: [
-                const QuiltedGridTile(2, 1),
-                const QuiltedGridTile(1, 1),
-              ],
-            ),
-            childrenDelegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                final note = widget.notes.elementAt(index);
-
-                return AnimatedScrollViewItem(
-                  child: Dismissible(
-                    key: Key(note.documentId),
-                    onDismissed: (direction) {
-                      widget.onDeleteNote(note);
-                    },
-                    confirmDismiss: (direction) async {
-                      final result = await showDeleteDialog(context);
-                      return result;
-                    },
-                    //Red background when swiped with delete text
-
-                    child: Card(
-                      color: NoteColor.getColor(note.noteColor),
-                      margin: const EdgeInsets.all(6),
-                      elevation: 3,
-                      child: Visibility(
-                        visible: widget.notes.isNotEmpty,
-                        child: ListTile(
-                          //onlongpress to share
-                          onLongPress: () {
-                            _showOptionsSheet(context, note);
-                          },
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-
-                          title: Text(
-                            note.noteTitle,
-                            maxLines: 1,
-                            softWrap: true,
-                            overflow: TextOverflow.fade,
-                          ),
-                          subtitle: Text(
-                            note.noteText,
-                            maxLines: 10,
-                            softWrap: true,
-                            overflow: TextOverflow.fade,
-                          ),
-
-                          onTap: () {
-                            widget.onNoteTap(note);
-                          },
+      child:
+          // if widget is empty display centered container with empty text and icon else display gridview
+          widget.notes.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Iconsax.note,
+                        size: 100,
+                        color: kJungleGreen,
+                      ),
+                      Text(
+                        'No notes',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: kJungleGreen,
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                );
-              },
-              childCount: widget.notes.length,
-              addAutomaticKeepAlives: true,
-            ),
-          )),
+                )
+              : SafeArea(
+                  bottom: false,
+                  child: GridView.custom(
+                    gridDelegate: SliverQuiltedGridDelegate(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 2,
+                      crossAxisSpacing: 4,
+                      repeatPattern: QuiltedGridRepeatPattern.inverted,
+                      pattern: [
+                        // const QuiltedGridTile(2,1),
+                        const QuiltedGridTile(1, 1),
+                        const QuiltedGridTile(1, 1),
+                      ],
+                    ),
+                    childrenDelegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        final note = widget.notes.elementAt(index);
+                        //if note is archived display it else don't
+
+                        return AnimatedScrollViewItem(
+                          child: Dismissible(
+                            key: Key(note.documentId),
+                            onDismissed: (direction) {
+                              widget.onDeleteNote(note);
+                            },
+                            confirmDismiss: (direction) async {
+                              final result = await showDeleteDialog(context);
+                              return result;
+                            },
+                            //Red background when swiped with delete text
+
+                            child: Card(
+                              color: NoteColor.getColor(note.noteColor),
+                              margin: const EdgeInsets.all(6),
+                              elevation: 3,
+                              child: Visibility(
+                                visible: widget.notes.isNotEmpty,
+                                // child card with note title and note content inkwell container
+                                child: InkWell(
+                                  // onlongpress show optionsheet
+                                  onLongPress: () {
+                                    _note = note;
+                                    _showOptionsSheet(
+                                      // show optionsheet
+                                      context,
+                                      note,
+                                    );
+                                  },
+                                  onTap: () {
+                                    widget.onNoteTap(note);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          note.noteTitle,
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Expanded(
+                                          child: Text(
+                                            note.noteText,
+                                            style: const TextStyle(
+                                              //scale factor to make text smaller
+                                              fontSize: 15,
+                                              height: 1.5,
+                                            ),
+                                            maxLines: 6,
+                                            overflow: TextOverflow.fade,
+                                          ),
+                                        ),
+                                        // date and time of note creation in the bottom right corner  of the card
+                                        const Spacer(),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            // show date and time of note creation with border
+                                            Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.black,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                              ),
+                                              child: Text(
+                                                note.noteDate,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                // child: ListTile(
+                                //   //onlongpress to share
+                                //   onLongPress: () {
+                                //     _showOptionsSheet(context, note);
+                                //   },
+                                //   contentPadding: const EdgeInsets.symmetric(
+                                //       horizontal: 16, vertical: 8),
+
+                                //   title: Text(
+                                //     note.noteTitle,
+                                //     maxLines: 1,
+                                //     softWrap: true,
+                                //     overflow: TextOverflow.fade,
+                                //   ),
+                                //   subtitle: Text(
+                                //     note.noteText,
+                                //     maxLines: 10,
+                                //     softWrap: true,
+                                //     overflow: TextOverflow.fade,
+                                //   ),
+                                //   //date positioned bottom right
+
+                                //   onTap: () {
+                                //     widget.onNoteTap(note);
+                                //   },
+                                // ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: widget.notes.length,
+                      addAutomaticKeepAlives: true,
+                    ),
+                  )),
     );
   }
 
@@ -141,7 +242,7 @@ class _NotesGridViewState extends State<NotesGridView> {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setModalState) {
               return SizedBox(
-                height: 420,
+                height: MediaQuery.of(context).size.height * 0.6,
                 child: Container(
                   child: Column(
                     // mainAxisSize: MainAxisSize.min,
@@ -170,168 +271,60 @@ class _NotesGridViewState extends State<NotesGridView> {
                       ),
                       InkWell(
                         borderRadius: BorderRadius.circular(15),
-                        // onTap: () {
-                        //   Navigator.pop(context);
-                        //   _showColorPalette(context, _note);
-                        // },
+                        onTap: () {
+                          // Archive Note Function
+                          _notesService.archiveNote(
+                            documentId: note.documentId,
+                            archived: 1,
+                          );
+                          Navigator.of(context).pop();
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: const <Widget>[
                               Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.color_swatch),
+                                child: Icon(Iconsax.archive_add),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Text('Color Palette'),
+                                child: Text('Archive'),
                               ),
                             ],
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 60,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            children: [
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(0),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                      documentId: note.documentId,
-                                      color: 0,
-                                      archived: note.noteArchived,
-                                      date: note.noteDate,
-                                      text: note.noteText,
-                                      title: note.noteTitle);
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 0,
+
+                      //share note
+                      InkWell(
+                        borderRadius: BorderRadius.circular(15),
+                        onTap: () async {
+                          // Share Note Function
+                          final text = note.noteText;
+                          final title = note.noteTitle;
+                          if (_note == null || text.isEmpty || title.isEmpty) {
+                            await showCannotShareEmptyNoteDialog(context);
+                          } else {
+                            Share.share('$title\n$text');
+                          }
+                          if (mounted) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: const <Widget>[
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(Iconsax.share),
                               ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(1),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                      documentId: note.documentId,
-                                      color: 1,
-                                      archived: note.noteArchived,
-                                      date: note.noteDate,
-                                      text: note.noteText,
-                                      title: note.noteTitle);
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 1,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(2),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                      documentId: note.documentId,
-                                      color: 2,
-                                      archived: note.noteArchived,
-                                      date: note.noteDate,
-                                      text: note.noteText,
-                                      title: note.noteTitle);
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 2,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(3),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                      documentId: note.documentId,
-                                      color: 3,
-                                      archived: note.noteArchived,
-                                      date: note.noteDate,
-                                      text: note.noteText,
-                                      title: note.noteTitle);
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 3,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(4),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                      documentId: note.documentId,
-                                      color: 4,
-                                      archived: note.noteArchived,
-                                      date: note.noteDate,
-                                      text: note.noteText,
-                                      title: note.noteTitle);
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 4,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(5),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                      documentId: note.documentId,
-                                      color: 5,
-                                      archived: note.noteArchived,
-                                      date: note.noteDate,
-                                      text: note.noteText,
-                                      title: note.noteTitle);
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 5,
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Share'),
                               ),
                             ],
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: note.noteArchived == 0,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(15),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: const <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(Iconsax.archive_add),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text('Archive'),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: note.noteArchived == 1,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(15),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: const <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(Iconsax.archive_minus),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text('Unarchive'),
-                                ),
-                              ],
-                            ),
                           ),
                         ),
                       ),
@@ -380,6 +373,107 @@ class _NotesGridViewState extends State<NotesGridView> {
                               Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text('Cancel'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(15),
+                        // onTap: () {
+                        //   Navigator.pop(context);
+                        //   _showColorPalette(context, _note);
+                        // },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: const <Widget>[
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(Iconsax.color_swatch),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Color Palette'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 60,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: false,
+                            children: [
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(0),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 0,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 0,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(1),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 1,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 1,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(2),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 2,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 2,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(3),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 3,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 3,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(4),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 4,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 4,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(5),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 5,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 5,
                               ),
                             ],
                           ),

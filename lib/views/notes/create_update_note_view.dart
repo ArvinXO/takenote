@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/services/auth/auth_service.dart';
@@ -148,13 +147,6 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                 ? const Text('Create a new note')
                 : const Text('Update your note'),
         actions: [
-          IconButton(
-            onPressed: () {
-              // _showColorPalette(context, CloudNote note);
-            },
-            color: Colors.white,
-            icon: const Icon(Iconsax.color_swatch),
-          ),
           // Archive
           IconButton(
             onPressed: () async {
@@ -179,12 +171,23 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                 children: [
                   k24SizedBox,
                   TextField(
+                    style: // noteColor from swatch
+                        const TextStyle(
+                      // title font size
+                      fontSize: 30,
+                    ),
+                    cursorColor: kPlatinum,
                     controller: _titleController,
                     keyboardType: TextInputType.multiline,
                     autofocus: true,
                     maxLines: null,
                     decoration: InputDecoration(
                       hintText: 'Title',
+                      hintStyle: const TextStyle(
+                        color: kPlatinum,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w500,
+                      ),
                       // label: Text('Title'),
                       // isCollapsed: true,
                       fillColor: Colors.transparent,
@@ -197,6 +200,11 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                           _note != null && _titleController.text.isNotEmpty
                               ? 'Edit title'
                               : 'Title',
+                      floatingLabelStyle: const TextStyle(
+                        color: kPlatinum,
+                        fontSize: 20,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
                   k24SizedBox,
@@ -206,6 +214,11 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                     maxLines: null,
                     decoration: InputDecoration(
                       hintText: 'Content',
+                      hintStyle: const TextStyle(
+                        color: kPlatinum,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                       // label: Text('Title'),
                       // isCollapsed: true,
                       fillColor: Colors.transparent,
@@ -218,6 +231,11 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                           _note != null && _contentController.text.isNotEmpty
                               ? 'Edit content'
                               : 'Content',
+                      floatingLabelStyle: const TextStyle(
+                        color: kPlatinum,
+                        fontSize: 20,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
                 ],
@@ -255,12 +273,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                       color: NoteColor.getColor(0),
                       onTap: () {
                         _notesService.updateNoteColor(
-                            documentId: note.documentId,
-                            color: 0,
-                            archived: note.noteArchived,
-                            date: note.noteDate,
-                            text: note.noteText,
-                            title: note.noteTitle);
+                          documentId: note.documentId,
+                          color: 0,
+                        );
                         Navigator.pop(context);
                       },
                       isSelected: note.noteColor == 0,
@@ -269,12 +284,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                       color: NoteColor.getColor(1),
                       onTap: () {
                         _notesService.updateNoteColor(
-                            documentId: note.documentId,
-                            color: 1,
-                            archived: note.noteArchived,
-                            date: note.noteDate,
-                            text: note.noteText,
-                            title: note.noteTitle);
+                          documentId: note.documentId,
+                          color: 1,
+                        );
                         Navigator.pop(context);
                       },
                       isSelected: note.noteColor == 1,
@@ -283,12 +295,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                       color: NoteColor.getColor(2),
                       onTap: () {
                         _notesService.updateNoteColor(
-                            documentId: note.documentId,
-                            color: 2,
-                            archived: note.noteArchived,
-                            date: note.noteDate,
-                            text: note.noteText,
-                            title: note.noteTitle);
+                          documentId: note.documentId,
+                          color: 2,
+                        );
                         Navigator.pop(context);
                       },
                       isSelected: note.noteColor == 2,
@@ -297,12 +306,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                       color: NoteColor.getColor(3),
                       onTap: () {
                         _notesService.updateNoteColor(
-                            documentId: note.documentId,
-                            color: 3,
-                            archived: note.noteArchived,
-                            date: note.noteDate,
-                            text: note.noteText,
-                            title: note.noteTitle);
+                          documentId: note.documentId,
+                          color: 3,
+                        );
                         Navigator.pop(context);
                       },
                       isSelected: note.noteColor == 3,
@@ -311,12 +317,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                       color: NoteColor.getColor(4),
                       onTap: () {
                         _notesService.updateNoteColor(
-                            documentId: note.documentId,
-                            color: 4,
-                            archived: note.noteArchived,
-                            date: note.noteDate,
-                            text: note.noteText,
-                            title: note.noteTitle);
+                          documentId: note.documentId,
+                          color: 4,
+                        );
                         Navigator.pop(context);
                       },
                       isSelected: note.noteColor == 4,
@@ -325,12 +328,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                       color: NoteColor.getColor(5),
                       onTap: () {
                         _notesService.updateNoteColor(
-                            documentId: note.documentId,
-                            color: 5,
-                            archived: note.noteArchived,
-                            date: note.noteDate,
-                            text: note.noteText,
-                            title: note.noteTitle);
+                          documentId: note.documentId,
+                          color: 5,
+                        );
                         Navigator.pop(context);
                       },
                       isSelected: note.noteColor == 5,

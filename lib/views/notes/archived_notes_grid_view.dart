@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
+import 'package:takenote/services/cloud/firebase_cloud_storage.dart';
 import 'package:takenote/views/notes/animated_scroll_view_item.dart';
 
 import '../../constants/k_constants.dart';
-import '../../services/cloud/firebase_cloud_storage.dart';
 import '../../utilities/color_pallette.dart';
 import '../../utilities/dialogs/cannot_share_empty_note_dialog.dart';
 import '../../utilities/dialogs/delete_dialog.dart';
@@ -13,13 +14,13 @@ import '../../utilities/note_colours.dart';
 
 typedef NoteCallBack = void Function(CloudNote note);
 
-class NotesListView extends StatefulWidget {
+class ArchivedNotesGridView extends StatefulWidget {
   final Iterable<CloudNote> notes;
   final NoteCallBack onDeleteNote;
   final NoteCallBack onNoteTap;
   final FirebaseCloudStorage _notesService;
 
-  const NotesListView({
+  const ArchivedNotesGridView({
     Key? key,
     required this.notes,
     required this.onDeleteNote,
@@ -29,12 +30,11 @@ class NotesListView extends StatefulWidget {
         super(key: key);
 
   @override
-  State<NotesListView> createState() => _NotesListViewState();
+  State<ArchivedNotesGridView> createState() => _ArchivedNotesGridViewState();
 }
 
-class _NotesListViewState extends State<NotesListView> {
+class _ArchivedNotesGridViewState extends State<ArchivedNotesGridView> {
   CloudNote? _note;
-
   late final FirebaseCloudStorage _notesService;
 
   @override
@@ -49,6 +49,11 @@ class _NotesListViewState extends State<NotesListView> {
       return;
     }
 
+    await _notesService.archiveNote(
+      documentId: note.documentId,
+      archived: 1,
+    );
+
     await _notesService.updateNoteColor(
       documentId: note.documentId,
       color: note.noteColor,
@@ -58,123 +63,97 @@ class _NotesListViewState extends State<NotesListView> {
   @override
   Widget build(BuildContext context) {
     return AnimatedScrollViewItem(
-      child: widget.notes.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Iconsax.note,
-                    size: 100,
-                    color: kJungleGreen,
-                  ),
-                  Text(
-                    'No notes',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: kJungleGreen,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : SafeArea(
-              bottom: false,
-              child: ListView.builder(
-                cacheExtent: 0,
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                //refresh the list when the user scrolls to the top
-                itemCount: widget.notes.length,
-                itemBuilder: (context, index) {
-                  final note = widget.notes.elementAt(index);
-                  //wrap with dismissible to allow swipe to delete
-                  return AnimatedScrollViewItem(
-                    child: Dismissible(
-                      key: Key(note.documentId),
-                      onDismissed: (direction) {
-                        widget.onDeleteNote(note);
-                      },
-                      confirmDismiss: (direction) async {
-                        final result = await showDeleteDialog(context);
-                        return result;
-                      },
-                      //Red background when swiped with delete text
-                      background: Container(
-                        color: Colors.red,
-                        child: const ListTile(
-                          title: Text(
-                            'Deleting...',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(color: Colors.white),
-                          ),
+      child:
+          // if widget is empty display centered container with empty text and icon else display gridview
+          widget.notes.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Iconsax.note,
+                        size: 100,
+                        color: kJungleGreen,
+                      ),
+                      Text(
+                        'No notes',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: kJungleGreen,
                         ),
                       ),
+                    ],
+                  ),
+                )
+              : SafeArea(
+                  bottom: false,
+                  child: GridView.custom(
+                    gridDelegate: SliverQuiltedGridDelegate(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 4,
+                      crossAxisSpacing: 4,
+                      repeatPattern: QuiltedGridRepeatPattern.inverted,
+                      pattern: [
+                        const QuiltedGridTile(2, 1),
+                        const QuiltedGridTile(1, 1),
+                      ],
+                    ),
+                    childrenDelegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        final note = widget.notes.elementAt(index);
 
-                      child: Card(
-                        color: NoteColor.getColor(note.noteColor),
-                        elevation: 3,
-                        child: ListTile(
-                          // leading: CircleAvatar(
-                          //   maxRadius: 14,
-                          //   child: Text(
-                          //     // note index + 1 to start at 1 instead of 0
-                          //     '${index + 1}',
-                          //   ),
-                          // ),
+                        return AnimatedScrollViewItem(
+                          child: Dismissible(
+                            key: Key(note.documentId),
+                            onDismissed: (direction) {
+                              widget.onDeleteNote(note);
+                            },
+                            confirmDismiss: (direction) async {
+                              final result = await showDeleteDialog(context);
+                              return result;
+                            },
+                            //Red background when swiped with delete text
 
-                          //onlongpress to share
-                          onLongPress: () {
-                            _showOptionsSheet(context, note);
-                          },
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(90),
-                          ),
-                          title: Text(
-                            note.noteTitle,
-                            maxLines: 1,
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          subtitle: Text(
-                            note.noteText,
-                            maxLines: 1,
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          //Trailing date if notedate is empty then show nothing
-                          trailing: note.noteDate != ''
-                              // formate date to show abbreviated time
-                              ? Text(
-                                  note.noteDate,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black,
+                            child: Card(
+                              color: NoteColor.getColor(note.noteColor),
+                              margin: const EdgeInsets.all(6),
+                              elevation: 3,
+                              child: Visibility(
+                                visible: widget.notes.isNotEmpty,
+                                child: ListTile(
+                                  //onlongpress to share
+                                  onLongPress: () {
+                                    _showOptionsSheet(context, note);
+                                  },
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 8),
+
+                                  title: Text(
+                                    note.noteTitle,
+                                    maxLines: 1,
+                                    softWrap: true,
+                                    overflow: TextOverflow.fade,
                                   ),
-                                )
-                              : const SizedBox.shrink(),
+                                  subtitle: Text(
+                                    note.noteText,
+                                    maxLines: 10,
+                                    softWrap: true,
+                                    overflow: TextOverflow.fade,
+                                  ),
 
-                          // trailing: IconButton(
-                          //   onPressed: () async {
-                          //     final shouldDelete =
-                          //         await showDeleteDialog(context);
-                          //     if (shouldDelete) {
-                          //       widget.onDeleteNote(note);
-                          //     }
-                          //   },
-                          //   icon: const Icon(Icons.delete, color: Colors.grey),
-                          // ),
-                          onTap: () {
-                            widget.onNoteTap(note);
-                          },
-                        ),
-                      ),
+                                  onTap: () {
+                                    widget.onNoteTap(note);
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: widget.notes.length,
+                      addAutomaticKeepAlives: true,
                     ),
-                  );
-                },
-              ),
-            ),
+                  )),
     );
   }
 
@@ -215,13 +194,14 @@ class _NotesListViewState extends State<NotesListView> {
                           ),
                         ),
                       ),
+
                       InkWell(
                         borderRadius: BorderRadius.circular(15),
                         onTap: () {
-                          // Archive Note Function
+                          // Unarchive Note Function
                           _notesService.archiveNote(
                             documentId: note.documentId,
-                            archived: 1,
+                            archived: 0,
                           );
                           Navigator.of(context).pop();
                         },
@@ -231,17 +211,16 @@ class _NotesListViewState extends State<NotesListView> {
                             children: const <Widget>[
                               Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.archive_add),
+                                child: Icon(Iconsax.archive_minus),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Text('Archive'),
+                                child: Text('Unarchive'),
                               ),
                             ],
                           ),
                         ),
                       ),
-
                       //share note
                       InkWell(
                         borderRadius: BorderRadius.circular(15),

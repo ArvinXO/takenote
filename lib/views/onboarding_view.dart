@@ -178,13 +178,6 @@ class _ScreenOneState extends State<ScreenOne> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: Image.asset(
-            'assets/icon/icon.png',
-            height: 80,
-          ),
-        ),
         const SizedBox(
           height: 50,
         ),
@@ -192,9 +185,12 @@ class _ScreenOneState extends State<ScreenOne> {
           'Welcome to',
           style: TextStyle(fontSize: 18, color: Colors.white),
         ),
-        const Text(
-          'Take Note',
-          style: TextStyle(fontSize: 50, color: Colors.white),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: Image.asset(
+            'assets/icon/icontext.png',
+            height: 190,
+          ),
         ),
       ],
     );
@@ -218,20 +214,18 @@ class _ScreenTwoState extends State<ScreenTwo> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(
-              Iconsax.note,
-              size: 100,
-              color: Colors.white,
+            // Take note logo with text
+
+            // Image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                'assets/icon/icon.png',
+                height: 140,
+              ),
             ),
             const SizedBox(height: 30),
-            const Text(
-              'Take Notes Easily',
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 30),
+
             const Divider(
               color: Colors.white,
               thickness: 1,

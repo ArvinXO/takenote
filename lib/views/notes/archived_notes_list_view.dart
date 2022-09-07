@@ -13,13 +13,13 @@ import '../../utilities/note_colours.dart';
 
 typedef NoteCallBack = void Function(CloudNote note);
 
-class NotesListView extends StatefulWidget {
+class ArchivedNotesListView extends StatefulWidget {
   final Iterable<CloudNote> notes;
   final NoteCallBack onDeleteNote;
   final NoteCallBack onNoteTap;
   final FirebaseCloudStorage _notesService;
 
-  const NotesListView({
+  const ArchivedNotesListView({
     Key? key,
     required this.notes,
     required this.onDeleteNote,
@@ -29,10 +29,10 @@ class NotesListView extends StatefulWidget {
         super(key: key);
 
   @override
-  State<NotesListView> createState() => _NotesListViewState();
+  State<ArchivedNotesListView> createState() => _ArchivedNotesListViewState();
 }
 
-class _NotesListViewState extends State<NotesListView> {
+class _ArchivedNotesListViewState extends State<ArchivedNotesListView> {
   CloudNote? _note;
 
   late final FirebaseCloudStorage _notesService;
@@ -215,13 +215,14 @@ class _NotesListViewState extends State<NotesListView> {
                           ),
                         ),
                       ),
+
                       InkWell(
                         borderRadius: BorderRadius.circular(15),
                         onTap: () {
-                          // Archive Note Function
+                          // Unarchive Note Function
                           _notesService.archiveNote(
                             documentId: note.documentId,
-                            archived: 1,
+                            archived: 0,
                           );
                           Navigator.of(context).pop();
                         },
@@ -231,17 +232,16 @@ class _NotesListViewState extends State<NotesListView> {
                             children: const <Widget>[
                               Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.archive_add),
+                                child: Icon(Iconsax.archive_minus),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Text('Archive'),
+                                child: Text('Unarchive'),
                               ),
                             ],
                           ),
                         ),
                       ),
-
                       //share note
                       InkWell(
                         borderRadius: BorderRadius.circular(15),
