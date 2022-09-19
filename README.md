@@ -1,6 +1,6 @@
 # Take Note
 
-A simple notes app, set colours for notes & archive your notes.
+A simple notes app, set colours for notes, share notes, temporarily delete notes & archive your notes.
 
 ## Features
 - Supports Android/iOS (iOS not published yet but works fine)
