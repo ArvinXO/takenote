@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 const Color kJungleGreen = Color.fromRGBO(31, 171, 137, 1);
+const Color kJungleDarkGreen = Color(0xff01ECC0);
+
 const Color kRichBlackFogra = Color.fromRGBO(13, 27, 42, 1);
 const Color kOxfordBlue = Color.fromRGBO(27, 38, 59, 1);
 const Color kBdazalledBlue = Color.fromRGBO(65, 90, 119, 1);
@@ -391,3 +394,14 @@ const gridCross = 1;
 const gridCross2 = 2;
 const gridCross3 = 3;
 const gridCross4 = 4;
+
+final twoBytwo = SliverQuiltedGridDelegate(
+  crossAxisCount: 2,
+  mainAxisSpacing: 2,
+  crossAxisSpacing: 4,
+  repeatPattern: QuiltedGridRepeatPattern.inverted,
+  pattern: [
+    const QuiltedGridTile(1, 1),
+    const QuiltedGridTile(1, 1),
+  ],
+);

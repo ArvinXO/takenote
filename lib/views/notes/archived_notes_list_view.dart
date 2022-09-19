@@ -49,6 +49,11 @@ class _ArchivedNotesListViewState extends State<ArchivedNotesListView> {
       return;
     }
 
+    await _notesService.archiveNote(
+      documentId: note.documentId,
+      archived: 1,
+    );
+
     await _notesService.updateNoteColor(
       documentId: note.documentId,
       color: note.noteColor,
@@ -124,7 +129,7 @@ class _ArchivedNotesListViewState extends State<ArchivedNotesListView> {
 
                           //onlongpress to share
                           onLongPress: () {
-                            _showOptionsSheet(context, note);
+                            showOptionsSheet(context, note);
                           },
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
@@ -178,7 +183,7 @@ class _ArchivedNotesListViewState extends State<ArchivedNotesListView> {
     );
   }
 
-  void _showOptionsSheet(BuildContext context, CloudNote note) {
+  void showOptionsSheet(BuildContext context, CloudNote note) {
     showModalBottomSheet(
         context: context,
         isDismissible: true,
@@ -279,13 +284,15 @@ class _ArchivedNotesListViewState extends State<ArchivedNotesListView> {
                         borderRadius: BorderRadius.circular(15),
                         onTap: () {
                           // Delete Note Function
-                          showDeleteDialog(context).then((result) {
-                            if (result) {
-                              widget.onDeleteNote.call(note);
-                            }
-                            //pop
-                            Navigator.pop(context);
-                          });
+                          _notesService.unarchiveNote(
+                            documentId: note.documentId,
+                            archived: 0,
+                          );
+                          _notesService.softDeleteNote(
+                            documentId: note.documentId,
+                            deleted: 1,
+                          );
+                          Navigator.of(context).pop();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -420,6 +427,28 @@ class _ArchivedNotesListViewState extends State<ArchivedNotesListView> {
                                   Navigator.pop(context);
                                 },
                                 isSelected: note.noteColor == 5,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(6),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 6,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 6,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(7),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 7,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 7,
                               ),
                             ],
                           ),

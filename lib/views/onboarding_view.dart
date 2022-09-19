@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:takenote/constants/k_constants.dart';
+import 'package:takenote/services/auth/bloc/auth_state.dart';
 
 import '../services/auth/bloc/auth_bloc.dart';
 import '../services/auth/bloc/auth_event.dart';
@@ -35,17 +37,27 @@ class _IntroductionPageState extends State<IntroductionPage> {
     // _pageController.jumpToPage(page);
   }
 
-  // getPref() async {
-  //   prefs = await SharedPreferences.getInstance();
-  //   newUser = prefs.getBool('newUser') ?? true;
-  // }
+  getPref() async {
+    prefs = await SharedPreferences.getInstance();
+    newUser = prefs.getBool('newUser') ?? true;
+    if (!newUser) {
+      if (mounted) {}
+      //auth state logged in
+      BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     //If user is initialized then skip the onboarding
-
-    // getPref();
+    if (BlocProvider.of<AuthBloc>(context).state is AuthStateUninitialized) {
+      BlocProvider.of<AuthBloc>(context).add(const AuthEventInitializing());
+    } else {
+      // auth state logged in
+      BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
+    }
+    getPref();
     _pageController = PageController();
   }
 
@@ -58,13 +70,15 @@ class _IntroductionPageState extends State<IntroductionPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.grey.shade900,
-            FlexColor.jungleDarkPrimary,
+            kPlatinum,
+            kJungleGreen,
+            kJungleGreen,
+            kRichBlackFogra,
           ],
         ),
       ),
@@ -87,9 +101,9 @@ class _IntroductionPageState extends State<IntroductionPage> {
             ],
           ),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.transparent,
+            color: kJungleGreen.withOpacity(0.1),
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(0.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -185,8 +199,9 @@ class _ScreenOneState extends State<ScreenOne> {
           'Welcome to',
           style: TextStyle(fontSize: 18, color: Colors.white),
         ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(50),
+        //hero animation
+        Hero(
+          tag: 'logo',
           child: Image.asset(
             'assets/icon/icontext.png',
             height: 190,
@@ -216,14 +231,21 @@ class _ScreenTwoState extends State<ScreenTwo> {
           children: [
             // Take note logo with text
 
-            // Image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.asset(
-                'assets/icon/icon.png',
-                height: 140,
+            // Hero
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Hero(
+                  tag: 'logo',
+                  child: Image.asset(
+                    'assets/icon/icon.png',
+                    height: 190,
+                    width: 200,
+                  ),
+                ),
               ),
             ),
+
             const SizedBox(height: 30),
 
             const Divider(
@@ -231,14 +253,29 @@ class _ScreenTwoState extends State<ScreenTwo> {
               thickness: 1,
             ),
             const SizedBox(height: 30),
-            const Icon(
-              Iconsax.add_circle,
-              color: Colors.white,
-            ),
+
             const SizedBox(height: 10),
-            const Text(
-              'Create ',
-              style: TextStyle(fontSize: 20, color: Colors.white),
+            // app logo
+
+            ListTile(
+              leading: Image.asset(
+                'assets/icon/icon.png',
+                height: 30,
+              ),
+              // Center Title
+              title: const Center(
+                child: Text(
+                  'Create',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              trailing: const Icon(
+                Iconsax.add_circle,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 10),
             const Divider(
@@ -248,15 +285,29 @@ class _ScreenTwoState extends State<ScreenTwo> {
               endIndent: 40,
             ),
             const SizedBox(height: 10),
-            const Icon(
-              Iconsax.archive,
-              color: Colors.white,
-            ),
+
             const SizedBox(height: 10),
-            Text(
-              'Archive ',
-              style: TextStyle(fontSize: 20, color: Colors.grey.shade300),
+            ListTile(
+              leading: Image.asset(
+                'assets/icon/icon.png',
+                height: 30,
+              ),
+              // Center Title
+              title: const Center(
+                child: Text(
+                  'Archive',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              trailing: const Icon(
+                Iconsax.archive,
+                color: Colors.white,
+              ),
             ),
+
             const SizedBox(height: 10),
             const Divider(
               color: Colors.white,
@@ -265,14 +316,27 @@ class _ScreenTwoState extends State<ScreenTwo> {
               endIndent: 40,
             ),
             const SizedBox(height: 10),
-            const Icon(
-              Iconsax.color_swatch,
-              color: Colors.white,
-            ),
+
             const SizedBox(height: 10),
-            Text(
-              'Color Code',
-              style: TextStyle(fontSize: 20, color: Colors.grey.shade300),
+            ListTile(
+              leading: Image.asset(
+                'assets/icon/icon.png',
+                height: 30,
+              ),
+              // Center Title
+              title: const Center(
+                child: Text(
+                  'Color Code',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              trailing: const Icon(
+                Iconsax.color_swatch,
+                color: Colors.white,
+              ),
             ),
           ],
         ),

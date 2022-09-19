@@ -3,7 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 import 'package:takenote/views/archived_view.dart';
-import 'package:takenote/views/notes/search_view.dart';
+import 'package:takenote/views/notes/delete_view.dart';
 import 'package:takenote/views/notes_view.dart';
 
 import '../../constants/routes.dart';
@@ -23,7 +23,7 @@ class _AppViewState extends State<AppView> {
   final _pageList = <Widget>[
     const NotesView(),
     const ArchivedView(),
-    const SearchPage(),
+    const DeleteView(),
   ];
   @override
   void initState() {
@@ -48,12 +48,25 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      backgroundColor: kBdazalledBlue,
-      body: PageView(
-        physics: const BouncingScrollPhysics(),
-        onPageChanged: onPageChanged,
-        controller: _pageController,
-        children: _pageList,
+      backgroundColor: kBdazalledBlue.withOpacity(0.95),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[
+              kJungleGreen,
+              kOxfordBlue,
+              kBdazalledBlue.withOpacity(0.1),
+            ],
+          ),
+        ),
+        child: PageView(
+          physics: const BouncingScrollPhysics(),
+          onPageChanged: onPageChanged,
+          controller: _pageController,
+          children: _pageList,
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
@@ -61,7 +74,7 @@ class _AppViewState extends State<AppView> {
         selectedItemColor: kJungleGreen,
         iconSize: 30,
         unselectedItemColor: Colors.grey,
-        elevation: 30,
+        elevation: 55,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Iconsax.note),
@@ -74,9 +87,9 @@ class _AppViewState extends State<AppView> {
             label: 'Archive',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Iconsax.search_normal),
-            activeIcon: Icon(Iconsax.search_favorite4),
-            label: 'Search',
+            icon: Icon(Iconsax.trash),
+            activeIcon: Icon(Iconsax.trash4),
+            label: 'Deleted',
           ),
           // BottomNavigationBarItem(
           //   icon: Icon(Iconsax.menu),
@@ -91,13 +104,12 @@ class _AppViewState extends State<AppView> {
       ),
       floatingActionButton:
 
-          // if page 2 is selected then hide the floating action button
-          _page == 2
-              ? null
-              : FloatingActionButton(
-                  tooltip: 'Add Note',
+          // if page 1 is selected then show the floating action button and archive note and if page 0 is selected then show the floating action button if page 2 is selected then hide the floating action button
+          _page == 1
+              ? FloatingActionButton(
+                  tooltip: 'Add Archived Note',
                   //centered
-                  backgroundColor: kJungleGreen,
+                  backgroundColor: kJungleDarkGreen.withOpacity(0.35),
                   hoverColor: kBdazalledBlue,
                   splashColor: kBdazalledBlue,
                   shape: // square
@@ -110,12 +122,33 @@ class _AppViewState extends State<AppView> {
                   highlightElevation: 0,
 
                   onPressed: () {
-                    setState(() {
-                      Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
-                    });
+                    Navigator.of(context)
+                        .pushNamed(createOrUpdateArchiveNoteRoute);
                   },
-                  child: const Icon(Iconsax.pen_add5, size: 30),
-                ),
+                  child: const Icon(Iconsax.archive_add4, size: 30),
+                )
+              : _page == 0
+                  ? FloatingActionButton(
+                      tooltip: 'Add Note',
+                      //centered
+                      backgroundColor: kJungleDarkGreen.withOpacity(0.3),
+                      hoverColor: kBdazalledBlue,
+                      splashColor: kBdazalledBlue,
+                      shape: // square
+                          const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      elevation: 10,
+                      focusElevation: 0,
+                      hoverElevation: 0,
+                      highlightElevation: 0,
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(createOrUpdateNoteRoute);
+                      },
+                      child: const Icon(Iconsax.pen_add, size: 30),
+                    )
+                  : const SizedBox(),
     );
   }
 }

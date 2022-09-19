@@ -421,6 +421,28 @@ class _NotesListViewState extends State<NotesListView> {
                                 },
                                 isSelected: note.noteColor == 5,
                               ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(6),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 6,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 6,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(7),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 7,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 7,
+                              ),
                             ],
                           ),
                         ),

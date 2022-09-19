@@ -8,16 +8,18 @@ class NoteColor {
         return FlexColor.blueWhaleDarkPrimary.lighten(20);
       case 1:
         return FlexColor.sakuraLightSecondary.lighten(15);
-
       case 2:
         return FlexColor.greenDarkPrimary.lighten(10);
-
       case 3:
         return FlexColor.blueLightPrimary.lighten(40);
       case 4:
         return FlexColor.sakuraLightPrimary.lighten(10);
       case 5:
         return FlexColor.indigoLightSecondary.lighten(40);
+      case 6:
+        return FlexColor.amberLightPrimary.lighten(10);
+      case 7:
+        return FlexColor.bigStoneLightSecondary.lighten(10);
       default:
         return Colors.transparent;
     }
@@ -36,6 +38,10 @@ class NoteColor {
       return 4;
     } else if (color == const Color(0xffE1CCEC)) {
       return 5;
+    } else if (color == const Color(0xffFFF8E1)) {
+      return 6;
+    } else if (color == const Color(0xffFFF8E1)) {
+      return 7;
     } else {
       return 0;
     }

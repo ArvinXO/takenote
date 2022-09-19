@@ -10,6 +10,7 @@ class CloudNote {
   final String noteDate;
   final String noteTitle;
   final int noteArchived;
+  final int noteDeleted;
   final int noteColor;
 
   CloudNote(
@@ -19,6 +20,7 @@ class CloudNote {
     this.noteDate,
     this.noteTitle,
     this.noteArchived,
+    this.noteDeleted,
     this.noteColor,
   );
 
@@ -30,5 +32,6 @@ class CloudNote {
         noteDate = snapshot.data()[dateFieldName] as String,
         noteTitle = snapshot.data()[titleFieldName] as String,
         noteArchived = snapshot.data()[archivedFieldName] as int,
+        noteDeleted = snapshot.data()[deletedFieldName] as int,
         noteColor = snapshot.data()[colorFieldName] as int;
 }

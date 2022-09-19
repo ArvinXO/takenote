@@ -13,13 +13,13 @@ import '../../utilities/note_colours.dart';
 
 typedef NoteCallBack = void Function(CloudNote note);
 
-class ArchivedNotesGridView extends StatefulWidget {
+class DeletedNotesGridView extends StatefulWidget {
   final Iterable<CloudNote> notes;
   final NoteCallBack onDeleteNote;
   final NoteCallBack onNoteTap;
   final FirebaseCloudStorage _notesService;
 
-  const ArchivedNotesGridView({
+  const DeletedNotesGridView({
     Key? key,
     required this.notes,
     required this.onDeleteNote,
@@ -29,10 +29,10 @@ class ArchivedNotesGridView extends StatefulWidget {
         super(key: key);
 
   @override
-  State<ArchivedNotesGridView> createState() => _ArchivedNotesGridViewState();
+  State<DeletedNotesGridView> createState() => _DeletedNotesGridViewState();
 }
 
-class _ArchivedNotesGridViewState extends State<ArchivedNotesGridView> {
+class _DeletedNotesGridViewState extends State<DeletedNotesGridView> {
   CloudNote? _note;
   late final FirebaseCloudStorage _notesService;
 

@@ -7,6 +7,7 @@ import 'package:takenote/services/auth/firebase_auth_provider.dart';
 import 'package:takenote/views/forgot_password_view.dart';
 import 'package:takenote/views/homepage.dart';
 import 'package:takenote/views/login_view.dart';
+import 'package:takenote/views/notes/create_update_archive_note_view.dart';
 import 'package:takenote/views/notes/create_update_note_view.dart';
 import 'package:takenote/views/notes/settings_view.dart';
 import 'package:takenote/views/onboarding_view.dart';
@@ -55,6 +56,8 @@ void main() {
           //
           // Routes for the app
           createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
+          createOrUpdateArchiveNoteRoute: (context) =>
+              const CreateUpdateArchiveNoteView(),
           settingsRoute: (context) => const SettingsView(),
         },
       ),

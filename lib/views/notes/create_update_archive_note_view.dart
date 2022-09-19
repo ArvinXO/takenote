@@ -10,14 +10,16 @@ import 'package:takenote/services/cloud/cloud_note.dart';
 import '../../utilities/color_pallette.dart';
 import '../../utilities/note_colours.dart';
 
-class CreateUpdateNoteView extends StatefulWidget {
-  const CreateUpdateNoteView({Key? key}) : super(key: key);
+class CreateUpdateArchiveNoteView extends StatefulWidget {
+  const CreateUpdateArchiveNoteView({Key? key}) : super(key: key);
 
   @override
-  State<CreateUpdateNoteView> createState() => _CreateUpdateNoteViewState();
+  State<CreateUpdateArchiveNoteView> createState() =>
+      _CreateUpdateArchiveNoteViewState();
 }
 
-class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
+class _CreateUpdateArchiveNoteViewState
+    extends State<CreateUpdateArchiveNoteView> {
   CloudNote? _note;
   late final FirebaseCloudStorage _notesService;
   late final TextEditingController _titleController;
@@ -38,24 +40,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     }
 
     final text = _contentController.text;
-    await _notesService.updateNote(
-      documentId: note.documentId,
-      text: text,
-      date: note.noteDate,
-      title: note.noteTitle,
-      archived: note.noteArchived,
-      deleted: note.noteDeleted,
-      color: note.noteColor,
-    );
-  }
 
-  void _titleControllerListener() async {
-    final note = _note;
-    if (note == null) {
-      return;
-    }
-
-    final text = _contentController.text;
     await _notesService.updateNote(
       documentId: note.documentId,
       text: text,
@@ -80,7 +65,6 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
       _note = widgetNote;
       _titleController.text = widgetNote.noteTitle;
       _contentController.text = widgetNote.noteText;
-      // archived = 1
       return widgetNote;
     }
     final existingNote = _note;
@@ -89,7 +73,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     }
     final currentUser = AuthService.firebase().currentUser!;
     final userId = currentUser.id;
-    final newNote = await _notesService.createNewNote(ownerUserId: userId);
+    final newNote = await _notesService.createNewArchiveNote(
+      ownerUserId: userId,
+    );
     _note = newNote;
     return newNote;
   }
@@ -117,6 +103,13 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
       );
     }
   }
+
+  // void _archiveNote() {
+  //   final note = _note;
+  //   if (_textController.text.isEmpty && note != null) {
+  //     _notesService.deleteNote(documentId: note.documentId);
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -147,6 +140,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
           // Archive
           IconButton(
             onPressed: () async {
+              //archive
               final text = _contentController.text;
               if (_note == null || text.isEmpty) {
                 await showCannotShareEmptyNoteDialog(context);
@@ -158,131 +152,97 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
           ),
         ],
       ),
-      body: Container(
-        decoration: context.getArgument<CloudNote>() == null
-            ? BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                    kJungleGreen,
-                    kJungleGreen,
-                    kJungleGreen,
-                    kJungleGreen,
-                    kJungleGreen,
-                    kOxfordBlue.withOpacity(0.2),
-                    kBdazalledBlue.withOpacity(0.1),
-                  ],
-                ),
-              )
-            : BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                    kBdazalledBlue,
-                    kBdazalledBlue,
-                    kBdazalledBlue,
-                    kBdazalledBlue,
-                    kBdazalledBlue,
-                    kOxfordBlue.withOpacity(0.2),
-                    kJungleGreen.withOpacity(0.1),
-                  ],
-                ),
-              ),
-        child: FutureBuilder(
-          future: createOrGetExistingNote(context),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                _setupTextControllerListener();
-                return ListView(
-                  children: [
-                    Column(
-                      children: [
-                        k24SizedBox,
-                        TextField(
-                          style: // noteColor from swatch
-                              const TextStyle(
-                            // title font size
+      body: FutureBuilder(
+        future: createOrGetExistingNote(context),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              _setupTextControllerListener();
+              return ListView(
+                children: [
+                  Column(
+                    children: [
+                      k24SizedBox,
+                      TextField(
+                        style: // noteColor from swatch
+                            const TextStyle(
+                          // title font size
+                          fontSize: 20,
+                        ),
+                        cursorColor: kPlatinum,
+                        controller: _titleController,
+                        keyboardType: TextInputType.multiline,
+                        autofocus: true,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          hintText: 'Title',
+                          hintStyle: const TextStyle(
+                            color: kPlatinum,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          // label: Text('Title'),
+                          // isCollapsed: true,
+                          fillColor: Colors.transparent,
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none),
+                          focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none),
+                          labelText:
+                              //Existing note is not null and text is not empty then show text else show placeholder
+                              _note != null && _titleController.text.isNotEmpty
+                                  ? 'Edit title'
+                                  : 'Title',
+                          floatingLabelStyle: const TextStyle(
+                            color: kPlatinum,
                             fontSize: 20,
-                          ),
-                          cursorColor: kPlatinum,
-                          controller: _titleController,
-                          keyboardType: TextInputType.multiline,
-                          autofocus: true,
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            hintText: 'Title',
-                            hintStyle: const TextStyle(
-                              color: kPlatinum,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            // label: Text('Title'),
-                            // isCollapsed: true,
-                            fillColor: Colors.transparent,
-                            enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide.none),
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide.none),
-                            labelText:
-                                //Existing note is not null and text is not empty then show text else show placeholder
-                                _note != null &&
-                                        _titleController.text.isNotEmpty
-                                    ? 'Edit title'
-                                    : 'Title',
-                            floatingLabelStyle: const TextStyle(
-                              color: kPlatinum,
-                              fontSize: 20,
-                              fontStyle: FontStyle.italic,
-                            ),
+                            fontStyle: FontStyle.italic,
                           ),
                         ),
-                        k24SizedBox,
-                        TextField(
-                          controller: _contentController,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            hintText: 'Content',
-                            hintStyle: const TextStyle(
-                              color: kPlatinum,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            // label: Text('Title'),
-                            // isCollapsed: true,
-                            fillColor: Colors.transparent,
-                            enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide.none),
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide.none),
-                            labelText:
-                                //Existing note is not null and text is not empty then show text else show placeholder
-                                _note != null &&
-                                        _contentController.text.isNotEmpty
-                                    ? 'Edit content'
-                                    : 'Content',
-                            floatingLabelStyle: const TextStyle(
-                              color: kPlatinum,
-                              fontSize: 20,
-                              fontStyle: FontStyle.italic,
-                            ),
+                      ),
+                      k24SizedBox,
+                      TextField(
+                        controller: _contentController,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          hintText: 'Content',
+                          hintStyle: const TextStyle(
+                            color: kPlatinum,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          // label: Text('Title'),
+                          // isCollapsed: true,
+                          fillColor: Colors.transparent,
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none),
+                          focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none),
+                          labelText:
+                              //Existing note is not null and text is not empty then show text else show placeholder
+                              _note != null &&
+                                      _contentController.text.isNotEmpty
+                                  ? 'Edit content'
+                                  : 'Content',
+                          floatingLabelStyle: const TextStyle(
+                            color: kPlatinum,
+                            fontSize: 20,
+                            fontStyle: FontStyle.italic,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                );
+                      ),
+                    ],
+                  ),
+                ],
+              );
 
-              default:
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-            }
-          },
-        ),
+            default:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+          }
+        },
       ),
     );
   }

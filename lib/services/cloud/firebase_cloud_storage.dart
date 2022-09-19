@@ -13,7 +13,9 @@ class FirebaseCloudStorage {
       notes.snapshots().map((event) => event.docs
           .map((doc) => CloudNote.fromSnapshot(doc))
           .where((note) =>
-              note.ownerUserId == ownerUserId && note.noteArchived == 0));
+              note.ownerUserId == ownerUserId &&
+              note.noteArchived == 0 &&
+              note.noteDeleted == 0));
 
   //grab archived notes
   Stream<Iterable<CloudNote>> archivedNotes({required String ownerUserId}) =>
@@ -21,6 +23,12 @@ class FirebaseCloudStorage {
           .map((doc) => CloudNote.fromSnapshot(doc))
           .where((note) =>
               note.ownerUserId == ownerUserId && note.noteArchived == 1));
+
+  Stream<Iterable<CloudNote>> deletedNotes({required String ownerUserId}) =>
+      notes.snapshots().map((event) => event.docs
+          .map((doc) => CloudNote.fromSnapshot(doc))
+          .where((note) =>
+              note.ownerUserId == ownerUserId && note.noteDeleted == 1));
 
 //C-
   Future<CloudNote> createNewNote({required String ownerUserId}) async {
@@ -31,6 +39,7 @@ class FirebaseCloudStorage {
       titleFieldName: '',
       archivedFieldName: 0,
       colorFieldName: 0,
+      deletedFieldName: 0,
     });
     final fetchedNote = await document.get();
     return CloudNote(
@@ -40,6 +49,30 @@ class FirebaseCloudStorage {
       fetchedNote.data()![dateFieldName] as String,
       fetchedNote.data()![titleFieldName] as String,
       fetchedNote.data()![archivedFieldName] as int,
+      fetchedNote.data()![deletedFieldName] as int,
+      fetchedNote.data()![colorFieldName] as int,
+    );
+  }
+
+  Future<CloudNote> createNewArchiveNote({required String ownerUserId}) async {
+    final document = await notes.add({
+      ownerUserIdFieldName: ownerUserId,
+      textFieldName: '',
+      dateFieldName: '',
+      titleFieldName: '',
+      archivedFieldName: 1,
+      colorFieldName: 0,
+      deletedFieldName: 0,
+    });
+    final fetchedNote = await document.get();
+    return CloudNote(
+      document.id,
+      ownerUserId,
+      fetchedNote.data()![textFieldName] as String,
+      fetchedNote.data()![dateFieldName] as String,
+      fetchedNote.data()![titleFieldName] as String,
+      fetchedNote.data()![archivedFieldName] as int,
+      fetchedNote.data()![deletedFieldName] as int,
       fetchedNote.data()![colorFieldName] as int,
     );
   }
@@ -75,6 +108,7 @@ class FirebaseCloudStorage {
     required String date,
     required String title,
     required int archived,
+    required int deleted,
     required int color,
   }) async {
     try {
@@ -85,6 +119,7 @@ class FirebaseCloudStorage {
         // date is now a string format MONTH, DAT, YEAR HH:MM
         dateFieldName:
             DateFormat('MMM dd, yyyy HH:MM a').format(DateTime.now()),
+        deletedFieldName: deleted,
         archivedFieldName: archived,
         colorFieldName: color,
       });
@@ -151,6 +186,34 @@ class FirebaseCloudStorage {
     try {
       await notes.doc(documentId).update({
         archivedFieldName: archived,
+      });
+    } catch (e) {
+      throw CouldNotUpdateNoteException();
+    }
+  }
+
+  // Soft Delete note
+  Future<void> softDeleteNote({
+    required String documentId,
+    required int deleted,
+  }) async {
+    try {
+      await notes.doc(documentId).update({
+        deletedFieldName: 1,
+      });
+    } catch (e) {
+      throw CouldNotUpdateNoteException();
+    }
+  }
+
+  // Restore note
+  Future<void> restoreNote({
+    required String documentId,
+    required int deleted,
+  }) async {
+    try {
+      await notes.doc(documentId).update({
+        deletedFieldName: 0,
       });
     } catch (e) {
       throw CouldNotUpdateNoteException();

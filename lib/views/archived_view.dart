@@ -13,7 +13,7 @@ import 'package:takenote/views/notes/archived_notes_list_view.dart';
 
 import '../enums/menu_action.dart';
 
-enum ViewType { Tile, Grid }
+enum ViewType { tile, grid }
 
 class ArchivedView extends StatefulWidget {
   const ArchivedView({Key? key}) : super(key: key);
@@ -39,9 +39,21 @@ class _ArchivedViewState extends State<ArchivedView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBdazalledBlue,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: kOxfordBlue,
+        backgroundColor: Colors.transparent,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                kOxfordBlue.withOpacity(0.9),
+                kJungleGreen.withOpacity(0.3),
+              ],
+            ),
+          ),
+        ),
         title: const Text(
           'Archived',
           style: TextStyle(fontWeight: FontWeight.w600),
@@ -63,8 +75,8 @@ class _ArchivedViewState extends State<ArchivedView> {
             },
             //icon is grid or list
             icon: isGridView
-                ? const Icon(Icons.view_module_rounded)
-                : const Icon(Icons.list),
+                ? const Icon(Icons.list)
+                : const Icon(Icons.view_module_rounded),
           ),
           PopupMenuButton<MenuAction>(
             // rounded corners

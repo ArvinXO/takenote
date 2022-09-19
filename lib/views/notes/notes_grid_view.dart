@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
@@ -88,17 +87,7 @@ class _NotesGridViewState extends State<NotesGridView> {
               : SafeArea(
                   bottom: false,
                   child: GridView.custom(
-                    gridDelegate: SliverQuiltedGridDelegate(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 2,
-                      crossAxisSpacing: 4,
-                      repeatPattern: QuiltedGridRepeatPattern.inverted,
-                      pattern: [
-                        // const QuiltedGridTile(2,1),
-                        const QuiltedGridTile(1, 1),
-                        const QuiltedGridTile(1, 1),
-                      ],
-                    ),
+                    gridDelegate: twoBytwo,
                     childrenDelegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         final note = widget.notes.elementAt(index);
@@ -127,7 +116,7 @@ class _NotesGridViewState extends State<NotesGridView> {
                                   // onlongpress show optionsheet
                                   onLongPress: () {
                                     _note = note;
-                                    _showOptionsSheet(
+                                    showOptionsSheet(
                                       // show optionsheet
                                       context,
                                       note,
@@ -147,9 +136,15 @@ class _NotesGridViewState extends State<NotesGridView> {
                                           style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
+                                            color: kRichBlackFogra,
                                           ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
+                                        ),
+                                        // Divider
+                                        const Divider(
+                                          color: kRichBlackFogra,
+                                          thickness: 1.3,
                                         ),
                                         const SizedBox(height: 10),
                                         Expanded(
@@ -232,7 +227,7 @@ class _NotesGridViewState extends State<NotesGridView> {
     );
   }
 
-  void _showOptionsSheet(BuildContext context, CloudNote note) {
+  void showOptionsSheet(BuildContext context, CloudNote note) {
     showModalBottomSheet(
         context: context,
         isDismissible: true,
@@ -333,13 +328,13 @@ class _NotesGridViewState extends State<NotesGridView> {
                         borderRadius: BorderRadius.circular(15),
                         onTap: () {
                           // Delete Note Function
-                          showDeleteDialog(context).then((result) {
-                            if (result) {
-                              widget.onDeleteNote.call(note);
-                            }
-                            //pop
-                            Navigator.pop(context);
-                          });
+
+                          // soft delete
+                          _notesService.softDeleteNote(
+                            documentId: note.documentId,
+                            deleted: 1,
+                          );
+                          Navigator.of(context).pop();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -357,27 +352,27 @@ class _NotesGridViewState extends State<NotesGridView> {
                           ),
                         ),
                       ),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(15),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: const <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.close_circle),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text('Cancel'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // InkWell(
+                      //   borderRadius: BorderRadius.circular(15),
+                      //   onTap: () {
+                      //     Navigator.pop(context);
+                      //   },
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     child: Row(
+                      //       children: const <Widget>[
+                      //         Padding(
+                      //           padding: EdgeInsets.all(8.0),
+                      //           child: Icon(Iconsax.close_circle),
+                      //         ),
+                      //         Padding(
+                      //           padding: EdgeInsets.all(8.0),
+                      //           child: Text('Cancel'),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       InkWell(
                         borderRadius: BorderRadius.circular(15),
                         // onTap: () {
@@ -409,6 +404,7 @@ class _NotesGridViewState extends State<NotesGridView> {
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: false,
                             children: [
+                              // For every color in pallette create a ColorPaletteButton
                               ColorPaletteButton(
                                 color: NoteColor.getColor(0),
                                 onTap: () {
@@ -474,6 +470,28 @@ class _NotesGridViewState extends State<NotesGridView> {
                                   Navigator.pop(context);
                                 },
                                 isSelected: note.noteColor == 5,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(6),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 6,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 6,
+                              ),
+                              ColorPaletteButton(
+                                color: NoteColor.getColor(7),
+                                onTap: () {
+                                  _notesService.updateNoteColor(
+                                    documentId: note.documentId,
+                                    color: 7,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                isSelected: note.noteColor == 7,
                               ),
                             ],
                           ),

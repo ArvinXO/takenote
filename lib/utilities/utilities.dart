@@ -36,7 +36,7 @@ class Utility {
   }
 }
 
-enum AppLockState { SET, CONFIRM }
+enum AppLockState { set, confirm, unlock, locked }
 
 enum ThemeModeState { light, dark, system }
 

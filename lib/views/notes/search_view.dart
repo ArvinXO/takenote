@@ -55,7 +55,9 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       backgroundColor: kBdazalledBlue,
       appBar: AppBar(
+        //dynaimc island ios
         backgroundColor: kOxfordBlue,
+
         title: const Text(
           'Search',
           style: TextStyle(fontWeight: FontWeight.w600),
@@ -195,7 +197,7 @@ class _SearchPageState extends State<SearchPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: const [
                     SizedBox(
-                      height: 150,
+                      height: 80,
                     ),
                     Icon(
                       Iconsax.search_status,

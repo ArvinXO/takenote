@@ -9,6 +9,7 @@ import 'package:takenote/services/auth/bloc/auth_state.dart';
 import '../services/auth/auth_exceptions.dart';
 import '../services/auth/bloc/auth_event.dart';
 import '../utilities/dialogs/error_dialog.dart';
+import '../utilities/dialogs/loading_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -178,7 +179,15 @@ class _LoginViewState extends State<LoginView> {
                           return;
                         }
                       } else {
+                        // else if login is successful, show loading dialog
+
                         FocusScope.of(context).unfocus();
+                        // loading dialog
+
+                        if (!mounted) {
+                          return;
+                        }
+
                         final email = _email.text;
                         final password = _password.text;
                         context.read<AuthBloc>().add(
@@ -187,7 +196,15 @@ class _LoginViewState extends State<LoginView> {
                                 password,
                               ),
                             );
+
+                        // navigate pop
+                        Navigator.of(context).pop();
+
+                        // loading screen
+
+                        // show dialog loading then remove circular progress indicator  after 2 seconds
                       }
+
                       //Dismiss keyboard
                     },
                     child: kLoginContainer,
