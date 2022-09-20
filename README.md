@@ -60,6 +60,8 @@ A simple notes app, set colours for notes, share notes, temporarily delete notes
 - [ ] Desktop Support
 - [ ] Web Support
 - [ ] Localization
+- [ ] Fix Hard-coded / Non-DRY compliant code
+
 
 ## Platform
  - Android
