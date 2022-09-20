@@ -1,9 +1,10 @@
 <h1 align="center">  Take Note!
  </h1> <br>
 <p align="center">
-    <img alt="Take Note" title="GitPoint" src="https://user-images.githubusercontent.com/97199759/191288721-ab2d36b3-d539-420f-855e-75ae85c57768.png" width="450">
+    <img alt="Take Note" title="GitPoint" src="https://user-images.githubusercontent.com/97199759/191323720-adea0c92-52b7-48fb-9196-4b3b4d4908e9.png" width="450">
   </a>
 </p>
+
 
 <p align="center">
   Take Notes
