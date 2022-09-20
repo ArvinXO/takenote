@@ -46,6 +46,8 @@ A simple notes app, set colours for notes, share notes, temporarily delete notes
 
 
 ## Features
+- BLoC Architecture
+- Firebase cloud integration
 - Supports Android/iOS (iOS not published yet but works fine)
 - List/grid view for notes
 - Archive notes
