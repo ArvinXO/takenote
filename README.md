@@ -1,16 +1,47 @@
-# Take Note!
+<h1 align="center">  Take Note!
+ </h1> <br>
+<p align="center">
+    <img alt="Take Note" title="GitPoint" src="https://user-images.githubusercontent.com/97199759/191288721-ab2d36b3-d539-420f-855e-75ae85c57768.png" width="450">
+  </a>
+</p>
+
+<p align="center">
+  Take Notes
+</p>
+
+<!-- <p align="center">
+  <a href="https://itunes.apple.com/us/app/gitpoint/id1251245162?mt=8">
+    <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="140">
+  </a>
+
+  <a href="https://play.google.com/store/apps/details?id=com.gitpoint">
+    <img alt="Get it on Google Play" title="Google Play" src="http://i.imgur.com/mtGRPuM.png" width="140">
+  </a>
+</p> -->
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
 
 A simple notes app, set colours for notes, share notes, temporarily delete notes & archive your notes.
 
-![Screenshot 2022-09-20 at 15 10 59](https://user-images.githubusercontent.com/97199759/191280698-561a6630-ebed-486f-9c74-f8c5dc9d454a.png)
 
 
-<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
-<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
-<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
-<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
-<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
-<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
+<p align="center">
+  <img src = "https://user-images.githubusercontent.com/97199759/191290220-83ebac8a-1101-49b2-82d9-e6a32754b087.png" width=700>
+</p>
+
+
+
+<p align="center">
+  <img src = "https://user-images.githubusercontent.com/97199759/191290609-167db54a-01e5-4e22-a5a4-efe5fc692c65.png" width=700>
+</p>
+
+<p align="center">
+  <img src = "https://user-images.githubusercontent.com/97199759/191290618-8a6641e7-5825-405d-9b4c-8bcd9662cc87.png" width=700>
+</p>
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 
@@ -59,3 +90,11 @@ $ flutter build apk
 ## Contributing
 
 Feel free to open a PR to suggest fixes, features or whatever you want, just remember that PRs are subjected to manual review so you gotta wait for actual people to look at your contributions.
+
+
+
+
+## Acknowledgments
+
+Thanks to [Vandahd](https://github.com/vandadnp) for creating such an awsome course and sharing his Dart & Flutter tips 
+
