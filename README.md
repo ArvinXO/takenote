@@ -1,5 +1,4 @@
-# Take Note![Screenshot 2022-09-17 at 11 55 39](https://user-images.githubusercontent.com/97199759/191281671-c0f5acd7-9731-42c5-96a8-134860e4fb83.png)
-
+# Take Note!
 
 A simple notes app, set colours for notes, share notes, temporarily delete notes & archive your notes.
 
