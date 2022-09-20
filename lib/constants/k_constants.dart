@@ -127,7 +127,7 @@ const kButtonTextStyle = TextStyle(
 
 final kLoginContainer = Container(
   height: 50,
-  width: 100,
+  width: 120,
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(20),
     color: kJungleGreen,
@@ -151,7 +151,7 @@ final kLoginContainer = Container(
 
 final kRegisterContainer = Container(
   height: 50,
-  width: 100,
+  width: 120,
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(20),
     color: kBdazalledBlue,
@@ -323,8 +323,8 @@ final kSendResetLinkContainer = Container(
 );
 
 final kBackToLoginContainer = Container(
-  height: 80,
-  width: 250,
+  height: 50,
+  width: 200,
   constraints: const BoxConstraints(
     maxWidth: 250,
   ),

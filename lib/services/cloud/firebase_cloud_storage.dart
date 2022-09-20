@@ -220,6 +220,32 @@ class FirebaseCloudStorage {
     }
   }
 
+  // //Duplicate note
+  // Future<void> duplicateNote({
+  //   required String documentId,
+  //   required String ownerUserId,
+  //   required String text,
+  //   required String date,
+  //   required String title,
+  //   required int archived,
+  //   required int deleted,
+  //   required int color,
+  // }) async {
+  //   try {
+  //     await notes.add({
+  //       ownerUserIdFieldName: ownerUserId,
+  //       textFieldName: text,
+  //       titleFieldName: title,
+  //       dateFieldName: date,
+  //       deletedFieldName: deleted,
+  //       archivedFieldName: archived,
+  //       colorFieldName: color,
+  //     });
+  //   } catch (e) {
+  //     throw CouldNotUpdateNoteException();
+  //   }
+  // }
+
 //D-
   Future<void> deleteNote({
     required String documentId,

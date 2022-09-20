@@ -128,6 +128,11 @@ class _NotesViewState extends State<NotesView> {
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
           decoration: BoxDecoration(
+            // rounded corners
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -159,8 +164,8 @@ class _NotesViewState extends State<NotesView> {
             },
             //icon is grid or list
             icon: isGridView
-                ? const Icon(Icons.list)
-                : const Icon(Icons.view_module_rounded),
+                ? const Icon(Icons.view_module_rounded)
+                : const Icon(Icons.list),
           ),
           PopupMenuButton<MenuAction>(
             // rounded corners

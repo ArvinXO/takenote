@@ -9,7 +9,6 @@ import 'package:takenote/services/auth/bloc/auth_state.dart';
 import '../services/auth/auth_exceptions.dart';
 import '../services/auth/bloc/auth_event.dart';
 import '../utilities/dialogs/error_dialog.dart';
-import '../utilities/dialogs/loading_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -68,20 +67,23 @@ class _LoginViewState extends State<LoginView> {
                 height: sizeQuery.height * 0.12,
               ),
               //logo
-              Hero(
-                tag: "logo",
-                child: Image.asset(
-                  'assets/icon/icontext.png',
-                  width: sizeQuery.width * 0.5,
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(20.0),
+              //   child: Hero(
+              //     tag: "logo",
+              //     child: Image.asset(
+              //       'assets/icon/icontext.png',
+              //       width: sizeQuery.width * 0.6,
+              //     ),
+              //   ),
+              // ),
 
               //Align login text to left
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
                   horizontal: sizeQuery.width * 0.07,
-                  vertical: sizeQuery.height * 0.01,
+                  vertical: sizeQuery.height * 0.06,
                 ),
                 child: const Text(
                   'LOGIN',
@@ -129,7 +131,6 @@ class _LoginViewState extends State<LoginView> {
                       hintText: 'Email'),
                 ),
               ),
-              SizedBox(height: sizeQuery.height * 0.00001),
               Padding(
                 padding: k3010LRpad,
                 child: TextField(
@@ -142,7 +143,7 @@ class _LoginViewState extends State<LoginView> {
                   clipBehavior: Clip.antiAlias,
                   decoration: InputDecoration(
                       constraints:
-                          BoxConstraints(maxHeight: sizeQuery.height * 0.08),
+                          BoxConstraints(maxHeight: sizeQuery.height * 0.07),
                       //white background
                       filled: true,
                       border: OutlineInputBorder(
@@ -196,10 +197,8 @@ class _LoginViewState extends State<LoginView> {
                                 password,
                               ),
                             );
-
-                        // navigate pop
-                        Navigator.of(context).pop();
-
+                        BlocProvider.of<AuthBloc>(context)
+                            .add(const AuthEventInitialize());
                         // loading screen
 
                         // show dialog loading then remove circular progress indicator  after 2 seconds

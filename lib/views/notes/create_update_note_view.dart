@@ -148,10 +148,11 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
           IconButton(
             onPressed: () async {
               final text = _contentController.text;
+              final title = _titleController.text;
               if (_note == null || text.isEmpty) {
                 await showCannotShareEmptyNoteDialog(context);
               } else {
-                Share.share(text);
+                await Share.share('$title\n$text');
               }
             },
             icon: const Icon(Icons.share),

@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:takenote/constants/k_constants.dart';
-import 'package:takenote/services/auth/bloc/auth_state.dart';
 
 import '../services/auth/bloc/auth_bloc.dart';
 import '../services/auth/bloc/auth_event.dart';
@@ -41,9 +40,10 @@ class _IntroductionPageState extends State<IntroductionPage> {
     prefs = await SharedPreferences.getInstance();
     newUser = prefs.getBool('newUser') ?? true;
     if (!newUser) {
-      if (mounted) {}
+      if (mounted) {
+        BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
+      }
       //auth state logged in
-      BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
     }
   }
 
@@ -51,12 +51,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
   void initState() {
     super.initState();
     //If user is initialized then skip the onboarding
-    if (BlocProvider.of<AuthBloc>(context).state is AuthStateUninitialized) {
-      BlocProvider.of<AuthBloc>(context).add(const AuthEventInitializing());
-    } else {
-      // auth state logged in
-      BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
-    }
+
     getPref();
     _pageController = PageController();
   }
@@ -147,6 +142,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
                         if (_page == 1) {
                           setState(() {
                             //AuthEventInitialize
+
                             BlocProvider.of<AuthBloc>(context)
                                 .add(const AuthEventInitialize());
                             //Navigate to Register Page
@@ -235,13 +231,10 @@ class _ScreenTwoState extends State<ScreenTwo> {
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: Hero(
-                  tag: 'logo',
-                  child: Image.asset(
-                    'assets/icon/icon.png',
-                    height: 190,
-                    width: 200,
-                  ),
+                child: Image.asset(
+                  'assets/icon/icon.png',
+                  height: 190,
+                  width: 200,
                 ),
               ),
             ),

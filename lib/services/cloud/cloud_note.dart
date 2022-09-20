@@ -26,7 +26,7 @@ class CloudNote {
 
   CloudNote.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
       : documentId = snapshot.id,
-        ownerUserId = snapshot.data()[ownerUserIdFieldName],
+        ownerUserId = snapshot.data()[ownerUserIdFieldName] as String,
         noteText = snapshot.data()[textFieldName] as String,
         // noteDate format is dd/mm/yyyy hh:mm
         noteDate = snapshot.data()[dateFieldName] as String,

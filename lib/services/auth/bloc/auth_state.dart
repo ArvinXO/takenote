@@ -23,7 +23,11 @@ class AuthStateUninitialized extends AuthState {
 }
 
 class AuthStateInitializing extends AuthState {
-  const AuthStateInitializing() : super(isLoading: true);
+  final AuthUser user;
+  const AuthStateInitializing({
+    required bool isLoading,
+    required this.user,
+  }) : super(isLoading: isLoading);
 }
 
 class AuthStateRegistering extends AuthState {

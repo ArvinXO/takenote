@@ -63,18 +63,11 @@ class _RegisterViewState extends State<RegisterView> {
               SizedBox(
                 height: sizeQuery.height * 0.12,
               ),
-              Hero(
-                tag: "logo",
-                child: Image.asset(
-                  'assets/icon/icontext.png',
-                  width: sizeQuery.width * 0.5,
-                ),
-              ),
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(
                   horizontal: sizeQuery.width * 0.07,
-                  vertical: sizeQuery.height * 0.01,
+                  vertical: sizeQuery.height * 0.06,
                 ),
                 child: kRegisterText,
               ),
@@ -112,7 +105,6 @@ class _RegisterViewState extends State<RegisterView> {
                       hintText: 'Email'),
                 ),
               ),
-              SizedBox(height: sizeQuery.height * 0.00001),
               Padding(
                 padding: k3010LRpad,
                 child: TextField(
@@ -125,7 +117,7 @@ class _RegisterViewState extends State<RegisterView> {
                   clipBehavior: Clip.antiAlias,
                   decoration: InputDecoration(
                       constraints:
-                          BoxConstraints(maxHeight: sizeQuery.height * 0.08),
+                          BoxConstraints(maxHeight: sizeQuery.height * 0.07),
                       //white background
                       filled: true,
                       border: OutlineInputBorder(

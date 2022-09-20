@@ -34,6 +34,8 @@ void main() {
               );
             }
             if (state is AuthStateLoggedIn) {
+              //authstateinitializing = false
+              // emit initialized
               return const HomePage();
             } else if (state is AuthStateNeedsVerification) {
               return const VerifiyEmailView();

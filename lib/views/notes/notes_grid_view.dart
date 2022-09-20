@@ -97,7 +97,14 @@ class _NotesGridViewState extends State<NotesGridView> {
                           child: Dismissible(
                             key: Key(note.documentId),
                             onDismissed: (direction) {
-                              widget.onDeleteNote(note);
+                              _notesService.unarchiveNote(
+                                documentId: note.documentId,
+                                archived: 0,
+                              );
+                              _notesService.softDeleteNote(
+                                documentId: note.documentId,
+                                deleted: 1,
+                              );
                             },
                             confirmDismiss: (direction) async {
                               final result = await showDeleteDialog(context);
@@ -233,12 +240,21 @@ class _NotesGridViewState extends State<NotesGridView> {
         isDismissible: true,
         isScrollControlled: true,
         constraints: const BoxConstraints(),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(28),
+          ),
+        ),
         builder: (context) {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setModalState) {
               return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.6,
+                width: MediaQuery.of(context).size.width * 1,
+                height: MediaQuery.of(context).size.height * 0.5,
                 child: Container(
+                  padding: const EdgeInsets.all(16),
+                  // curved corners
+
                   child: Column(
                     // mainAxisSize: MainAxisSize.min,
                     children: <Widget>[

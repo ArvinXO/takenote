@@ -109,7 +109,7 @@ class _AppViewState extends State<AppView> {
               ? FloatingActionButton(
                   tooltip: 'Add Archived Note',
                   //centered
-                  backgroundColor: kJungleDarkGreen.withOpacity(0.35),
+                  backgroundColor: kJungleDarkGreen.withOpacity(0.6),
                   hoverColor: kBdazalledBlue,
                   splashColor: kBdazalledBlue,
                   shape: // square
@@ -131,7 +131,7 @@ class _AppViewState extends State<AppView> {
                   ? FloatingActionButton(
                       tooltip: 'Add Note',
                       //centered
-                      backgroundColor: kJungleDarkGreen.withOpacity(0.3),
+                      backgroundColor: kJungleDarkGreen.withOpacity(0.6),
                       hoverColor: kBdazalledBlue,
                       splashColor: kBdazalledBlue,
                       shape: // square

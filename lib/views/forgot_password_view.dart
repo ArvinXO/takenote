@@ -82,25 +82,44 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               SizedBox(height: sizeQuery.height * 0.01),
               Padding(
                 padding: k3010LRpad,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.white,
-                  ),
-                  child: TextField(
-                    //Email
-                    controller: _controller,
-                    keyboardType: TextInputType.emailAddress,
-                    autocorrect: false,
-                    cursorColor: Colors.orange,
-                    decoration: kForgotPasswordContainerDecoration,
-                  ),
+                child: TextField(
+                  //overflow textfield
+                  controller: _controller,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  showCursor: true,
+                  keyboardType: TextInputType.emailAddress,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                      //overflow text if text is too long
+                      constraints:
+                          BoxConstraints(maxHeight: sizeQuery.height * 0.08),
+                      //black border
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                          width: 2,
+                        ),
+                      ),
+                      fillColor: Colors.white,
+                      prefixIcon: const Icon(
+                        Icons.email,
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: _controller.clear,
+                        icon: const Icon(Icons.clear),
+                      ),
+                      hintText: 'Email'),
                 ),
               ),
+              SizedBox(height: sizeQuery.height * 0.02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
+                    // if user doesnt enter email then keep the colour else change to orange
                     onPressed: () {
                       final email = _controller.text;
                       context
@@ -111,7 +130,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                   ),
                 ],
               ),
-              SizedBox(height: sizeQuery.height * 0.15),
+              SizedBox(height: sizeQuery.height * 0.07),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

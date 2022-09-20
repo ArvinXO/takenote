@@ -7,7 +7,6 @@ import 'package:takenote/views/notes/animated_scroll_view_item.dart';
 
 import '../../constants/k_constants.dart';
 import '../../utilities/color_pallette.dart';
-import '../../utilities/dialogs/cannot_share_empty_note_dialog.dart';
 import '../../utilities/dialogs/delete_dialog.dart';
 import '../../utilities/note_colours.dart';
 
@@ -96,7 +95,14 @@ class _ArchivedNotesGridViewState extends State<ArchivedNotesGridView> {
                           child: Dismissible(
                             key: Key(note.documentId),
                             onDismissed: (direction) {
-                              widget.onDeleteNote(note);
+                              _notesService.unarchiveNote(
+                                documentId: note.documentId,
+                                archived: 0,
+                              );
+                              _notesService.softDeleteNote(
+                                documentId: note.documentId,
+                                deleted: 1,
+                              );
                             },
                             confirmDismiss: (direction) async {
                               final result = await showDeleteDialog(context);
@@ -231,12 +237,19 @@ class _ArchivedNotesGridViewState extends State<ArchivedNotesGridView> {
         isDismissible: true,
         isScrollControlled: true,
         constraints: const BoxConstraints(),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(28),
+          ),
+        ),
         builder: (context) {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setModalState) {
               return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.6,
+                width: MediaQuery.of(context).size.width * 1,
+                height: MediaQuery.of(context).size.height * 0.5,
                 child: Container(
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     // mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -296,14 +309,8 @@ class _ArchivedNotesGridViewState extends State<ArchivedNotesGridView> {
                           // Share Note Function
                           final text = note.noteText;
                           final title = note.noteTitle;
-                          if (_note == null || text.isEmpty || title.isEmpty) {
-                            await showCannotShareEmptyNoteDialog(context);
-                          } else {
-                            Share.share('$title\n$text');
-                          }
-                          if (mounted) {
-                            Navigator.of(context).pop();
-                          }
+
+                          await Share.share('$title\n$text');
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -350,27 +357,7 @@ class _ArchivedNotesGridViewState extends State<ArchivedNotesGridView> {
                           ),
                         ),
                       ),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(15),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: const <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.close_circle),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text('Cancel'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+
                       InkWell(
                         borderRadius: BorderRadius.circular(15),
                         // onTap: () {
