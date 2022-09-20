@@ -5,7 +5,12 @@ A simple notes app, set colours for notes, share notes, temporarily delete notes
 ![Screenshot 2022-09-20 at 15 10 59](https://user-images.githubusercontent.com/97199759/191280698-561a6630-ebed-486f-9c74-f8c5dc9d454a.png)
 
 
-<img src="dScreenshot_20220920_133707](https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
+<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
+<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
+<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
+<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
+<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
+<img src="https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png " alt="drawing" width="200"/>
 
 
 
