@@ -4,7 +4,7 @@ A simple notes app, set colours for notes, share notes, temporarily delete notes
 
 ![Screenshot 2022-09-20 at 15 10 59](https://user-images.githubusercontent.com/97199759/191280698-561a6630-ebed-486f-9c74-f8c5dc9d454a.png)
 
-![Screenshot_20220920_133707](https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png =250x250 )
+![Screenshot_20220920_133707](https://user-images.githubusercontent.com/97199759/191282016-4843187b-daeb-49f6-9308-b4d91cc98cd7.png=250x250)
 ![Screenshot_20220920_133746](https://user-images.githubusercontent.com/97199759/191282022-1e4c2705-a9b7-4065-a468-136516ae3203.png)
 ![Screenshot_20220920_133838](https://user-images.githubusercontent.com/97199759/191282028-7f05da9d-6437-4072-857f-b8db6562c316.png)
 ![Screenshot_20220920_134021](https://user-images.githubusercontent.com/97199759/191282031-58a27b8e-8901-4c8b-b7ae-05becc13dda4.png)
