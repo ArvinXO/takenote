@@ -206,7 +206,7 @@ class _ArchivedNotesListViewState extends State<ArchivedNotesListView> {
             builder: (BuildContext context, StateSetter setModalState) {
               return SizedBox(
                 width: MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.55,
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   child: Column(
