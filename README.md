@@ -29,7 +29,7 @@ A simple notes app, set colours for notes, share notes, temporarily delete notes
 
 
 <p align="center">
-  <img src = "https://user-images.githubusercontent.com/97199759/191290220-83ebac8a-1101-49b2-82d9-e6a32754b087.png" width=700>
+  <img src = "https://user-images.githubusercontent.com/97199759/191323905-2e765ea4-f305-4d1a-873d-636ac3fa35e5.jpg" width=700>
 </p>
 
 
