@@ -2,6 +2,9 @@
 
 A simple notes app, set colours for notes, share notes, temporarily delete notes & archive your notes.
 
+![Screenshot 2022-09-20 at 15 10 59](https://user-images.githubusercontent.com/97199759/191280698-561a6630-ebed-486f-9c74-f8c5dc9d454a.png)
+
+
 ## Features
 - Supports Android/iOS (iOS not published yet but works fine)
 - List/grid view for notes
