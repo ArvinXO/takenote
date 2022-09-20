@@ -58,6 +58,7 @@ A simple notes app, set colours for notes, share notes, temporarily delete notes
 - [ ] Lock Notes - Local Auth
 - [ ] Desktop Support
 - [ ] Web Support
+- [ ] Localization
 
 ## Platform
  - Android
