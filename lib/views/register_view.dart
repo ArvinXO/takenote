@@ -61,7 +61,7 @@ class _RegisterViewState extends State<RegisterView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: sizeQuery.height * 0.12,
+                height: sizeQuery.height * 0.07,
               ),
               Container(
                 alignment: Alignment.centerLeft,
@@ -132,50 +132,76 @@ class _RegisterViewState extends State<RegisterView> {
                       hintText: 'Password'),
                 ),
               ),
-              Center(
-                child: Column(
-                  children: [
-                    TextButton(
-                      onPressed: () async {
-                        final email = _email.text;
-                        final password = _password.text;
-                        await AuthService.firebase().initialize();
-                        if (!mounted) {
-                          return;
-                        }
-                        //if email or password is empty
-                        if (email.isEmpty || password.isEmpty) {
-                          await showErrorDialog(
-                              context, 'Email or password is empty');
-                          return;
-                        } else {
-                          context.read<AuthBloc>().add(
-                                AuthEventRegister(
-                                  email,
-                                  password,
-                                ),
-                              );
-                        }
-                      },
-                      child: kRegisterContainer,
+              Column(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: sizeQuery.width * 0.07,
+                      vertical: sizeQuery.height * 0.01,
                     ),
-                    k10SizedBox,
-                    TextButton(
-                      onPressed: () {
-                        if (!mounted) {
-                          return;
-                        }
-                        context.read<AuthBloc>().add(
-                              const AuthEventLogOut(),
-                            );
-                        // context.read<AuthBloc>().add(
-                        //       const AuthEventShouldRegister(),
-                        //     );
-                      },
-                      child: kBackToLogin,
+                    // Register button covers left and right 7% of screen
+                    child: SizedBox(
+                      width: sizeQuery.width * 0.85,
+                      height: sizeQuery.height * 0.07,
+                      // curved edges
+
+                      child: ElevatedButton(
+                        style: //oxford blue
+
+                            ElevatedButton.styleFrom(
+                          backgroundColor: kBdazalledBlue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () async {
+                          final email = _email.text;
+                          final password = _password.text;
+                          await AuthService.firebase().initialize();
+                          if (!mounted) {
+                            return;
+                          }
+                          //if email or password is empty
+                          if (email.isEmpty || password.isEmpty) {
+                            await showErrorDialog(
+                                context, 'Email or password is empty');
+                            return;
+                          } else {
+                            context.read<AuthBloc>().add(
+                                  AuthEventRegister(
+                                    email,
+                                    password,
+                                  ),
+                                );
+                          }
+                        },
+                        child: const Text('Register'),
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  k10SizedBox,
+                  TextButton(
+                    onPressed: () {
+                      if (!mounted) {
+                        return;
+                      }
+                      context.read<AuthBloc>().add(
+                            const AuthEventLogOut(),
+                          );
+                      // context.read<AuthBloc>().add(
+                      //       const AuthEventShouldRegister(),
+                      //     );
+                    },
+                    child: const Text(
+                      'Already have an account? Log in',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

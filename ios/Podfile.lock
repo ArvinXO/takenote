@@ -1,5 +1,5 @@
 PODS:
-  - cloud_firestore (3.4.3):
+  - cloud_firestore (3.4.9):
     - Firebase/Firestore (= 9.3.0)
     - firebase_core
     - Flutter
@@ -16,15 +16,15 @@ PODS:
   - Firebase/Firestore (9.3.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 9.3.0)
-  - firebase_analytics (9.3.5):
+  - firebase_analytics (9.3.6):
     - Firebase/Analytics (= 9.3.0)
     - firebase_core
     - Flutter
-  - firebase_auth (3.6.2):
+  - firebase_auth (3.10.0):
     - Firebase/Auth (= 9.3.0)
     - firebase_core
     - Flutter
-  - firebase_core (1.20.0):
+  - firebase_core (1.23.0):
     - Firebase/CoreOnly (= 9.3.0)
     - Flutter
   - FirebaseAnalytics (9.3.0):
@@ -217,11 +217,11 @@ CHECKOUT OPTIONS:
     :tag: 9.3.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: 08093e207dfb2e6c82a6b272def699e022548786
+  cloud_firestore: bf6e6893be4d9d751656f17a7da689e3b84924c0
   Firebase: ef75abb1cdbc746d5a38f4e26c422c807b189b8c
-  firebase_analytics: fa36c19a077fd0de41ff9babc389915d77cf0702
-  firebase_auth: e4bd9a01f6c45764bf3bfb0cea4d5ce3673a92a2
-  firebase_core: 96214f90497b808a2cf2a24517084c5f6de37b53
+  firebase_analytics: 7391c7be7d7f21e39b1276e8776cd6ef54ec935f
+  firebase_auth: 34cdd686c440cf410c8818742f220f266e06636d
+  firebase_core: e92509026e3f69b7975e40593fb61d5ae811e2d5
   FirebaseAnalytics: bf46f5163f44097ce2c789de0b3e6f87f1da834a
   FirebaseAuth: 9ebc3577fe0acf9092df21ac314024b70aebf21e
   FirebaseCore: c088995ece701a021a48a1348ea0174877de2a6a

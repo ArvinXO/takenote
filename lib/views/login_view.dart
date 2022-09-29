@@ -64,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: sizeQuery.height * 0.12,
+                height: sizeQuery.height * 0.07,
               ),
               //logo
               // Padding(
@@ -158,20 +158,25 @@ class _LoginViewState extends State<LoginView> {
                       hintText: 'Password'),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      context.read<AuthBloc>().add(
-                            const AuthEventShouldRegister(),
-                          );
-                    },
-                    child: kRegisterContainer,
-                  ),
-                  TextButton(
+              // Wrap button to the right side
+              // login button size is 0.4 of the screen
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(
+                  horizontal: sizeQuery.width * 0.07,
+                  vertical: sizeQuery.height * 0.01,
+                ),
+                child: SizedBox(
+                  width: sizeQuery.width * 0.85,
+                  height: sizeQuery.height * 0.07,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kJungleGreen,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                     onPressed: () async {
-                      // if textfields are empty, show error dialog
                       if (_email.text.isEmpty || _password.text.isEmpty) {
                         //print user verified
                         await showErrorDialog(
@@ -203,24 +208,67 @@ class _LoginViewState extends State<LoginView> {
 
                         // show dialog loading then remove circular progress indicator  after 2 seconds
                       }
-
-                      //Dismiss keyboard
                     },
-                    child: kLoginContainer,
+                    child: const Text('Login'),
                   ),
-                ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.symmetric(
+                  horizontal: sizeQuery.width * 0.07,
+                  vertical: sizeQuery.height * 0.0000001,
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(
+                          const AuthEventForgotPassword(),
+                        );
+                  },
+                  child: const Text(
+                    'Forgot Password',
+                    style: TextStyle(color: kRichBlackFogra, fontSize: 15),
+                  ),
+                ),
+              ),
+              //Divider
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(
+                  horizontal: sizeQuery.width * 0.07,
+                  vertical: sizeQuery.height * 0.01,
+                ),
+                child: const Text(
+                  'OR',
+                  style: TextStyle(
+                    color: kRichBlackFogra,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              //divider line
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(
+                  horizontal: sizeQuery.width * 0.07,
+                  vertical: sizeQuery.height * 0.01,
+                ),
+                child: const Divider(
+                  color: kRichBlackFogra,
+                  thickness: 1,
+                ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
                     onPressed: () {
                       context.read<AuthBloc>().add(
-                            const AuthEventForgotPassword(),
+                            const AuthEventShouldRegister(),
                           );
                     },
                     child: const Text(
-                      'Forgot Password',
+                      'Need an account? Register',
                       style: TextStyle(color: kRichBlackFogra, fontSize: 15),
                     ),
                   ),

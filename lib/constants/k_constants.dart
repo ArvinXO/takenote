@@ -284,17 +284,19 @@ final kRestartContainer = Container(
     ],
   ),
 );
-final kSendResetLinkContainer = Container(
+
+final kSendPasswordResetContainer = Container(
   height: 50,
   width: 200,
   decoration: BoxDecoration(
     // add icon to the button
 
     borderRadius: BorderRadius.circular(20),
-    color: kPlatinum,
+    color: kBdazalledBlue,
+
     boxShadow: const [
       BoxShadow(
-        color: kPlatinum,
+        color: kBdazalledBlue,
         spreadRadius: 1,
       ),
     ],
@@ -303,18 +305,43 @@ final kSendResetLinkContainer = Container(
     mainAxisAlignment: MainAxisAlignment.center,
     children: const <Widget>[
       Text(
-        'SEND',
+        'Send password reset',
         style: TextStyle(
-          color: kBdazalledBlue,
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          fontSize: 12,
         ),
       ),
       SizedBox(width: 5),
 
       Icon(
+        Icons.send_sharp,
+        color: Colors.white,
+        size: 20,
+      ),
+      //space between the icon and the text
+    ],
+  ),
+);
+
+final kSendResetLinkContainer = Container(
+  decoration: const BoxDecoration(
+      // add icon to the button
+      ),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: const <Widget>[
+      Text(
+        'Send',
+        style: TextStyle(
+          color: kPlatinum,
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+
+      Icon(
         Icons.send_rounded,
-        color: kOxfordBlue,
+        color: kPlatinum,
         size: 20,
       ),
       //space between the icon and the text
@@ -344,7 +371,7 @@ final kBackToLoginContainer = Container(
   ),
   child: const Center(
     child: Text(
-      'BACK TO LOGIN',
+      'Back to Login',
       style: TextStyle(
         color: Colors.white,
         fontSize: 15,

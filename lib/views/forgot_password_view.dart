@@ -69,14 +69,16 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                   horizontal: sizeQuery.width * 0.07,
                   vertical: sizeQuery.height * 0.01,
                 ),
-                child: const Text(
-                  'FORGOT PASSWORD',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                child: const Center(
+                  child: Text(
+                    'FORGOT PASSWORD',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.left,
                   ),
-                  textAlign: TextAlign.left,
                 ),
               ),
               SizedBox(height: sizeQuery.height * 0.01),
@@ -118,19 +120,41 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(
-                    // if user doesnt enter email then keep the colour else change to orange
-                    onPressed: () {
-                      final email = _controller.text;
-                      context
-                          .read<AuthBloc>()
-                          .add(AuthEventForgotPassword(email: email));
-                    },
-                    child: kSendResetLinkContainer,
+                  Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: sizeQuery.width * 0.07,
+                      vertical: sizeQuery.height * 0.01,
+                    ),
+                    // Register button covers left and right 7% of screen
+                    child: SizedBox(
+                      width: sizeQuery.width * 0.85,
+                      height: sizeQuery.height * 0.07,
+                      // curved edges
+
+                      child: ElevatedButton(
+                        style: //oxford blue
+
+                            ElevatedButton.styleFrom(
+                          backgroundColor: kBdazalledBlue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        // if user doesnt enter email then keep the colour else change to orange
+                        onPressed: () {
+                          final email = _controller.text;
+                          context
+                              .read<AuthBloc>()
+                              .add(AuthEventForgotPassword(email: email));
+                        },
+                        child: kSendResetLinkContainer,
+                      ),
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: sizeQuery.height * 0.07),
+              SizedBox(height: sizeQuery.height * 0.001),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
