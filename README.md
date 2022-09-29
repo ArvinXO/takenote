@@ -5,7 +5,6 @@
   </a>
 </p>
 
-
 <p align="center">
   Take Notes
 </p>
@@ -22,17 +21,14 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
 A simple notes app, set colours for notes, share notes, temporarily delete notes & archive your notes.
 
-
-
 <p align="center">
   <img src = "https://user-images.githubusercontent.com/97199759/191323905-2e765ea4-f305-4d1a-873d-636ac3fa35e5.jpg" width=700>
 </p>
-
-
 
 <p align="center">
   <img src = "https://user-images.githubusercontent.com/97199759/191290609-167db54a-01e5-4e22-a5a4-efe5fc692c65.png" width=700>
@@ -44,17 +40,16 @@ A simple notes app, set colours for notes, share notes, temporarily delete notes
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
-
 ## Features
+
 - BLoC Architecture
 - Firebase cloud integration
 - Supports Android/iOS (iOS not published yet but works fine)
 - List/grid view for notes
 - Archive notes
 
-
 ## To-do
+
 - [ ] Search notes
 - [ ] Lock Notes - Local Auth
 - [ ] Desktop Support
@@ -62,33 +57,39 @@ A simple notes app, set colours for notes, share notes, temporarily delete notes
 - [ ] Localization
 - [ ] Fix Hard-coded / Non-DRY compliant code
 
-
 ## Platform
- - Android
- - iOS ```not published```
- - Desktop ```work in progress```
 
+- Android
+- iOS `not published`
+- Desktop `work in progress`
+- Linux `beta testing in progress`
 
 ## Compiling the app
+
 Before anything, be sure to have a working flutter sdk setup.If not installed, go to [Install - Flutter](https://docs.flutter.dev/get-started/install).
 
 Be sure to disable signing on build.gradle or change keystore to sign the app.
 
 For now the required flutter channel is master, so issue those two commands before starting building:
+
 ```
 $ flutter channel master
 ```
+
 ```
 $ flutter upgrade
 ```
 
 After that, building is simple as this:
+
 ```
 $ flutter pub get
 ```
+
 ```
 $ flutter run
 ```
+
 ```
 $ flutter build apk
 ```
@@ -97,10 +98,6 @@ $ flutter build apk
 
 Feel free to open a PR to suggest fixes, features or whatever you want, just remember that PRs are subjected to manual review so you gotta wait for actual people to look at your contributions.
 
-
-
-
 ## Acknowledgments
 
-Thanks to [Vandahd](https://github.com/vandadnp) for creating such an awsome course and sharing his Dart & Flutter tips 
-
+Thanks to [Vandahd](https://github.com/vandadnp) for creating such an awsome course and sharing his Dart & Flutter tips
