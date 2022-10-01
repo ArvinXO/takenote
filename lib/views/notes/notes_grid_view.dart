@@ -255,268 +255,270 @@ class _NotesGridViewState extends State<NotesGridView> {
                   padding: const EdgeInsets.all(16),
                   // curved corners
 
-                  child: Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      InkWell(
-                        borderRadius: BorderRadius.circular(15),
-                        onTap: () {
-                          // Edit Note Function
-                          widget.onNoteTap(note);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: const <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.edit_2),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text('Edit'),
-                              ),
-                            ],
+                  child: SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                    child: Column(// mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        InkWell(
+                          borderRadius: BorderRadius.circular(15),
+                          onTap: () {
+                            // Edit Note Function
+                            widget.onNoteTap(note);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: const <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(Iconsax.edit_2),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Edit'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(15),
-                        onTap: () {
-                          // Archive Note Function
-                          _notesService.archiveNote(
-                            documentId: note.documentId,
-                            archived: 1,
-                          );
-                          Navigator.of(context).pop();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: const <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.archive_add),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text('Archive'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      //share note
-                      InkWell(
-                        borderRadius: BorderRadius.circular(15),
-                        onTap: () async {
-                          // Share Note Function
-                          final text = note.noteText;
-                          final title = note.noteTitle;
-                          if (_note == null || text.isEmpty || title.isEmpty) {
-                            await showCannotShareEmptyNoteDialog(context);
-                          } else {
-                            Share.share('$title\n$text');
-                          }
-                          if (mounted) {
+                        InkWell(
+                          borderRadius: BorderRadius.circular(15),
+                          onTap: () {
+                            // Archive Note Function
+                            _notesService.archiveNote(
+                              documentId: note.documentId,
+                              archived: 1,
+                            );
                             Navigator.of(context).pop();
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: const <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.share),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text('Share'),
-                              ),
-                            ],
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: const <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(Iconsax.archive_add),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Archive'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        splashColor: Colors.red,
-                        borderRadius: BorderRadius.circular(15),
-                        onTap: () {
-                          // Delete Note Function
 
-                          // soft delete
-                          _notesService.softDeleteNote(
-                            documentId: note.documentId,
-                            deleted: 1,
-                          );
-                          Navigator.of(context).pop();
-                        },
-                        child: Padding(
+                        //share note
+                        InkWell(
+                          borderRadius: BorderRadius.circular(15),
+                          onTap: () async {
+                            // Share Note Function
+                            final text = note.noteText;
+                            final title = note.noteTitle;
+                            if (_note == null || text.isEmpty || title.isEmpty) {
+                              await showCannotShareEmptyNoteDialog(context);
+                            } else {
+                              Share.share('$title\n$text');
+                            }
+                            if (mounted) {
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: const <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(Iconsax.share),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Share'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          splashColor: Colors.red,
+                          borderRadius: BorderRadius.circular(15),
+                          onTap: () {
+                            // Delete Note Function
+
+                            // soft delete
+                            _notesService.softDeleteNote(
+                              documentId: note.documentId,
+                              deleted: 1,
+                            );
+                            Navigator.of(context).pop();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: const <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(Iconsax.note_remove),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Delete'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // InkWell(
+                        //   borderRadius: BorderRadius.circular(15),
+                        //   onTap: () {
+                        //     Navigator.pop(context);
+                        //   },
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(8.0),
+                        //     child: Row(
+                        //       children: const <Widget>[
+                        //         Padding(
+                        //           padding: EdgeInsets.all(8.0),
+                        //           child: Icon(Iconsax.close_circle),
+                        //         ),
+                        //         Padding(
+                        //           padding: EdgeInsets.all(8.0),
+                        //           child: Text('Cancel'),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(15),
+                          // onTap: () {
+                          //   Navigator.pop(context);
+                          //   _showColorPalette(context, _note);
+                          // },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: const <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(Iconsax.color_swatch),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Color Palette'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: const <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.note_remove),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text('Delete'),
-                              ),
-                            ],
+                          child: SizedBox(
+                            height: 60,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: false,
+                              children: [
+                                // For every color in pallette create a ColorPaletteButton
+                                ColorPaletteButton(
+                                  color: NoteColor.getColor(0),
+                                  onTap: () {
+                                    _notesService.updateNoteColor(
+                                      documentId: note.documentId,
+                                      color: 0,
+                                    );
+                                    Navigator.pop(context);
+                                  },
+                                  isSelected: note.noteColor == 0,
+                                ),
+                                ColorPaletteButton(
+                                  color: NoteColor.getColor(1),
+                                  onTap: () {
+                                    _notesService.updateNoteColor(
+                                      documentId: note.documentId,
+                                      color: 1,
+                                    );
+                                    Navigator.pop(context);
+                                  },
+                                  isSelected: note.noteColor == 1,
+                                ),
+                                ColorPaletteButton(
+                                  color: NoteColor.getColor(2),
+                                  onTap: () {
+                                    _notesService.updateNoteColor(
+                                      documentId: note.documentId,
+                                      color: 2,
+                                    );
+                                    Navigator.pop(context);
+                                  },
+                                  isSelected: note.noteColor == 2,
+                                ),
+                                ColorPaletteButton(
+                                  color: NoteColor.getColor(3),
+                                  onTap: () {
+                                    _notesService.updateNoteColor(
+                                      documentId: note.documentId,
+                                      color: 3,
+                                    );
+                                    Navigator.pop(context);
+                                  },
+                                  isSelected: note.noteColor == 3,
+                                ),
+                                ColorPaletteButton(
+                                  color: NoteColor.getColor(4),
+                                  onTap: () {
+                                    _notesService.updateNoteColor(
+                                      documentId: note.documentId,
+                                      color: 4,
+                                    );
+                                    Navigator.pop(context);
+                                  },
+                                  isSelected: note.noteColor == 4,
+                                ),
+                                ColorPaletteButton(
+                                  color: NoteColor.getColor(5),
+                                  onTap: () {
+                                    _notesService.updateNoteColor(
+                                      documentId: note.documentId,
+                                      color: 5,
+                                    );
+                                    Navigator.pop(context);
+                                  },
+                                  isSelected: note.noteColor == 5,
+                                ),
+                                ColorPaletteButton(
+                                  color: NoteColor.getColor(6),
+                                  onTap: () {
+                                    _notesService.updateNoteColor(
+                                      documentId: note.documentId,
+                                      color: 6,
+                                    );
+                                    Navigator.pop(context);
+                                  },
+                                  isSelected: note.noteColor == 6,
+                                ),
+                                ColorPaletteButton(
+                                  color: NoteColor.getColor(7),
+                                  onTap: () {
+                                    _notesService.updateNoteColor(
+                                      documentId: note.documentId,
+                                      color: 7,
+                                    );
+                                    Navigator.pop(context);
+                                  },
+                                  isSelected: note.noteColor == 7,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      // InkWell(
-                      //   borderRadius: BorderRadius.circular(15),
-                      //   onTap: () {
-                      //     Navigator.pop(context);
-                      //   },
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(8.0),
-                      //     child: Row(
-                      //       children: const <Widget>[
-                      //         Padding(
-                      //           padding: EdgeInsets.all(8.0),
-                      //           child: Icon(Iconsax.close_circle),
-                      //         ),
-                      //         Padding(
-                      //           padding: EdgeInsets.all(8.0),
-                      //           child: Text('Cancel'),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(15),
-                        // onTap: () {
-                        //   Navigator.pop(context);
-                        //   _showColorPalette(context, _note);
-                        // },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: const <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Iconsax.color_swatch),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text('Color Palette'),
-                              ),
-                            ],
-                          ),
+                        const SizedBox(
+                          height: 30,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 60,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: false,
-                            children: [
-                              // For every color in pallette create a ColorPaletteButton
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(0),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                    documentId: note.documentId,
-                                    color: 0,
-                                  );
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 0,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(1),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                    documentId: note.documentId,
-                                    color: 1,
-                                  );
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 1,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(2),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                    documentId: note.documentId,
-                                    color: 2,
-                                  );
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 2,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(3),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                    documentId: note.documentId,
-                                    color: 3,
-                                  );
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 3,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(4),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                    documentId: note.documentId,
-                                    color: 4,
-                                  );
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 4,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(5),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                    documentId: note.documentId,
-                                    color: 5,
-                                  );
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 5,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(6),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                    documentId: note.documentId,
-                                    color: 6,
-                                  );
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 6,
-                              ),
-                              ColorPaletteButton(
-                                color: NoteColor.getColor(7),
-                                onTap: () {
-                                  _notesService.updateNoteColor(
-                                    documentId: note.documentId,
-                                    color: 7,
-                                  );
-                                  Navigator.pop(context);
-                                },
-                                isSelected: note.noteColor == 7,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

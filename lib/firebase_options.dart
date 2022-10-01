@@ -16,9 +16,6 @@ import 'package:flutter/foundation.dart'
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      return web;
-    }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -26,6 +23,10 @@ class DefaultFirebaseOptions {
         return ios;
       case TargetPlatform.macOS:
         return macos;
+      case TargetPlatform.windows:
+        return windows;
+      case TargetPlatform.linux:
+        return linux;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -68,5 +69,23 @@ class DefaultFirebaseOptions {
     storageBucket: 'takenotes-flutter-project.appspot.com',
     iosClientId: '806667950412-7i8ub0ljqi6q67akb8h73l1ij53q2fcs.apps.googleusercontent.com',
     iosBundleId: 'com.atencia.takenote',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDCCyDWjee9k0IpfGZp7LwhVr0BhWmQM60',
+    appId: '1:806667950412:web:0abd3760c3bdb195ae97e9',
+    messagingSenderId: '806667950412',
+    projectId: 'takenotes-flutter-project',
+    authDomain: 'takenotes-flutter-project.firebaseapp.com',
+    storageBucket: 'takenotes-flutter-project.appspot.com',
+  );
+
+  static const FirebaseOptions linux = FirebaseOptions(
+    apiKey: 'AIzaSyDCCyDWjee9k0IpfGZp7LwhVr0BhWmQM60',
+    appId: '1:806667950412:web:8a84f9025ae79dd1ae97e9',
+    messagingSenderId: '806667950412',
+    projectId: 'takenotes-flutter-project',
+    authDomain: 'takenotes-flutter-project.firebaseapp.com',
+    storageBucket: 'takenotes-flutter-project.appspot.com',
   );
 }

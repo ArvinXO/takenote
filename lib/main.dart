@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:takenote/helpers/loading/splash_screen.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
+import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
 import 'package:takenote/services/auth/firebase_auth_provider.dart';
 import 'package:takenote/views/forgot_password_view.dart';
@@ -26,13 +30,25 @@ void main() {
         // Show splash screen while loading then show introduction
         home: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            if (state is AuthStateUninitialized) {
+            if( state is AuthStateUninitialized && Platform.isLinux){
+              if (BlocProvider.of<AuthBloc>(context).state is AuthStateUninitialized) {
+                 kDebugMode ? print('AuthStateUninitialized') : null;
+                BlocProvider.of<AuthBloc>(context).add(const AuthEventInitializing());
+              } else {
+                BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
+                kDebugMode ? print('AuthEVent initialise') : null;
+
+              }
+            }
+            if (state is AuthStateUninitialized && Platform.isAndroid || Platform.isIOS) {
               return const AnimatedSwitcher(
                 duration: Duration(milliseconds: 300),
                 switchOutCurve: Curves.easeInOut,
-                child: SplashScreen(),
+                child: //Platform is android show splash else show homepage directly
+                    SplashScreen(),
               );
             }
+
             if (state is AuthStateLoggedIn) {
               //authstateinitializing = false
               // emit initialized
@@ -40,6 +56,7 @@ void main() {
             } else if (state is AuthStateNeedsVerification) {
               return const VerifiyEmailView();
             } else if (state is AuthStateLoggedOut) {
+              kDebugMode ? print('AuthStateLoggedOut') : null;
               return const LoginView();
             } else if (state is AuthStateInitializing) {
               return const IntroductionPage();

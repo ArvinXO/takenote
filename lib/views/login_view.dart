@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:takenote/components/background_green.dart';
@@ -46,6 +47,13 @@ class _LoginViewState extends State<LoginView> {
       listener: (context, state) async {
         //Screen size mediaQuery is used to get the height and width of the screen
         if (state is AuthStateLoggedOut) {
+          kDebugMode
+              ? print('Logged out')
+              : ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Logged out'),
+                  ),
+                );
           if (state.exception is UserNotFoundAuthException) {
             await showErrorDialog(
                 context, 'Cannot find user with entered credentials.');

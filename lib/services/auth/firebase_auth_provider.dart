@@ -1,4 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../firebase_options.dart';
 import 'auth_user.dart';
@@ -11,10 +13,15 @@ import 'package:firebase_auth/firebase_auth.dart'
 class FirebaseAuthProvider implements AuthProvider {
   @override
   Future<void> initialize() async {
+    WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    kDebugMode ? print('Firebase initialized') : null;
   }
+
+  // Check for authstate changes  and return the user if there is one or null if there is not one
+
 
   @override
   Future<AuthUser> createUser({

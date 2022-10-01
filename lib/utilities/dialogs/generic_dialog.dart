@@ -16,7 +16,7 @@ Future<T?> showGenericDialog<T>({
       return AlertDialog(
         title: Text(
           title,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         // CURVED
         shape: RoundedRectangleBorder(
