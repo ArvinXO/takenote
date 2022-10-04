@@ -40,14 +40,15 @@ static void my_application_activate(GApplication* application) {
   if (use_header_bar) {
     GtkHeaderBar* header_bar = GTK_HEADER_BAR(gtk_header_bar_new());
     gtk_widget_show(GTK_WIDGET(header_bar));
-    gtk_header_bar_set_title(header_bar, "takenote");
+    gtk_header_bar_set_title(header_bar, "Take Note");
     gtk_header_bar_set_show_close_button(header_bar, TRUE);
     gtk_window_set_titlebar(window, GTK_WIDGET(header_bar));
   } else {
-    gtk_window_set_title(window, "takenote");
+    gtk_window_set_title(window, "Take Note");
   }
 
-  gtk_window_set_default_size(window, 1280, 720);
+  gtk_window_set_default_size(window, 1480, 720);
+  gtk_window_set_icon_from_file(GTK_WINDOW(window),"/home/vino/AndroidStudioProjects/takenote/assets/icon/icon.ico",NULL);
   gtk_widget_show(GTK_WIDGET(window));
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();

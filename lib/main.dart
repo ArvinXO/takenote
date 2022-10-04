@@ -19,6 +19,29 @@ import 'package:takenote/views/register_view.dart';
 import 'package:takenote/views/verify_email_view.dart';
 import 'constants/routes.dart';
 
+// theme button toggle
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import 'package:takenote/providers/theme_provider.dart';
+// import 'package:takenote/services/Utils/utils.dart';
+//
+// class ThemeButton extends StatelessWidget {
+//   const ThemeButton({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return IconButton(
+//       icon: Icon(
+//         Icons.brightness_4,
+//         color: Utils(context).getColor,
+//       ),
+//       onPressed: () {
+//         Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+//       },
+//     );
+//   }
+
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -83,5 +106,5 @@ void main() {
     ),
   );
 }
- 
+
 // TODO FlutterSlidable - NOTES LISTVIEW
