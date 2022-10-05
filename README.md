@@ -64,6 +64,9 @@ A simple notes app, set colours for notes, share notes, temporarily delete notes
 - Desktop `work in progress`
 - Linux `beta testing in progress`
 
+### Android 
+<a href='https://play.google.com/store/apps/details?id=com.atencia.takenote'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="200"/></a>
+
 ## Compiling the app
 
 Before anything, be sure to have a working flutter sdk setup.If not installed, go to [Install - Flutter](https://docs.flutter.dev/get-started/install).
