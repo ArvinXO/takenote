@@ -1,12 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:takenote/components/background_green.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:takenote/constants/k_constants.dart';
 
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
 
+import '../components/background_colour_animate.dart';
+import '../components/fade_animation.dart';
+import '../enums/login_field_control.dart';
+import '../services/Utils/utils.dart';
 import '../services/auth/auth_exceptions.dart';
 import '../services/auth/bloc/auth_event.dart';
 import '../utilities/dialogs/error_dialog.dart';
@@ -21,6 +26,13 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+
+  Color enabled = const Color(0xFF827F8A);
+  Color enabledtxt = Colors.white;
+  Color deaible = Colors.grey;
+  Color backgroundColor = const Color(0xFF1F1A30);
+  bool ispasswordev = true;
+  LoginFields? selected;
 
   //TitleBar for AppBar that can change depending on the state of the AuthBloc
 
@@ -42,7 +54,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    Size sizeQuery = MediaQuery.of(context).size;
+    final Size size = Utils(context).size;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         //Screen size mediaQuery is used to get the height and width of the screen
@@ -64,225 +76,306 @@ class _LoginViewState extends State<LoginView> {
           }
         }
       },
-      child: Scaffold(
-        backgroundColor: const Color.fromRGBO(239, 246, 236, 0.98),
-        resizeToAvoidBottomInset: false,
-        body: GreenBackground(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: sizeQuery.height * 0.07,
-              ),
-              //logo
-              // Padding(
-              //   padding: const EdgeInsets.all(20.0),
-              //   child: Hero(
-              //     tag: "logo",
-              //     child: Image.asset(
-              //       'assets/icon/icontext.png',
-              //       width: sizeQuery.width * 0.6,
-              //     ),
-              //   ),
-              // ),
+      child: FadeAnimation(
+        delay: 0.1,
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: BackgroundColourAnimation(
+            delay: 1,
+            child: SingleChildScrollView(
+              //Prevent textfield from being covered by keyboard
 
-              //Align login text to left
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(
-                  horizontal: sizeQuery.width * 0.07,
-                  vertical: sizeQuery.height * 0.06,
-                ),
-                child: const Text(
-                  'LOGIN',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: kJungleGreen,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: size.height * 0.05,
                   ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              SizedBox(height: sizeQuery.height * 0.01),
-
-              Padding(
-                padding: k3010LRpad,
-                child: TextField(
-                  //overflow textfield
-                  controller: _email,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  showCursor: true,
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      //overflow text if text is too long
-                      constraints:
-                          BoxConstraints(maxHeight: sizeQuery.height * 0.08),
-                      //black border
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
-                          width: 2,
-                        ),
-                      ),
-                      fillColor: Colors.white,
-                      prefixIcon: const Icon(
-                        Icons.email,
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: _email.clear,
-                        icon: const Icon(Icons.clear),
-                      ),
-                      hintText: 'Email'),
-                ),
-              ),
-              Padding(
-                padding: k3010LRpad,
-                child: TextField(
-                  //white background
-                  controller: _password,
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: InputDecoration(
-                      constraints:
-                          BoxConstraints(maxHeight: sizeQuery.height * 0.07),
-                      //white background
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fillColor: Colors.white,
-                      prefixIcon: const Icon(Icons.lock),
-                      suffix: IconButton(
-                        onPressed: _password.clear,
-                        icon: const Icon(Icons.clear),
-                      ),
-                      hintText: 'Password'),
-                ),
-              ),
-              // Wrap button to the right side
-              // login button size is 0.4 of the screen
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(
-                  horizontal: sizeQuery.width * 0.07,
-                  vertical: sizeQuery.height * 0.01,
-                ),
-                child: SizedBox(
-                  width: sizeQuery.width * 0.85,
-                  height: sizeQuery.height * 0.07,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kJungleGreen,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  FadeAnimation(
+                    delay: 0.8,
+                    child: Image.asset(
+                      'assets/images/signin.png',
+                      height: size.height * 0.2,
+                      width: size.width * 0.7,
+                    ),
+                  ),
+                  FadeAnimation(
+                    delay: 1,
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 230.0),
+                      child: Text(
+                        "Login",
+                        style: GoogleFonts.heebo(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35,
+                            letterSpacing: 2),
                       ),
                     ),
-                    onPressed: () async {
-                      if (_email.text.isEmpty || _password.text.isEmpty) {
-                        //print user verified
-                        await showErrorDialog(
-                            context, 'Please enter your email and password.');
-                        if (!mounted) {
-                          return;
-                        }
-                      } else {
-                        // else if login is successful, show loading dialog
+                  ),
+                  FadeAnimation(
+                    delay: 1,
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 130.0),
+                      child: Text(
+                        "Please sign in to continue",
+                        style: GoogleFonts.heebo(
+                            color: Colors.grey, letterSpacing: 0.5),
+                      ),
+                    ),
+                  ),
+                  FadeAnimation(
+                    delay: 1,
+                    child: Container(
+                      width: size.width * 0.7, //width of the TextField Widget
+                      height: size.height * 0.01,
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.07,
+                        vertical: size.height * 0.06,
+                      ),
+                      child: const Text(
+                        'LOGIN',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: kJungleGreen,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: size.height / 90),
+                  FadeAnimation(
+                    delay: 1.2,
+                    child: Container(
+                      width: size.width * 0.88, //width of the TextField Widget
+                      height: size.height * 0.07,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2,
+                            color: selected == LoginFields.Email
+                                ? kJungleDarkGreen.withOpacity(1)
+                                : kJungleDarkGreen.withOpacity(0.2),
+                          ),
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: selected == LoginFields.Email
+                              ? enabled
+                              : backgroundColor),
+                      child: TextField(
+                        clipBehavior: Clip.antiAlias,
+                        controller: _email,
+                        onTap: () {
+                          setState(() {
+                            selected = LoginFields.Email;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          enabledBorder: InputBorder.none,
+                          border: InputBorder.none,
+                          prefixIcon: Icon(
+                            Icons.email_outlined,
+                            color: selected == LoginFields.Email
+                                ? enabledtxt
+                                : deaible,
+                          ),
+                          hintText: 'Email',
+                          hintStyle: TextStyle(
+                            color: selected == LoginFields.Email
+                                ? enabledtxt
+                                : deaible,
+                          ),
+                        ),
+                        style: TextStyle(
+                            color: selected == LoginFields.Email
+                                ? enabledtxt
+                                : deaible,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  FadeAnimation(
+                    delay: 1,
+                    child: Container(
+                      width: size.width * 0.88, //width of the TextField Widget
+                      height: size.height * 0.07,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 2,
+                          color: selected == LoginFields.password
+                              ? kJungleDarkGreen.withOpacity(1)
+                              : kJungleDarkGreen.withOpacity(0.2),
+                        ),
+                        borderRadius: BorderRadius.circular(25.0),
+                        color: selected == LoginFields.password
+                            ? enabled
+                            : backgroundColor,
+                      ),
+                      child: TextField(
+                        controller: _password,
+                        onTap: () {
+                          setState(() {
+                            selected = LoginFields.password;
+                          });
+                        },
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            border: InputBorder.none,
+                            prefixIcon: Icon(
+                              Icons.lock_open_outlined,
+                              color: selected == LoginFields.password
+                                  ? enabledtxt
+                                  : deaible,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: ispasswordev
+                                  ? Icon(
+                                      Icons.visibility_off,
+                                      color: selected == LoginFields.password
+                                          ? enabledtxt
+                                          : deaible,
+                                    )
+                                  : Icon(
+                                      Icons.visibility,
+                                      color: selected == LoginFields.password
+                                          ? enabledtxt
+                                          : deaible,
+                                    ),
+                              onPressed: () =>
+                                  setState(() => ispasswordev = !ispasswordev),
+                            ),
+                            hintText: 'Password',
+                            hintStyle: TextStyle(
+                                color: selected == LoginFields.password
+                                    ? enabledtxt
+                                    : deaible)),
+                        obscureText: ispasswordev,
+                        style: TextStyle(
+                            color: selected == LoginFields.password
+                                ? enabledtxt
+                                : deaible,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  FadeAnimation(
+                    delay: 1.2,
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.04,
+                        vertical: size.height * 0.01,
+                      ),
+                      child: SizedBox(
+                        width: size.width * 0.55,
+                        height: size.height * 0.07,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kJungleGreen,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          onPressed: () async {
+                            if (_email.text.isEmpty || _password.text.isEmpty) {
+                              //print user verified
+                              await showErrorDialog(context,
+                                  'Please enter your email and password.');
+                              if (!mounted) {
+                                return;
+                              }
+                            } else {
+                              // else if login is successful, show loading dialog
 
-                        FocusScope.of(context).unfocus();
-                        // loading dialog
+                              FocusScope.of(context).unfocus();
+                              // loading dialog
 
-                        if (!mounted) {
-                          return;
-                        }
+                              if (!mounted) {
+                                return;
+                              }
 
-                        final email = _email.text;
-                        final password = _password.text;
+                              final email = _email.text;
+                              final password = _password.text;
+                              context.read<AuthBloc>().add(
+                                    AuthEventLogIn(
+                                      email,
+                                      password,
+                                    ),
+                                  );
+                              BlocProvider.of<AuthBloc>(context)
+                                  .add(const AuthEventInitialize());
+                              // loading screen
+
+                              // show dialog loading then remove circular progress indicator  after 2 seconds
+                            }
+                          },
+                          child: const Text('Login'),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.0001,
+                  ),
+                  FadeAnimation(
+                    delay: 1,
+                    child: TextButton(
+                      onPressed: () {
                         context.read<AuthBloc>().add(
-                              AuthEventLogIn(
-                                email,
-                                password,
-                              ),
+                              const AuthEventForgotPassword(),
                             );
-                        BlocProvider.of<AuthBloc>(context)
-                            .add(const AuthEventInitialize());
-                        // loading screen
-
-                        // show dialog loading then remove circular progress indicator  after 2 seconds
-                      }
-                    },
-                    child: const Text('Login'),
+                      },
+                      child: Text("Forgot password?",
+                          style: GoogleFonts.heebo(
+                            color: const Color(0xFF0DF5E4).withOpacity(0.9),
+                            letterSpacing: 0.5,
+                          )),
+                    ),
                   ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerRight,
-                padding: EdgeInsets.symmetric(
-                  horizontal: sizeQuery.width * 0.07,
-                  vertical: sizeQuery.height * 0.0000001,
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(
-                          const AuthEventForgotPassword(),
-                        );
-                  },
-                  child: const Text(
-                    'Forgot Password',
-                    style: TextStyle(color: kRichBlackFogra, fontSize: 15),
+                  SizedBox(
+                    height: size.height * 0.23,
                   ),
-                ),
-              ),
-              //Divider
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(
-                  horizontal: sizeQuery.width * 0.07,
-                  vertical: sizeQuery.height * 0.01,
-                ),
-                child: const Text(
-                  'OR',
-                  style: TextStyle(
-                    color: kRichBlackFogra,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              //divider line
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(
-                  horizontal: sizeQuery.width * 0.07,
-                  vertical: sizeQuery.height * 0.01,
-                ),
-                child: const Divider(
-                  color: kRichBlackFogra,
-                  thickness: 1,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      context.read<AuthBloc>().add(
-                            const AuthEventShouldRegister(),
-                          );
-                    },
-                    child: const Text(
-                      'Need an account? Register',
-                      style: TextStyle(color: kRichBlackFogra, fontSize: 15),
+                  FadeAnimation(
+                    delay: 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Don't have an account?",
+                            style: GoogleFonts.heebo(
+                              color: Colors.grey,
+                              letterSpacing: 0.5,
+                            )),
+                        TextButton(
+                            style: TextButton.styleFrom(),
+                            onPressed: () {
+                              context.read<AuthBloc>().add(
+                                    const AuthEventShouldRegister(),
+                                  );
+                            },
+                            child: Text(
+                              "Register",
+                              style: GoogleFonts.heebo(
+                                color: const Color(0xFF0DF5E4).withOpacity(0.9),
+                                letterSpacing: 0.5,
+                              ),
+                            )),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),

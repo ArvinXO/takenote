@@ -4,7 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_auth
-  local_auth_windows
+  share_plus_windows
   url_launcher_windows
 )
 

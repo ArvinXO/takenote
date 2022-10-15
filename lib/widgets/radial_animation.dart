@@ -39,7 +39,7 @@ class AnimatedContainerDemoState extends State<AnimatedContainerDemo>
 
   @override
   Widget build(BuildContext context) {
-    Size sizeQuery = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
 
     return AnimatedBuilder(
         animation: _controller.view,
@@ -48,8 +48,8 @@ class AnimatedContainerDemoState extends State<AnimatedContainerDemo>
             backgroundColor: Colors.black,
             body: Center(
               child: Container(
-                width: sizeQuery.width * 0.6,
-                height: sizeQuery.height * 0.2,
+                width: size.width * 0.6,
+                height: size.height * 0.2,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
@@ -71,8 +71,8 @@ class AnimatedContainerDemoState extends State<AnimatedContainerDemo>
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    width: sizeQuery.width * 0.25,
-                    height: sizeQuery.height * 0.09,
+                    width: size.width * 0.25,
+                    height: size.height * 0.09,
                     decoration: BoxDecoration(
                       color: kBdazalledBlue,
                       borderRadius: BorderRadius.circular(10),

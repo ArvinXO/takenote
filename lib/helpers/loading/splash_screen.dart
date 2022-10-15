@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:takenote/components/fade_animation.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:video_player/video_player.dart';
 
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.asset(
-      'assets/videos/splash_screen.mp4',
+      'assets/videos/splashy.mp4',
     )
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _playVideo() async {
     _controller.play();
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(milliseconds: 1500));
     //
     setState(() {
       //AuthEventInitialize
@@ -54,15 +55,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-          child: _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : Container()),
+    return FadeAnimation(
+      delay: 0.1,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+            child: _controller.value.isInitialized
+                ? AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller),
+                  )
+                : Container()),
+      ),
     );
   }
 }

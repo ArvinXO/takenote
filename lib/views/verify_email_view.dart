@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:takenote/components/background_blue.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:takenote/components/background_colour_animate.dart';
+import 'package:takenote/services/Utils/utils.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/utilities/dialogs/resend_verification_dialog.dart';
@@ -16,12 +18,21 @@ class VerifiyEmailView extends StatefulWidget {
 }
 
 class _VerifiyEmailViewState extends State<VerifiyEmailView>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _controller;
+  late Animation<double> _animation;
   @override
   void initState() {
     super.initState();
-
+    _animation = AnimationController(
+        vsync: this, // the SingleTickerProviderStateMixin
+        duration: const Duration(seconds: 10))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) _animation;
+      })
+      ..addListener(() {
+        setState(() {});
+      });
     _controller = AnimationController(
         vsync: this, // the SingleTickerProviderStateMixin
         duration: const Duration(seconds: 1))
@@ -35,21 +46,22 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView>
 
   @override
   void dispose() {
+    _animation.removeListener(() {});
     _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size sizeQuery = MediaQuery.of(context).size;
+    Size size = Utils(context).size;
     return Scaffold(
-      backgroundColor: kBlueBackground,
-      resizeToAvoidBottomInset: false,
-      body: BlueBackground(
+      backgroundColor: kRichBlackFogra,
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(
-              height: sizeQuery.height * 0.12,
+              height: size.height * 0.01,
             ),
             const Padding(
               padding: EdgeInsets.all(98.0),
@@ -62,10 +74,23 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView>
                 ),
               ),
             ),
+            //Tap the mail icon! Animated Text
+            ScaleTransition(
+              scale: Tween<double>(begin: 1, end: 1.2).animate(_controller),
+              child: const Text(
+                "Psst...Tap me",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+
             const SizedBox(
                 width: 100, height: 100, child: AnimatedContainerDemo()),
             SizedBox(
-              height: sizeQuery.height * 0.02,
+              height: size.height * 0.02,
             ),
             const Padding(
               padding: EdgeInsets.only(
@@ -81,7 +106,7 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView>
               ),
             ),
             SizedBox(
-              height: sizeQuery.height * 0.02,
+              height: size.height * 0.02,
             ),
             TextButton(
               onPressed: () async {
@@ -94,7 +119,7 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView>
               child: kSendVerificationContainer,
             ),
             SizedBox(
-              height: sizeQuery.height * 0.01,
+              height: size.height * 0.21,
             ),
             Center(
               child: TextButton(
@@ -104,7 +129,13 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView>
                         const AuthEventLogOut(),
                       );
                 },
-                child: kRestartContainer,
+                child: Text(
+                  "Return to login",
+                  style: GoogleFonts.heebo(
+                    color: const Color(0xFF0DF5E4).withOpacity(0.9),
+                    letterSpacing: 0.5,
+                  ),
+                ),
               ),
             ),
           ],
