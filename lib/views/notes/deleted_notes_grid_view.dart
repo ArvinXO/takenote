@@ -238,9 +238,7 @@ class _DeletedNotesGridViewState extends State<DeletedNotesGridView> {
         builder: (context) {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setModalState) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * 0.5,
+              return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -323,6 +321,7 @@ class _DeletedNotesGridViewState extends State<DeletedNotesGridView> {
                           ),
                         ),
                       ),
+
                       InkWell(
                         splashColor: Colors.red,
                         borderRadius: BorderRadius.circular(15),
@@ -352,7 +351,33 @@ class _DeletedNotesGridViewState extends State<DeletedNotesGridView> {
                           ),
                         ),
                       ),
-
+                      //Delete allnotes permanently
+                      InkWell(
+                        borderRadius: BorderRadius.circular(15),
+                        onTap: () {
+                          // Delete Note Function
+                          _notesService.deleteAllNotes(
+                            ownerUserId: note.ownerUserId,
+                            deleted: 1,
+                          );
+                          Navigator.of(context).pop();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: const <Widget>[
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(Iconsax.close_circle),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Delete All'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       InkWell(
                         borderRadius: BorderRadius.circular(15),
                         // onTap: () {

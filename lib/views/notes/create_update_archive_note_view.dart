@@ -137,6 +137,14 @@ class _CreateUpdateArchiveNoteViewState
                 ? const Text('Create a new note')
                 : const Text('Update your note'),
         actions: [
+          //Save
+          IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: () {
+              _saveNoteIfTextIsNotEmpty();
+              Navigator.pop(context);
+            },
+          ),
           // Archive
           IconButton(
             onPressed: () async {

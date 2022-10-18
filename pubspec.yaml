@@ -63,6 +63,9 @@ dependencies:
   firebase_core_desktop: ^1.0.2
   firebase_auth_desktop: ^1.0.2
   desktop_webview_auth: ^0.0.9
+  dragablegridview_flutter: ^0.2.5
+  flutter_draggable_gridview: ^0.0.7
+  flutter_quill: ^6.0.8+1
 
 
 

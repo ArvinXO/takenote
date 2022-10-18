@@ -101,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
                   FadeAnimation(
                     delay: 1,
                     child: Container(
-                      margin: const EdgeInsets.only(right: 230.0),
+                      margin: EdgeInsets.only(right: size.width * 0.62),
                       child: Text(
                         "Login",
                         style: GoogleFonts.heebo(
@@ -115,7 +115,7 @@ class _LoginViewState extends State<LoginView> {
                   FadeAnimation(
                     delay: 1,
                     child: Container(
-                      margin: const EdgeInsets.only(right: 130.0),
+                      margin: EdgeInsets.only(right: size.width * 0.42),
                       child: Text(
                         "Please sign in to continue",
                         style: GoogleFonts.heebo(
@@ -217,7 +217,9 @@ class _LoginViewState extends State<LoginView> {
                             : backgroundColor,
                       ),
                       child: TextField(
-                        controller: _password,
+                        controller: //null check
+                            _password,
+                        // _password,
                         onTap: () {
                           setState(() {
                             selected = LoginFields.password;

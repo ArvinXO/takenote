@@ -39,127 +39,35 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: SizedBox(
-      //   width: MediaQuery.of(context).size.width * 0.5, //<-- SEE HERE
-
-      //   child: Drawer(
-      //     // Add a ListView to the drawer. This ensures the user can scroll
-      //     // through the options in the drawer if there isn't enough vertical
-      //     // space to fit everything.
-      //     child: ListView(
-      //       // Important: Remove any padding from the ListView.
-      //       padding: EdgeInsets.zero,
-      //       children: [
-      //         const DrawerHeader(
-      //           decoration: BoxDecoration(
-      //             color: kJungleGreen,
-      //           ),
-      //           // logo
-      //           child: FlutterLogo(),
-      //         ),
-      //         ListTile(
-      //           leading: const Icon(Icons.home_filled),
-      //           title: const Text('Home'),
-      //           onTap: () {
-      //             Navigator.pop(context);
-      //             // Update the state of the app.
-      //             // ...
-      //           },
-      //         ),
-      //         ListTile(
-      //           leading: const Icon(Icons.folder),
-      //           title: const Text('Folders'),
-      //           onTap: () {
-      //             // Update the state of the app.
-      //             // ...
-      //           },
-      //         ),
-      //         ListTile(
-      //           leading: const Icon(Icons.archive_rounded),
-      //           title: const Text('Archive'),
-      //           onTap: () {
-      //             // Update the state of the app.
-      //             // ...
-      //           },
-      //         ),
-      //         ListTile(
-      //           leading: //Bin setting
-      //               const Icon(Icons.delete),
-      //           title: const Text('Bin'),
-      //           onTap: () {
-      //             // Update the state of the app.
-      //             // ...
-      //           },
-      //         ),
-      //         ListTile(
-      //           leading: //Icon setting
-      //               const Icon(Icons.settings),
-      //           title: const Text('Settings'),
-      //           onTap: () {
-      //             Navigator.of(context).push(//push to settings page
-      //                 MaterialPageRoute(
-      //                     builder: (context) => const SettingsView()));
-      //             // Update the state of the app.
-      //             // ...
-      //           },
-      //         ),
-      //         const AboutListTile(
-      //           // <-- SEE HERE
-      //           icon: Icon(
-      //             Icons.info,
-      //           ),
-      //           applicationIcon: Icon(
-      //             Icons.local_play,
-      //           ),
-      //           applicationName: 'Take Note',
-      //           applicationVersion: '1.0.25',
-      //           applicationLegalese: '© 2022 Company',
-      //           aboutBoxChildren: [
-      //             ///Content goes here...
-      //           ],
-      //           child: Text('About app'),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            // rounded corners
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                kJungleGreen.withOpacity(0.3),
-                kOxfordBlue.withOpacity(0.9),
-              ],
-            ),
-          ),
-        ),
+        flexibleSpace: NotesAppBarContainer,
         title: const Text(
           'Notes',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         actions: [
-          // IconButton(
-          //   onPressed: () {
-          //     Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
-          //   },
-          //   icon: const Icon(Icons.add),
-          // ),
-          //PopupMenuButton grid or list
-
           IconButton(
             onPressed: () {
               setState(() {
                 isGridView = !isGridView;
+                //Show Snackbar
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: isGridView
+                        ? const Text(
+                            'Grid View',
+                            textAlign: TextAlign.center,
+                          )
+                        : const Text(
+                            'List View',
+                            textAlign: TextAlign.center,
+                          ),
+                    duration: const Duration(seconds: 1),
+                    backgroundColor: kJungleGreen.withOpacity(0.3),
+                  ),
+                );
               });
             },
             //icon is grid or list

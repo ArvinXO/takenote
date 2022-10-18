@@ -42,22 +42,7 @@ class _DeleteViewState extends State<DeleteView> {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[
-                kOxfordBlue.withOpacity(0.9),
-                kJungleGreen.withOpacity(0.3),
-              ],
-            ),
-          ),
-        ),
+        flexibleSpace: NotesAppBarContainer,
         title: const Text(
           'Deleted Notes',
           style: TextStyle(fontWeight: FontWeight.w600),
@@ -75,6 +60,22 @@ class _DeleteViewState extends State<DeleteView> {
             onPressed: () {
               setState(() {
                 isGridView = !isGridView;
+                //Show Snackbar
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: isGridView
+                        ? const Text(
+                            'Grid View',
+                            textAlign: TextAlign.center,
+                          )
+                        : const Text(
+                            'List View',
+                            textAlign: TextAlign.center,
+                          ),
+                    duration: const Duration(seconds: 1),
+                    backgroundColor: kJungleGreen.withOpacity(0.3),
+                  ),
+                );
               });
             },
             //icon is grid or list

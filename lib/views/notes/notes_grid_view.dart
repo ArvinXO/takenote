@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:takenote/components/fade_animation.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
 import 'package:takenote/services/cloud/firebase_cloud_storage.dart';
 import 'package:takenote/views/notes/animated_scroll_view_item.dart';
@@ -112,116 +113,95 @@ class _NotesGridViewState extends State<NotesGridView> {
                             },
                             //Red background when swiped with delete text
 
-                            child: Card(
-                              color: NoteColor.getColor(note.noteColor),
-                              margin: const EdgeInsets.all(6),
-                              elevation: 3,
-                              child: Visibility(
-                                visible: widget.notes.isNotEmpty,
-                                // child card with note title and note content inkwell container
-                                child: InkWell(
-                                  // onlongpress show optionsheet
-                                  onLongPress: () {
-                                    _note = note;
-                                    showOptionsSheet(
-                                      // show optionsheet
-                                      context,
-                                      note,
-                                    );
-                                  },
-                                  onTap: () {
-                                    widget.onNoteTap(note);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          note.noteTitle,
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: kRichBlackFogra,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        // Divider
-                                        const Divider(
-                                          color: kRichBlackFogra,
-                                          thickness: 1.3,
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Expanded(
-                                          child: Text(
-                                            note.noteText,
+                            child: FadeAnimation(
+                              delay: 0.2,
+                              child: Card(
+                                color: NoteColor.getColor(note.noteColor),
+                                margin: const EdgeInsets.all(6),
+                                elevation: 3,
+                                child: Visibility(
+                                  visible: widget.notes.isNotEmpty,
+                                  // child card with note title and note content inkwell container
+                                  child: InkWell(
+                                    // onlongpress show optionsheet
+                                    onLongPress: () {
+                                      _note = note;
+                                      showOptionsSheet(
+                                        // show optionsheet
+                                        context,
+                                        note,
+                                      );
+                                    },
+                                    onTap: () {
+                                      widget.onNoteTap(note);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            note.noteTitle,
                                             style: const TextStyle(
-                                              //scale factor to make text smaller
-                                              fontSize: 15,
-                                              height: 1.5,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: kRichBlackFogra,
                                             ),
-                                            maxLines: 6,
-                                            overflow: TextOverflow.fade,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                        ),
-                                        // date and time of note creation in the bottom right corner  of the card
-                                        const Spacer(),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            // show date and time of note creation with border
-                                            Container(
-                                              padding: const EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: Colors.black,
-                                                  width: 1,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
+                                          //button to share more options
+                                          // Divider
+                                          const Divider(
+                                            color: kRichBlackFogra,
+                                            thickness: 1.3,
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Expanded(
+                                            child: Text(
+                                              note.noteText,
+                                              style: const TextStyle(
+                                                //scale factor to make text smaller
+                                                fontSize: 15,
+                                                height: 1.5,
                                               ),
-                                              child: Text(
-                                                note.noteDate,
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                ),
-                                              ),
+                                              maxLines: 6,
+                                              overflow: TextOverflow.fade,
                                             ),
-                                          ],
-                                        ),
-                                      ],
+                                          ),
+                                          // date and time of note creation in the bottom right corner  of the card
+                                          const Spacer(),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              // show date and time of note creation with border
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.all(4),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.black,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                ),
+                                                child: Text(
+                                                  note.noteDate,
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                                // child: ListTile(
-                                //   //onlongpress to share
-                                //   onLongPress: () {
-                                //     _showOptionsSheet(context, note);
-                                //   },
-                                //   contentPadding: const EdgeInsets.symmetric(
-                                //       horizontal: 16, vertical: 8),
-
-                                //   title: Text(
-                                //     note.noteTitle,
-                                //     maxLines: 1,
-                                //     softWrap: true,
-                                //     overflow: TextOverflow.fade,
-                                //   ),
-                                //   subtitle: Text(
-                                //     note.noteText,
-                                //     maxLines: 10,
-                                //     softWrap: true,
-                                //     overflow: TextOverflow.fade,
-                                //   ),
-                                //   //date positioned bottom right
-
-                                //   onTap: () {
-                                //     widget.onNoteTap(note);
-                                //   },
-                                // ),
                               ),
                             ),
                           ),
@@ -256,8 +236,9 @@ class _NotesGridViewState extends State<NotesGridView> {
                   // curved corners
 
                   child: SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
-                    child: Column(// mainAxisSize: MainAxisSize.min,
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Column(
+                      // mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         InkWell(
                           borderRadius: BorderRadius.circular(15),
@@ -315,7 +296,9 @@ class _NotesGridViewState extends State<NotesGridView> {
                             // Share Note Function
                             final text = note.noteText;
                             final title = note.noteTitle;
-                            if (_note == null || text.isEmpty || title.isEmpty) {
+                            if (_note == null ||
+                                text.isEmpty ||
+                                title.isEmpty) {
                               await showCannotShareEmptyNoteDialog(context);
                             } else {
                               Share.share('$title\n$text');

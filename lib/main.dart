@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:takenote/helpers/loading/splash_screen.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
@@ -18,6 +17,7 @@ import 'package:takenote/views/onboarding_view.dart';
 import 'package:takenote/views/register_view.dart';
 import 'package:takenote/views/verify_email_view.dart';
 import 'constants/routes.dart';
+import 'helpers/loading/splash_screen.dart';
 
 // theme button toggle
 // import 'package:flutter/material.dart';
@@ -41,7 +41,6 @@ import 'constants/routes.dart';
 //     );
 //   }
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -53,28 +52,32 @@ void main() {
         // Show splash screen while loading then show introduction
         home: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            if( state is AuthStateUninitialized && Platform.isLinux){
-              if (BlocProvider.of<AuthBloc>(context).state is AuthStateUninitialized) {
-                 kDebugMode ? print('AuthStateUninitialized') : null;
-                BlocProvider.of<AuthBloc>(context).add(const AuthEventInitializing());
+            if (state is AuthStateUninitialized && Platform.isLinux) {
+              if (BlocProvider.of<AuthBloc>(context).state
+                  is AuthStateUninitialized) {
+                kDebugMode ? print('AuthStateUninitialized') : null;
+                BlocProvider.of<AuthBloc>(context)
+                    .add(const AuthEventInitializing());
               } else {
-                BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
+                BlocProvider.of<AuthBloc>(context)
+                    .add(const AuthEventInitialize());
                 kDebugMode ? print('AuthEVent initialise') : null;
-
               }
             }
-            if (state is AuthStateUninitialized && Platform.isAndroid || Platform.isIOS) {
-              return const AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
-                switchOutCurve: Curves.easeInOut,
-                child: //Platform is android show splash else show homepage directly
-                    SplashScreen(),
-              );
+            // if android or ios
+            if (state is AuthStateUninitialized && Platform.isAndroid ||
+                Platform.isIOS) {
+              if (BlocProvider.of<AuthBloc>(context).state
+                  is AuthStateUninitialized) {
+                // splash screen
+                return const SplashScreen();
+              } else {
+                BlocProvider.of<AuthBloc>(context)
+                    .add(const AuthEventInitialize());
+              }
             }
 
             if (state is AuthStateLoggedIn) {
-              //authstateinitializing = false
-              // emit initialized
               return const HomePage();
             } else if (state is AuthStateNeedsVerification) {
               return const VerifiyEmailView();

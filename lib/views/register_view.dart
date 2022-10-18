@@ -103,7 +103,7 @@ class _RegisterViewState extends State<RegisterView> {
                   FadeAnimation(
                     delay: 1,
                     child: Container(
-                      margin: const EdgeInsets.only(right: 170.0),
+                      margin: EdgeInsets.only(right: size.width * 0.52),
                       child: Text(
                         "Register",
                         style: GoogleFonts.heebo(
@@ -117,7 +117,7 @@ class _RegisterViewState extends State<RegisterView> {
                   FadeAnimation(
                     delay: 1,
                     child: Container(
-                      margin: const EdgeInsets.only(right: 130.0),
+                      margin: EdgeInsets.only(right: size.width * 0.44),
                       child: Text(
                         "Please fill in your details",
                         style: GoogleFonts.heebo(
@@ -125,7 +125,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                     ),
                   ),
-                  SizedBox(height: size.height / 90),
+                  SizedBox(height: size.height / 70),
                   FadeAnimation(
                     delay: 1,
                     child: Container(

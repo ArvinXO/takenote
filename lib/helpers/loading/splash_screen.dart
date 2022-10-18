@@ -26,7 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
     )
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
+        setState(() {
+          if (mounted) {}
+        });
       })
       ..setVolume(0.0);
 

@@ -55,9 +55,14 @@ class _AppViewState extends State<AppView> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: <Color>[
-              kJungleGreen,
+              kJungleGreen.withOpacity(0.9),
               kOxfordBlue,
-              kBdazalledBlue.withOpacity(0.1),
+              kOxfordBlue,
+              kOxfordBlue,
+              kOxfordBlue,
+              kOxfordBlue,
+              kOxfordBlue,
+              kOxfordBlue,
             ],
           ),
         ),
@@ -68,9 +73,10 @@ class _AppViewState extends State<AppView> {
           children: _pageList,
         ),
       ),
+      //BottomNavigationBar
       bottomNavigationBar: BottomNavigationBar(
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        backgroundColor: kBdazalledBlue.withOpacity(0.1),
+        backgroundColor: kOxfordBlue.withOpacity(0.9),
         selectedItemColor: kJungleGreen,
         iconSize: 30,
         unselectedItemColor: Colors.grey,
@@ -102,12 +108,31 @@ class _AppViewState extends State<AppView> {
         showUnselectedLabels: false,
         onTap: navigationTapped,
       ),
-      floatingActionButton:
+      //FAB
+      floatingActionButton: _page == 1
+          ? FloatingActionButton(
+              tooltip: 'Add Archived Note',
+              //centered
+              backgroundColor: kJungleDarkGreen.withOpacity(0.6),
+              hoverColor: kBdazalledBlue,
+              splashColor: kBdazalledBlue,
+              shape: // square
+                  const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              ),
+              elevation: 10,
+              focusElevation: 0,
+              hoverElevation: 0,
+              highlightElevation: 0,
 
-          // if page 1 is selected then show the floating action button and archive note and if page 0 is selected then show the floating action button if page 2 is selected then hide the floating action button
-          _page == 1
+              onPressed: () {
+                Navigator.of(context).pushNamed(createOrUpdateArchiveNoteRoute);
+              },
+              child: const Icon(Iconsax.archive_add4, size: 30),
+            )
+          : _page == 0
               ? FloatingActionButton(
-                  tooltip: 'Add Archived Note',
+                  tooltip: 'Add Note',
                   //centered
                   backgroundColor: kJungleDarkGreen.withOpacity(0.6),
                   hoverColor: kBdazalledBlue,
@@ -120,35 +145,12 @@ class _AppViewState extends State<AppView> {
                   focusElevation: 0,
                   hoverElevation: 0,
                   highlightElevation: 0,
-
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(createOrUpdateArchiveNoteRoute);
+                    Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
                   },
-                  child: const Icon(Iconsax.archive_add4, size: 30),
+                  child: const Icon(Iconsax.pen_add, size: 30),
                 )
-              : _page == 0
-                  ? FloatingActionButton(
-                      tooltip: 'Add Note',
-                      //centered
-                      backgroundColor: kJungleDarkGreen.withOpacity(0.6),
-                      hoverColor: kBdazalledBlue,
-                      splashColor: kBdazalledBlue,
-                      shape: // square
-                          const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      elevation: 10,
-                      focusElevation: 0,
-                      hoverElevation: 0,
-                      highlightElevation: 0,
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(createOrUpdateNoteRoute);
-                      },
-                      child: const Icon(Iconsax.pen_add, size: 30),
-                    )
-                  : const SizedBox(),
+              : const SizedBox(),
     );
   }
 }

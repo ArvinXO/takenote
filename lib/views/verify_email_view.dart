@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:takenote/components/background_colour_animate.dart';
 import 'package:takenote/services/Utils/utils.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
@@ -119,7 +118,7 @@ class _VerifiyEmailViewState extends State<VerifiyEmailView>
               child: kSendVerificationContainer,
             ),
             SizedBox(
-              height: size.height * 0.21,
+              height: size.height * 0.11,
             ),
             Center(
               child: TextButton(

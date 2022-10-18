@@ -127,7 +127,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                         right: 10,
                       ),
                       child: Text(
-                          "Enter your registered email address to reset your password, check your spam/junk folder if you don't see the email in your inbox.",
+                          "Enter your registered email address to reset your password.",
                           style: GoogleFonts.heebo(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -186,7 +186,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                   ),
                   SizedBox(height: size.height * 0.01),
                   FadeAnimation(
-                    delay: 1.2,
+                    delay: 0.8,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -249,6 +249,24 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  FadeAnimation(
+                    delay: 0.8,
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        left: 30.0,
+                        bottom: 10,
+                        right: 10,
+                        top: 20,
+                      ),
+                      child: Text(
+                          "Tip: Check your spam/junk folder if you don't see the email in your inbox.",
+                          style: GoogleFonts.roboto(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              letterSpacing: 1)),
                     ),
                   ),
                   SizedBox(height: size.height * 0.20),

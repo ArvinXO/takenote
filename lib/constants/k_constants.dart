@@ -120,6 +120,24 @@ const k10SizedBox = SizedBox(height: 10.0);
 const k20SizedBox = SizedBox(height: 20.0);
 const k24SizedBox = SizedBox(height: 24.0);
 
+final NotesAppBarContainer = Container(
+  decoration: BoxDecoration(
+    // rounded corners
+    borderRadius: const BorderRadius.only(
+      bottomLeft: Radius.circular(20),
+      bottomRight: Radius.circular(20),
+    ),
+    gradient: LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: <Color>[
+        kJungleGreen.withOpacity(0.3),
+        kOxfordBlue.withOpacity(0.9),
+      ],
+    ),
+  ),
+);
+
 const kButtonTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 18.0,

@@ -206,6 +206,30 @@ class FirebaseCloudStorage {
     }
   }
 
+  // Delete All Notes WHERE DELETED = 1
+  Future<void> deleteAllNotes({
+    required String ownerUserId,
+    required int deleted,
+  }) async {
+    try {
+      await notes
+          .where(
+            ownerUserIdFieldName,
+            isEqualTo: ownerUserId,
+          )
+          .where(
+            deletedFieldName,
+            isEqualTo: 1,
+          )
+          .get()
+          .then((value) => value.docs.forEach((element) {
+                element.reference.delete();
+              }));
+    } catch (e) {
+      throw CouldNotDeleteAllNotesException();
+    }
+  }
+
   // Restore note
   Future<void> restoreNote({
     required String documentId,
