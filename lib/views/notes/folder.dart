@@ -9,25 +9,24 @@ import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
 import 'package:takenote/services/cloud/firebase_cloud_storage.dart';
 import 'package:takenote/utilities/dialogs/logout_dialog.dart';
+import 'package:takenote/views/notes/folder_grid.dart';
 import 'package:takenote/views/notes/notes_grid_view.dart';
 import 'package:takenote/views/notes/notes_list_view.dart';
 
-import '../enums/menu_action.dart';
+import '../../enums/menu_action.dart';
 
 enum ViewType { tile, grid }
 
-class NotesView extends StatefulWidget {
-  const NotesView({Key? key}) : super(key: key);
+class FolderView extends StatefulWidget {
+  const FolderView({Key? key}) : super(key: key);
 
   @override
-  State<NotesView> createState() => _NotesViewState();
+  State<FolderView> createState() => _FolderViewState();
 }
 
-class _NotesViewState extends State<NotesView> {
+class _FolderViewState extends State<FolderView> {
   late final FirebaseCloudStorage _notesService;
   String get userId => AuthService.firebase().currentUser!.id;
-  bool isGridView = true;
-  bool isTileView = false;
 
   @override
   void initState() {
@@ -47,37 +46,10 @@ class _NotesViewState extends State<NotesView> {
           backgroundColor: Colors.transparent,
           flexibleSpace: NotesAppBarContainer,
           title: const Text(
-            'Notes',
+            'Folders',
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
           actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  isGridView = !isGridView;
-                  //Show Snackbar
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: isGridView
-                          ? const Text(
-                              'Grid View',
-                              textAlign: TextAlign.center,
-                            )
-                          : const Text(
-                              'List View',
-                              textAlign: TextAlign.center,
-                            ),
-                      duration: const Duration(seconds: 1),
-                      backgroundColor: kJungleGreen.withOpacity(0.3),
-                    ),
-                  );
-                });
-              },
-              //icon is grid or list
-              icon: isGridView
-                  ? const Icon(Icons.view_module_rounded)
-                  : const Icon(Icons.list),
-            ),
             PopupMenuButton<MenuAction>(
               // rounded corners
               shape: const RoundedRectangleBorder(
@@ -128,25 +100,9 @@ class _NotesViewState extends State<NotesView> {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
               case ConnectionState.active:
-                if (snapshot.hasData && isGridView) {
+                if (snapshot.hasData) {
                   final allNotes = snapshot.data as Iterable<CloudNote>;
-                  return NotesGridView(
-                    notes: allNotes,
-                    onDeleteNote: (note) async {
-                      await _notesService.deleteNote(
-                          documentId: note.documentId);
-                    },
-                    onNoteTap: (CloudNote note) {
-                      Navigator.of(context).pushNamed(
-                        createOrUpdateNoteRoute,
-                        arguments: note,
-                      );
-                    },
-                    notesService: _notesService,
-                  );
-                } else if (snapshot.hasData && !isGridView) {
-                  final allNotes = snapshot.data as Iterable<CloudNote>;
-                  return NotesListView(
+                  return FolderGridView(
                     notes: allNotes,
                     onDeleteNote: (note) async {
                       await _notesService.deleteNote(

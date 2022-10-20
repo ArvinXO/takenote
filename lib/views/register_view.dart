@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -103,7 +102,7 @@ class _RegisterViewState extends State<RegisterView> {
                   FadeAnimation(
                     delay: 1,
                     child: Container(
-                      margin: EdgeInsets.only(right: size.width * 0.52),
+                      width: size.width * 0.8,
                       child: Text(
                         "Register",
                         style: GoogleFonts.heebo(
@@ -117,7 +116,7 @@ class _RegisterViewState extends State<RegisterView> {
                   FadeAnimation(
                     delay: 1,
                     child: Container(
-                      margin: EdgeInsets.only(right: size.width * 0.44),
+                      width: size.width * 0.8,
                       child: Text(
                         "Please fill in your details",
                         style: GoogleFonts.heebo(
@@ -294,7 +293,14 @@ class _RegisterViewState extends State<RegisterView> {
                                       );
                                 }
                               },
-                              child: const Text('Register'),
+                              child: const Text(
+                                'Register',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),

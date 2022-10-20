@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:takenote/components/fade_animation.dart';
 import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/services/auth/auth_service.dart';
@@ -38,132 +39,137 @@ class _ArchivedViewState extends State<ArchivedView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
+    return FadeAnimation(
+      delay: 0.2,
+      child: Scaffold(
         backgroundColor: Colors.transparent,
-        flexibleSpace: NotesAppBarContainer,
-        title: const Text(
-          'Archived',
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
-        actions: [
-          // IconButton(
-          //   onPressed: () {
-          //     Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
-          //   },
-          //   icon: const Icon(Icons.add),
-          // ),
-          //PopupMenuButton grid or list
-
-          IconButton(
-            onPressed: () {
-              setState(() {
-                isGridView = !isGridView;
-                //Show Snackbar
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: isGridView
-                        ? const Text(
-                            'Grid View',
-                            textAlign: TextAlign.center,
-                          )
-                        : const Text(
-                            'List View',
-                            textAlign: TextAlign.center,
-                          ),
-                    duration: const Duration(seconds: 1),
-                    backgroundColor: kJungleGreen.withOpacity(0.3),
-                  ),
-                );
-              });
-            },
-            //icon is grid or list
-            icon: isGridView
-                ? const Icon(Icons.list)
-                : const Icon(Icons.view_module_rounded),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          flexibleSpace: NotesAppBarContainer,
+          title: const Text(
+            'Archived',
+            style: TextStyle(fontWeight: FontWeight.w600),
           ),
-          PopupMenuButton<MenuAction>(
-            // rounded corners
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          actions: [
+            // IconButton(
+            //   onPressed: () {
+            //     Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
+            //   },
+            //   icon: const Icon(Icons.add),
+            // ),
+            //PopupMenuButton grid or list
+
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  isGridView = !isGridView;
+                  //Show Snackbar
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: isGridView
+                          ? const Text(
+                              'Grid View',
+                              textAlign: TextAlign.center,
+                            )
+                          : const Text(
+                              'List View',
+                              textAlign: TextAlign.center,
+                            ),
+                      duration: const Duration(seconds: 1),
+                      backgroundColor: kJungleGreen.withOpacity(0.3),
+                    ),
+                  );
+                });
+              },
+              //icon is grid or list
+              icon: isGridView
+                  ? const Icon(Icons.list)
+                  : const Icon(Icons.view_module_rounded),
             ),
-            elevation: 10,
-            offset: const Offset(0, 50),
-            color: kJungleGreen,
+            PopupMenuButton<MenuAction>(
+              // rounded corners
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+              elevation: 10,
+              offset: const Offset(0, 50),
+              color: kJungleGreen,
 
-            onSelected: (value) async {
-              switch (value) {
-                case MenuAction.logout:
-                  final shouldLogout = await showLogOutDialog(context);
-                  if (shouldLogout) {
-                    if (!mounted) {
-                      return;
+              onSelected: (value) async {
+                switch (value) {
+                  case MenuAction.logout:
+                    final shouldLogout = await showLogOutDialog(context);
+                    if (shouldLogout) {
+                      if (!mounted) {
+                        return;
+                      }
+                      context.read<AuthBloc>().add(
+                            const AuthEventLogOut(),
+                          );
                     }
-                    context.read<AuthBloc>().add(
-                          const AuthEventLogOut(),
-                        );
-                  }
-              }
-            },
-            itemBuilder: (context) {
-              return const [
-                PopupMenuItem<MenuAction>(
-                  value: MenuAction.logout,
-                  child: textLogoutStyle,
-                ),
-              ];
-            },
-          ),
-        ],
-      ),
-      body: StreamBuilder(
-        // stream archived notes
-        stream: _notesService.archivedNotes(ownerUserId: userId),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-            case ConnectionState.active:
-              if (snapshot.hasData && isGridView) {
-                final allNotes = snapshot.data as Iterable<CloudNote>;
-                return ArchivedNotesGridView(
-                  notes: allNotes,
-                  onDeleteNote: (note) async {
-                    await _notesService.deleteNote(documentId: note.documentId);
-                    //
-                  },
-                  onNoteTap: (CloudNote note) {
-                    Navigator.of(context).pushNamed(
-                      createOrUpdateNoteRoute,
-                      arguments: note,
-                    );
-                  },
-                  notesService: _notesService,
-                );
-              } else if (snapshot.hasData && !isGridView) {
-                final allNotes = snapshot.data as Iterable<CloudNote>;
-                return ArchivedNotesListView(
-                  notes: allNotes,
-                  onDeleteNote: (note) async {
-                    await _notesService.deleteNote(documentId: note.documentId);
-                  },
-                  onNoteTap: (CloudNote note) {
-                    Navigator.of(context).pushNamed(
-                      createOrUpdateNoteRoute,
-                      arguments: note,
-                    );
-                  },
-                  notesService: _notesService,
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            default:
-              return const CircularProgressIndicator();
-          }
-        },
+                }
+              },
+              itemBuilder: (context) {
+                return const [
+                  PopupMenuItem<MenuAction>(
+                    value: MenuAction.logout,
+                    child: textLogoutStyle,
+                  ),
+                ];
+              },
+            ),
+          ],
+        ),
+        body: StreamBuilder(
+          // stream archived notes
+          stream: _notesService.archivedNotes(ownerUserId: userId),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+              case ConnectionState.active:
+                if (snapshot.hasData && isGridView) {
+                  final allNotes = snapshot.data as Iterable<CloudNote>;
+                  return ArchivedNotesGridView(
+                    notes: allNotes,
+                    onDeleteNote: (note) async {
+                      await _notesService.deleteNote(
+                          documentId: note.documentId);
+                      //
+                    },
+                    onNoteTap: (CloudNote note) {
+                      Navigator.of(context).pushNamed(
+                        createOrUpdateNoteRoute,
+                        arguments: note,
+                      );
+                    },
+                    notesService: _notesService,
+                  );
+                } else if (snapshot.hasData && !isGridView) {
+                  final allNotes = snapshot.data as Iterable<CloudNote>;
+                  return ArchivedNotesListView(
+                    notes: allNotes,
+                    onDeleteNote: (note) async {
+                      await _notesService.deleteNote(
+                          documentId: note.documentId);
+                    },
+                    onNoteTap: (CloudNote note) {
+                      Navigator.of(context).pushNamed(
+                        createOrUpdateNoteRoute,
+                        arguments: note,
+                      );
+                    },
+                    notesService: _notesService,
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              default:
+                return const CircularProgressIndicator();
+            }
+          },
+        ),
       ),
     );
   }

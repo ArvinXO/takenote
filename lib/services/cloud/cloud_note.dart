@@ -35,3 +35,11 @@ class CloudNote {
         noteDeleted = snapshot.data()[deletedFieldName] as int,
         noteColor = snapshot.data()[colorFieldName] as int;
 }
+
+//CloudNote as a list
+List<CloudNote> cloudNotesFromSnapshot(
+    QuerySnapshot<Map<String, dynamic>> snapshot) {
+  return snapshot.docs.map((doc) {
+    return CloudNote.fromSnapshot(doc);
+  }).toList();
+}

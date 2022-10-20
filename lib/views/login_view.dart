@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -57,15 +55,7 @@ class _LoginViewState extends State<LoginView> {
     final Size size = Utils(context).size;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-        //Screen size mediaQuery is used to get the height and width of the screen
         if (state is AuthStateLoggedOut) {
-          kDebugMode
-              ? print('Logged out')
-              : ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Logged out'),
-                  ),
-                );
           if (state.exception is UserNotFoundAuthException) {
             await showErrorDialog(
                 context, 'Cannot find user with entered credentials.');
@@ -100,8 +90,8 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   FadeAnimation(
                     delay: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(right: size.width * 0.62),
+                    child: SizedBox(
+                      width: size.width * 0.85,
                       child: Text(
                         "Login",
                         style: GoogleFonts.heebo(
@@ -114,8 +104,8 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   FadeAnimation(
                     delay: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(right: size.width * 0.42),
+                    child: SizedBox(
+                      width: size.width * 0.85,
                       child: Text(
                         "Please sign in to continue",
                         style: GoogleFonts.heebo(
@@ -164,8 +154,7 @@ class _LoginViewState extends State<LoginView> {
                           color: selected == LoginFields.Email
                               ? enabled
                               : backgroundColor),
-                      child: TextField(
-                        clipBehavior: Clip.antiAlias,
+                      child: TextFormField(
                         controller: _email,
                         onTap: () {
                           setState(() {
@@ -216,7 +205,7 @@ class _LoginViewState extends State<LoginView> {
                             ? enabled
                             : backgroundColor,
                       ),
-                      child: TextField(
+                      child: TextFormField(
                         controller: //null check
                             _password,
                         // _password,
@@ -227,7 +216,6 @@ class _LoginViewState extends State<LoginView> {
                         },
                         enableSuggestions: false,
                         autocorrect: false,
-                        clipBehavior: Clip.antiAlias,
                         decoration: InputDecoration(
                             enabledBorder: InputBorder.none,
                             border: InputBorder.none,
@@ -290,7 +278,19 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           ),
                           onPressed: () async {
+                            //circuluar progress indicator
+
                             if (_email.text.isEmpty || _password.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text(
+                                    'Please enter email and password',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  duration: const Duration(seconds: 1),
+                                  backgroundColor: Colors.red.withOpacity(0.8),
+                                ),
+                              );
                               //print user verified
                               await showErrorDialog(context,
                                   'Please enter your email and password.');
@@ -302,7 +302,17 @@ class _LoginViewState extends State<LoginView> {
 
                               FocusScope.of(context).unfocus();
                               // loading dialog
-
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text(
+                                    'Logging in',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  duration: const Duration(seconds: 2),
+                                  backgroundColor:
+                                      kJungleGreen.withOpacity(0.8),
+                                ),
+                              );
                               if (!mounted) {
                                 return;
                               }
@@ -315,6 +325,7 @@ class _LoginViewState extends State<LoginView> {
                                       password,
                                     ),
                                   );
+
                               BlocProvider.of<AuthBloc>(context)
                                   .add(const AuthEventInitialize());
                               // loading screen
@@ -322,7 +333,16 @@ class _LoginViewState extends State<LoginView> {
                               // show dialog loading then remove circular progress indicator  after 2 seconds
                             }
                           },
-                          child: const Text('Login'),
+                          //CircularProgressIndicator or login text depending on loading state
+                          child: //If AuthBloc is in loading state, show circular progress indicator
+                              //else show login text
+                              const Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
                     ),

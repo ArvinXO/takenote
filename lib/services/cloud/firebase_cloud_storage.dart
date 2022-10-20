@@ -17,6 +17,17 @@ class FirebaseCloudStorage {
               note.noteArchived == 0 &&
               note.noteDeleted == 0));
 
+  //List of notes
+  Future<Iterable<CloudNote>> allNotesList(
+      {required String ownerUserId}) async {
+    final snapshot = await notes.get();
+    return snapshot.docs.map((doc) => CloudNote.fromSnapshot(doc)).where(
+        (note) =>
+            note.ownerUserId == ownerUserId &&
+            note.noteArchived == 0 &&
+            note.noteDeleted == 0);
+  }
+
   //grab archived notes
   Stream<Iterable<CloudNote>> archivedNotes({required String ownerUserId}) =>
       notes.snapshots().map((event) => event.docs
@@ -24,14 +35,54 @@ class FirebaseCloudStorage {
           .where((note) =>
               note.ownerUserId == ownerUserId && note.noteArchived == 1));
 
+  //List of archived notes
+  Future<Iterable<CloudNote>> archivedNotesList(
+      {required String ownerUserId}) async {
+    final snapshot = await notes.get();
+    return snapshot.docs.map((doc) => CloudNote.fromSnapshot(doc)).where(
+        (note) => note.ownerUserId == ownerUserId && note.noteArchived == 1);
+  }
+
+  //Deleted Notes
   Stream<Iterable<CloudNote>> deletedNotes({required String ownerUserId}) =>
       notes.snapshots().map((event) => event.docs
           .map((doc) => CloudNote.fromSnapshot(doc))
           .where((note) =>
               note.ownerUserId == ownerUserId && note.noteDeleted == 1));
+  //List of deleted notes
+  Future<Iterable<CloudNote>> deletedNotesList(
+      {required String ownerUserId}) async {
+    final snapshot = await notes.get();
+    return snapshot.docs.map((doc) => CloudNote.fromSnapshot(doc)).where(
+        (note) => note.ownerUserId == ownerUserId && note.noteDeleted == 1);
+  }
 
 //C-
   Future<CloudNote> createNewNote({required String ownerUserId}) async {
+    final document = await notes.add({
+      ownerUserIdFieldName: ownerUserId,
+      textFieldName: '',
+      dateFieldName: '',
+      titleFieldName: '',
+      archivedFieldName: 0,
+      colorFieldName: 0,
+      deletedFieldName: 0,
+    });
+    final fetchedNote = await document.get();
+    return CloudNote(
+      document.id,
+      ownerUserId,
+      fetchedNote.data()![textFieldName] as String,
+      fetchedNote.data()![dateFieldName] as String,
+      fetchedNote.data()![titleFieldName] as String,
+      fetchedNote.data()![archivedFieldName] as int,
+      fetchedNote.data()![deletedFieldName] as int,
+      fetchedNote.data()![colorFieldName] as int,
+    );
+  }
+
+  //List of notes create
+  Future<CloudNote> createNewNotesList({required String ownerUserId}) async {
     final document = await notes.add({
       ownerUserIdFieldName: ownerUserId,
       textFieldName: '',

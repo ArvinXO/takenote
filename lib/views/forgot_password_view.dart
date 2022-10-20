@@ -219,6 +219,21 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                                 context
                                     .read<AuthBloc>()
                                     .add(AuthEventForgotPassword(email: email));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Sending email...',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        kJungleGreen.withOpacity(0.8),
+                                  ),
+                                );
                               },
                               child: Container(
                                 decoration: const BoxDecoration(

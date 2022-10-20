@@ -52,21 +52,8 @@ void main() {
         // Show splash screen while loading then show introduction
         home: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            if (state is AuthStateUninitialized && Platform.isLinux) {
-              if (BlocProvider.of<AuthBloc>(context).state
-                  is AuthStateUninitialized) {
-                kDebugMode ? print('AuthStateUninitialized') : null;
-                BlocProvider.of<AuthBloc>(context)
-                    .add(const AuthEventInitializing());
-              } else {
-                BlocProvider.of<AuthBloc>(context)
-                    .add(const AuthEventInitialize());
-                kDebugMode ? print('AuthEVent initialise') : null;
-              }
-            }
             // if android or ios
-            if (state is AuthStateUninitialized && Platform.isAndroid ||
-                Platform.isIOS) {
+            if (state is AuthStateUninitialized) {
               if (BlocProvider.of<AuthBloc>(context).state
                   is AuthStateUninitialized) {
                 // splash screen
@@ -82,7 +69,6 @@ void main() {
             } else if (state is AuthStateNeedsVerification) {
               return const VerifiyEmailView();
             } else if (state is AuthStateLoggedOut) {
-              kDebugMode ? print('AuthStateLoggedOut') : null;
               return const LoginView();
             } else if (state is AuthStateInitializing) {
               return const IntroductionPage();
