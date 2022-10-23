@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:takenote/helpers/loading/loading_screen.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
-import 'package:takenote/views/forgot_password_view.dart';
+import 'package:takenote/views/notes/onboarding/forgot_password_view.dart';
 import 'package:takenote/views/notes/app_view.dart';
 import 'package:takenote/views/onboarding_view.dart';
-import 'package:takenote/views/register_view.dart';
-import 'package:takenote/views/verify_email_view.dart';
+import 'package:takenote/views/notes/onboarding/register_view.dart';
+import 'package:takenote/views/notes/onboarding/verify_email_view.dart';
 
-import 'login_view.dart';
+import 'notes/onboarding/login_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,14 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<AuthBloc>().add(const AuthEventInitialize());
     return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state.isLoading) {
-          LoadingScreen().show(
-              context: context, text: state.loadingText ?? 'Please wait...');
-        } else {
-          LoadingScreen().hide();
-        }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
           return const AppView();

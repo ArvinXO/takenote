@@ -2,7 +2,7 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+    show defaultTargetPlatform, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -57,7 +57,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '806667950412',
     projectId: 'takenotes-flutter-project',
     storageBucket: 'takenotes-flutter-project.appspot.com',
-    iosClientId: '806667950412-7i8ub0ljqi6q67akb8h73l1ij53q2fcs.apps.googleusercontent.com',
+    iosClientId:
+        '806667950412-7i8ub0ljqi6q67akb8h73l1ij53q2fcs.apps.googleusercontent.com',
     iosBundleId: 'com.atencia.takenote',
   );
 
@@ -67,7 +68,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '806667950412',
     projectId: 'takenotes-flutter-project',
     storageBucket: 'takenotes-flutter-project.appspot.com',
-    iosClientId: '806667950412-7i8ub0ljqi6q67akb8h73l1ij53q2fcs.apps.googleusercontent.com',
+    iosClientId:
+        '806667950412-7i8ub0ljqi6q67akb8h73l1ij53q2fcs.apps.googleusercontent.com',
     iosBundleId: 'com.atencia.takenote',
   );
 

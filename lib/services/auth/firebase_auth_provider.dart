@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 
 import '../../firebase_options.dart';
 import 'auth_user.dart';
@@ -25,6 +24,8 @@ class FirebaseAuthProvider implements AuthProvider {
   Future<AuthUser> createUser({
     required String email,
     required String password,
+    String? firstname,
+    String? lastname,
   }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(

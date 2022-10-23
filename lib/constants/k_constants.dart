@@ -247,7 +247,7 @@ final kSendVerificationContainer = Container(
     mainAxisAlignment: MainAxisAlignment.center,
     children: const <Widget>[
       Text(
-        'RESEND VERIFICATION',
+        'RESEND',
         style: TextStyle(
           color: Colors.white,
           fontSize: 15,

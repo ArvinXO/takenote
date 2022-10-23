@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:takenote/components/fade_animation.dart';
+import 'package:takenote/widgets/animations/fade_animation.dart';
 import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/services/auth/auth_service.dart';
@@ -91,6 +91,21 @@ class _NotesViewState extends State<NotesView> {
                 switch (value) {
                   case MenuAction.logout:
                     final shouldLogout = await showLogOutDialog(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: shouldLogout
+                            ? const Text(
+                                'Logging Out',
+                                textAlign: TextAlign.center,
+                              )
+                            : const Text(
+                                'Cancelled',
+                                textAlign: TextAlign.center,
+                              ),
+                        duration: const Duration(seconds: 1),
+                        backgroundColor: kJungleGreen.withOpacity(0.3),
+                      ),
+                    );
                     if (shouldLogout) {
                       if (!mounted) {
                         return;
@@ -99,16 +114,6 @@ class _NotesViewState extends State<NotesView> {
                             const AuthEventLogOut(),
                           );
                     }
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text(
-                          'Logging out',
-                          textAlign: TextAlign.center,
-                        ),
-                        duration: const Duration(seconds: 2),
-                        backgroundColor: Colors.red.withOpacity(0.8),
-                      ),
-                    );
                 }
               },
               itemBuilder: (context) {

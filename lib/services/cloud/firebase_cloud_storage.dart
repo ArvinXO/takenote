@@ -67,6 +67,8 @@ class FirebaseCloudStorage {
       archivedFieldName: 0,
       colorFieldName: 0,
       deletedFieldName: 0,
+      firstNameFieldName: '',
+      lastNameFieldName: '',
     });
     final fetchedNote = await document.get();
     return CloudNote(
@@ -91,6 +93,8 @@ class FirebaseCloudStorage {
       archivedFieldName: 0,
       colorFieldName: 0,
       deletedFieldName: 0,
+      firstNameFieldName: '',
+      lastNameFieldName: '',
     });
     final fetchedNote = await document.get();
     return CloudNote(
@@ -114,6 +118,8 @@ class FirebaseCloudStorage {
       archivedFieldName: 1,
       colorFieldName: 0,
       deletedFieldName: 0,
+      firstNameFieldName: '',
+      lastNameFieldName: '',
     });
     final fetchedNote = await document.get();
     return CloudNote(
@@ -151,6 +157,21 @@ class FirebaseCloudStorage {
   //     throw (CouldNotGetAllNotesException());
   //   }
   // }
+  // void add field to all collection in document firstName and lastName
+  void addNoteCreationDate({required String noteCreationDateFieldName}) async {
+    try {
+      await notes.get().then((value) => value.docs.forEach((doc) {
+            doc.reference.set({
+              noteCreationDateFieldName: 'Note Creation Date',
+            }, SetOptions(merge: true));
+          }));
+    } catch (e) {
+      throw (CouldNotGetAllNotesException());
+    }
+  }
+  //Call method on tap to add firstName and lastName
+  // _notesService.addFirstNameLastName(
+  // firstName: 'first', lastName: 'last');
 
 //U-
   Future<void> updateNote({
@@ -173,6 +194,8 @@ class FirebaseCloudStorage {
         deletedFieldName: deleted,
         archivedFieldName: archived,
         colorFieldName: color,
+        noteCreationDateFieldName: //date and time  jm format
+            DateFormat('MMM dd, yyyy HH:MM a').format(DateTime.now()),
       });
     } catch (e) {
       throw CouldNotUpdateNoteException();
@@ -278,6 +301,34 @@ class FirebaseCloudStorage {
               }));
     } catch (e) {
       throw CouldNotDeleteAllNotesException();
+    }
+  }
+
+  //Delete field from all collection in document firstName and lastName
+  void deleteFirstNameLastName() async {
+    try {
+      await notes.get().then((value) => value.docs.forEach((doc) {
+            doc.reference.update({
+              firstNameFieldName: FieldValue.delete(),
+              lastNameFieldName: FieldValue.delete(),
+            });
+          }));
+    } catch (e) {
+      throw (CouldNotGetAllNotesException());
+    }
+  }
+
+  //Update fieldName from all collection in document firstName and lastName to First Name and Last Name
+  void updateFirstNameLastName() async {
+    try {
+      await notes.get().then((value) => value.docs.forEach((doc) {
+            doc.reference.update({
+              firstNameFieldName: 'First Name',
+              lastNameFieldName: 'Last Name',
+            });
+          }));
+    } catch (e) {
+      throw (CouldNotGetAllNotesException());
     }
   }
 

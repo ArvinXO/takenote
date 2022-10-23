@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:takenote/components/fade_animation.dart';
+import 'package:takenote/widgets/animations/fade_animation.dart';
 import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 import 'package:takenote/services/cloud/firebase_cloud_storage.dart';
@@ -30,24 +30,6 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   }
 
   void _textControllerListener() async {
-    final note = _note;
-    if (note == null) {
-      return;
-    }
-
-    final text = _contentController.text;
-    await _notesService.updateNote(
-      documentId: note.documentId,
-      text: text,
-      date: note.noteDate,
-      title: note.noteTitle,
-      archived: note.noteArchived,
-      deleted: note.noteDeleted,
-      color: note.noteColor,
-    );
-  }
-
-  void _titleControllerListener() async {
     final note = _note;
     if (note == null) {
       return;
@@ -145,8 +127,30 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
           //Save
           IconButton(
             onPressed: () {
-              _saveNoteIfTextIsNotEmpty();
-              Navigator.pop(context);
+              setState(() {
+                if (_contentController.text.isEmpty) {
+                  SnackBar(
+                    backgroundColor: kJungleGreen.withOpacity(0.8),
+                    content: Text(
+                      'Note is empty',
+                      textAlign: TextAlign.center,
+                    ),
+                    duration: const Duration(seconds: 2),
+                  );
+                  Navigator.pop(context);
+                } else {
+                  SnackBar(
+                    backgroundColor: kJungleGreen.withOpacity(0.8),
+                    content: Text(
+                      'Note saved',
+                      textAlign: TextAlign.center,
+                    ),
+                    duration: const Duration(seconds: 2),
+                  );
+                  _saveNoteIfTextIsNotEmpty();
+                  Navigator.pop(context);
+                }
+              });
             },
             icon: const Icon(Icons.save),
           ),
@@ -159,6 +163,14 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                 await showCannotShareEmptyNoteDialog(context);
               } else {
                 await Share.share('$title\n$text');
+                SnackBar(
+                  backgroundColor: kJungleGreen.withOpacity(0.8),
+                  content: Text(
+                    'Note shared',
+                    textAlign: TextAlign.center,
+                  ),
+                  duration: const Duration(seconds: 2),
+                );
               }
             },
             icon: const Icon(Icons.share),
@@ -184,6 +196,8 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                                 const TextStyle(
                               // title font size
                               fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                             cursorColor: kPlatinum,
                             controller: _titleController,
@@ -219,6 +233,12 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                           ),
                           k24SizedBox,
                           TextField(
+                            style: // noteColor from swatch
+                                const TextStyle(
+                              // content font size
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                             controller: _contentController,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,

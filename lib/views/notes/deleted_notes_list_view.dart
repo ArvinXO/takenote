@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
-import 'package:takenote/views/notes/animated_scroll_view_item.dart';
+import 'package:takenote/widgets/animations/animated_scroll_view_item.dart';
 
 import '../../constants/k_constants.dart';
 import '../../services/cloud/firebase_cloud_storage.dart';
@@ -41,23 +41,6 @@ class _DeletedNotesListViewState extends State<DeletedNotesListView> {
   void initState() {
     _notesService = FirebaseCloudStorage();
     super.initState();
-  }
-
-  void _textControllerListener() async {
-    final note = _note;
-    if (note == null) {
-      return;
-    }
-
-    await _notesService.archiveNote(
-      documentId: note.documentId,
-      archived: 1,
-    );
-
-    await _notesService.updateNoteColor(
-      documentId: note.documentId,
-      color: note.noteColor,
-    );
   }
 
   @override
@@ -152,7 +135,7 @@ class _DeletedNotesListViewState extends State<DeletedNotesListView> {
                           trailing: note.noteDate != ''
                               // formate date to show abbreviated time
                               ? Text(
-                                  note.noteDate,
+                                  note.noteDate.toString(),
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.black,

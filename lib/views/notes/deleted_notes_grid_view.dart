@@ -3,7 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
 import 'package:takenote/services/cloud/firebase_cloud_storage.dart';
-import 'package:takenote/views/notes/animated_scroll_view_item.dart';
+import 'package:takenote/widgets/animations/animated_scroll_view_item.dart';
 
 import '../../constants/k_constants.dart';
 import '../../utilities/color_pallette.dart';
@@ -39,23 +39,6 @@ class _DeletedNotesGridViewState extends State<DeletedNotesGridView> {
   void initState() {
     _notesService = FirebaseCloudStorage();
     super.initState();
-  }
-
-  void _textControllerListener() async {
-    final note = _note;
-    if (note == null) {
-      return;
-    }
-
-    await _notesService.archiveNote(
-      documentId: note.documentId,
-      archived: 1,
-    );
-
-    await _notesService.updateNoteColor(
-      documentId: note.documentId,
-      color: note.noteColor,
-    );
   }
 
   @override
@@ -174,7 +157,7 @@ class _DeletedNotesGridViewState extends State<DeletedNotesGridView> {
                                                     BorderRadius.circular(4),
                                               ),
                                               child: Text(
-                                                note.noteDate,
+                                                note.noteDate.toString(),
                                                 style: const TextStyle(
                                                   fontSize: 12,
                                                 ),

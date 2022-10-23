@@ -4,7 +4,6 @@ import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 import 'package:takenote/views/archived_view.dart';
 import 'package:takenote/views/notes/delete_view.dart';
-import 'package:takenote/views/notes/folder.dart';
 import 'package:takenote/views/notes_view.dart';
 
 import '../../constants/routes.dart';
@@ -25,8 +24,6 @@ class _AppViewState extends State<AppView> {
     const NotesView(),
     const ArchivedView(),
     const DeleteView(),
-    const FolderView(),
-    const FolderView(),
   ];
   @override
   void initState() {
@@ -100,15 +97,6 @@ class _AppViewState extends State<AppView> {
             icon: Icon(Iconsax.trash),
             activeIcon: Icon(Iconsax.trash4),
             label: 'Deleted',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Iconsax.folder),
-            activeIcon: Icon(Iconsax.folder_open4),
-            label: 'Folders',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Iconsax.user),
-            label: 'Profile',
           ),
 
           // BottomNavigationBarItem(

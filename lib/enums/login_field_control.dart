@@ -6,6 +6,8 @@ enum LoginFields {
 enum RegisterFields {
   Email,
   password,
+  firstname,
+  lastname,
 }
 
 enum ForgotPassField {

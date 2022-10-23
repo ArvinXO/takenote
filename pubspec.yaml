@@ -58,8 +58,13 @@ dependencies:
 #  firebase_core_desktop: ^1.0.2
 #  firebase_auth_desktop: ^1.0.2
 #  desktop_webview_auth: ^0.0.9
+
+#  Testing Pluggins
   dragablegridview_flutter: ^0.2.5
   flutter_draggable_gridview: ^0.0.7
+  cool_alert: ^1.1.0
+  animated_notch_bottom_bar: ^0.0.6
+  firebase_messaging: ^14.0.2
 
 
 

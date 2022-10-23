@@ -1,21 +1,18 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
 import 'package:takenote/services/auth/firebase_auth_provider.dart';
-import 'package:takenote/views/forgot_password_view.dart';
+import 'package:takenote/views/notes/onboarding/forgot_password_view.dart';
 import 'package:takenote/views/homepage.dart';
-import 'package:takenote/views/login_view.dart';
+import 'package:takenote/views/notes/onboarding/login_view.dart';
 import 'package:takenote/views/notes/create_update_archive_note_view.dart';
 import 'package:takenote/views/notes/create_update_note_view.dart';
-import 'package:takenote/views/notes/settings_view.dart';
 import 'package:takenote/views/onboarding_view.dart';
-import 'package:takenote/views/register_view.dart';
-import 'package:takenote/views/verify_email_view.dart';
+import 'package:takenote/views/notes/onboarding/register_view.dart';
+import 'package:takenote/views/notes/onboarding/verify_email_view.dart';
 import 'constants/routes.dart';
 import 'helpers/loading/splash_screen.dart';
 
@@ -41,8 +38,9 @@ import 'helpers/loading/splash_screen.dart';
 //     );
 //   }
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     BlocProvider<AuthBloc>(
       create: (context) => AuthBloc(FirebaseAuthProvider()),
@@ -89,11 +87,9 @@ void main() {
           createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
           createOrUpdateArchiveNoteRoute: (context) =>
               const CreateUpdateArchiveNoteView(),
-          settingsRoute: (context) => const SettingsView(),
         },
       ),
     ),
   );
+  // add fields to all documents in a collection in firestore add firstNameField and lastNameField to all documents in a collection in firestore
 }
-
-// TODO FlutterSlidable - NOTES LISTVIEW

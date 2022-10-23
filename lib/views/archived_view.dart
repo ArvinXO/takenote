@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:takenote/components/fade_animation.dart';
+import 'package:takenote/widgets/animations/fade_animation.dart';
 import 'package:takenote/constants/k_constants.dart';
 import 'package:takenote/constants/routes.dart';
 import 'package:takenote/services/auth/auth_service.dart';

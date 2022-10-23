@@ -60,6 +60,8 @@ android {
         versionCode 2 // Change to a higher number
         versionName "1.0.1" // Change to a higher number
         multiDexEnabled true
+//      //Compile Firebase SDK requires 33
+        compileSdkVersion 33
 
     }
 

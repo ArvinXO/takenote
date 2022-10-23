@@ -7,9 +7,6 @@ import 'package:takenote/utilities/dialogs/cannot_share_empty_note_dialog.dart';
 import 'package:takenote/utilities/generics/get_arguments.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
 
-import '../../utilities/color_pallette.dart';
-import '../../utilities/note_colours.dart';
-
 class CreateUpdateArchiveNoteView extends StatefulWidget {
   const CreateUpdateArchiveNoteView({Key? key}) : super(key: key);
 
@@ -253,119 +250,5 @@ class _CreateUpdateArchiveNoteViewState
         },
       ),
     );
-  }
-
-  void _showColorPalette(BuildContext context, CloudNote note) {
-    showModalBottomSheet(
-        context: context,
-        isDismissible: true,
-        constraints: const BoxConstraints(
-          maxHeight: 200,
-        ),
-        builder: (context) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 30),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 60,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    ColorPaletteButton(
-                      color: NoteColor.getColor(0),
-                      onTap: () {
-                        _notesService.updateNoteColor(
-                          documentId: note.documentId,
-                          color: 0,
-                        );
-                        Navigator.pop(context);
-                      },
-                      isSelected: note.noteColor == 0,
-                    ),
-                    ColorPaletteButton(
-                      color: NoteColor.getColor(1),
-                      onTap: () {
-                        _notesService.updateNoteColor(
-                          documentId: note.documentId,
-                          color: 1,
-                        );
-                        Navigator.pop(context);
-                      },
-                      isSelected: note.noteColor == 1,
-                    ),
-                    ColorPaletteButton(
-                      color: NoteColor.getColor(2),
-                      onTap: () {
-                        _notesService.updateNoteColor(
-                          documentId: note.documentId,
-                          color: 2,
-                        );
-                        Navigator.pop(context);
-                      },
-                      isSelected: note.noteColor == 2,
-                    ),
-                    ColorPaletteButton(
-                      color: NoteColor.getColor(3),
-                      onTap: () {
-                        _notesService.updateNoteColor(
-                          documentId: note.documentId,
-                          color: 3,
-                        );
-                        Navigator.pop(context);
-                      },
-                      isSelected: note.noteColor == 3,
-                    ),
-                    ColorPaletteButton(
-                      color: NoteColor.getColor(4),
-                      onTap: () {
-                        _notesService.updateNoteColor(
-                          documentId: note.documentId,
-                          color: 4,
-                        );
-                        Navigator.pop(context);
-                      },
-                      isSelected: note.noteColor == 4,
-                    ),
-                    ColorPaletteButton(
-                      color: NoteColor.getColor(5),
-                      onTap: () {
-                        _notesService.updateNoteColor(
-                          documentId: note.documentId,
-                          color: 5,
-                        );
-                        Navigator.pop(context);
-                      },
-                      isSelected: note.noteColor == 5,
-                    ),
-                    ColorPaletteButton(
-                      color: NoteColor.getColor(6),
-                      onTap: () {
-                        _notesService.updateNoteColor(
-                          documentId: note.documentId,
-                          color: 6,
-                        );
-                        Navigator.pop(context);
-                      },
-                      isSelected: note.noteColor == 6,
-                    ),
-                    ColorPaletteButton(
-                      color: NoteColor.getColor(7),
-                      onTap: () {
-                        _notesService.updateNoteColor(
-                          documentId: note.documentId,
-                          color: 7,
-                        );
-                        Navigator.pop(context);
-                      },
-                      isSelected: note.noteColor == 7,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
   }
 }
