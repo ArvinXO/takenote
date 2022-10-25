@@ -269,6 +269,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                               ),
                             ),
                           ),
+                          //user name
                         ],
                       ),
                     ],

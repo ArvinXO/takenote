@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:takenote/widgets/animations/fade_animation.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
-import 'package:video_player/video_player.dart';
 
 import '../../services/auth/bloc/auth_bloc.dart';
 import '../../services/auth/bloc/auth_state.dart';
+import 'package:rive/rive.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,58 +17,52 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   //video controller
-  late VideoPlayerController _controller;
+  Artboard? _artboard;
 
   @override
   void initState() {
+    _loadRiveFile();
     super.initState();
-    _controller = VideoPlayerController.asset(
-      'assets/videos/splashy.mp4',
-    )
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {
-          if (mounted) {}
-        });
-      })
-      ..setVolume(0.0);
-
-    _playVideo();
   }
 
-  void _playVideo() async {
-    _controller.play();
-    await Future.delayed(const Duration(milliseconds: 1500));
-    //
-    setState(() {
-      //AuthEventInitialize
-      if (BlocProvider.of<AuthBloc>(context).state is AuthStateUninitialized) {
-        BlocProvider.of<AuthBloc>(context).add(const AuthEventInitializing());
-      } else {
-        BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
-      }
+  _loadRiveFile() async {
+    // Load your Rive data
+    final data = await rootBundle.load('assets/videos/notebook.riv');
+    // Create a RiveFile from the binary data
+    final file = RiveFile.import(data);
+    // Get the artboard containing the animation you want to play
+    final artboard = file.mainArtboard;
+    // Create a SimpleAnimation controller for the animation you want to play
+    // and attach it to the artboard
+    artboard.addController(SimpleAnimation('Animation 1'));
+    // Wrapped in setState so the widget knows the animation is ready to play
+    setState(() => _artboard = artboard);
+    // play for 3 seconds then bloc to login
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        //AuthEventInitialize
+        if (BlocProvider.of<AuthBloc>(context).state
+            is AuthStateUninitialized) {
+          BlocProvider.of<AuthBloc>(context).add(const AuthEventInitializing());
+        } else {
+          BlocProvider.of<AuthBloc>(context).add(const AuthEventInitialize());
+        }
+      });
     });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
+    _loadRiveFile().dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FadeAnimation(
-      delay: 0.1,
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-            child: _controller.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller),
-                  )
-                : Container()),
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: _artboard != null ? Rive(artboard: _artboard!) : Container(),
       ),
     );
   }

@@ -122,6 +122,7 @@ class _NotesViewState extends State<NotesView> {
                     value: MenuAction.logout,
                     child: textLogoutStyle,
                   ),
+                  //Set firstName and lastName
                 ];
               },
             ),
