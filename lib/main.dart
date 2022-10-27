@@ -40,7 +40,6 @@ import 'helpers/loading/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(
     BlocProvider<AuthBloc>(
       create: (context) => AuthBloc(FirebaseAuthProvider()),
