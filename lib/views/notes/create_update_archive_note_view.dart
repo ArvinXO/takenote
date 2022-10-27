@@ -37,12 +37,12 @@ class _CreateUpdateArchiveNoteViewState
     }
 
     final text = _contentController.text;
-
+    final title = _titleController.text;
     await _notesService.updateNote(
       documentId: note.documentId,
       text: text,
       date: note.noteDate,
-      title: note.noteTitle,
+      title: title,
       archived: note.noteArchived,
       deleted: note.noteDeleted,
       color: note.noteColor,
@@ -79,19 +79,26 @@ class _CreateUpdateArchiveNoteViewState
 
   void _deleteNoteIfTextIsEmpty() {
     final note = _note;
-    if (_contentController.text.isEmpty && note != null) {
+    if (note == null) {
+      return;
+    }
+    final text = _contentController.text;
+    final title = _titleController.text;
+    if (text.isEmpty && title.isEmpty) {
       _notesService.deleteNote(documentId: note.documentId);
     }
   }
 
-  void _saveNoteIfTextIsNotEmpty() async {
+  void _saveNoteIfTextIsNotEmpty() {
     final note = _note;
-    final content = _contentController.text;
+    final text = _contentController.text;
     final title = _titleController.text;
-    if (note != null && content.isNotEmpty) {
-      await _notesService.updateNote(
+    if (note == null) {
+      return;
+    } else if (note != text.isNotEmpty || title.isNotEmpty) {
+      _notesService.updateNote(
         documentId: note.documentId,
-        text: content,
+        text: text,
         date: note.noteDate,
         title: title,
         archived: note.noteArchived,
@@ -131,16 +138,22 @@ class _CreateUpdateArchiveNoteViewState
             : kBdazalledBlue,
         title: // WidgetNote is not null if we are updating an existing note
             context.getArgument<CloudNote>() == null
-                ? const Text('Create a new note')
-                : const Text('Update your note'),
+                ? const Text('Create archive note')
+                : const Text('Update your archive note'),
         actions: [
           //Save
           IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: () {
-              _saveNoteIfTextIsNotEmpty();
-              Navigator.pop(context);
+            onPressed: () async {
+              final text = _contentController.text;
+              final title = _titleController.text;
+              if (_note == null || (text.isEmpty && title.isEmpty)) {
+                Navigator.pop(context);
+              } else {
+                _saveNoteIfTextIsNotEmpty();
+                Navigator.pop(context);
+              }
             },
+            icon: const Icon(Icons.save),
           ),
           // Archive
           IconButton(

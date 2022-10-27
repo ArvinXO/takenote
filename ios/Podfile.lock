@@ -17,6 +17,9 @@ PODS:
   - Firebase/Firestore (10.0.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.0.0)
+  - Firebase/Messaging (10.0.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 10.0.0)
   - firebase_analytics (10.0.1):
     - Firebase/Analytics (= 10.0.0)
     - firebase_core
@@ -25,8 +28,12 @@ PODS:
     - Firebase/Auth (= 10.0.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.0.0):
+  - firebase_core (2.1.0):
     - Firebase/CoreOnly (= 10.0.0)
+    - Flutter
+  - firebase_messaging (14.0.2):
+    - Firebase/Messaging (= 10.0.0)
+    - firebase_core
     - Flutter
   - FirebaseAnalytics (10.0.0):
     - FirebaseAnalytics/AdIdSupport (= 10.0.0)
@@ -70,6 +77,15 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
+  - FirebaseMessaging (10.0.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.2)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Reachability (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
   - Flutter (1.0.0)
   - GoogleAppMeasurement (10.0.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.0.0)
@@ -91,6 +107,10 @@ PODS:
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleDataTransport (9.2.0):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/AppDelegateSwizzler (7.8.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -135,6 +155,7 @@ DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `10.0.0`)
   - Flutter (from `Flutter`)
   - open_mail_app (from `.symlinks/plugins/open_mail_app/ios`)
@@ -152,7 +173,9 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreInternal
     - FirebaseInstallations
+    - FirebaseMessaging
     - GoogleAppMeasurement
+    - GoogleDataTransport
     - GoogleUtilities
     - GTMSessionFetcher
     - nanopb
@@ -167,6 +190,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_messaging:
+    :path: ".symlinks/plugins/firebase_messaging/ios"
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
     :tag: 10.0.0
@@ -195,15 +220,18 @@ SPEC CHECKSUMS:
   Firebase: 1b810f3d0c0532e27a48f1961f8c0400a668a2cf
   firebase_analytics: 8f6874ecf36f61797835ed99d7a792d3a212b026
   firebase_auth: 62015b6cbfccf40521d7f777c804d19f9bc6f922
-  firebase_core: f9febc855bab615ea02dc9a75b6932364edb1225
+  firebase_core: 9f457751caed72a30d23be90eb72de6ccbd1f9b0
+  firebase_messaging: 169ae56e5d64013d605b954b43e1b928a9170471
   FirebaseAnalytics: 9921a52739f4ab66099da31b6e0243db78a3ac0a
   FirebaseAuth: 493382cf533cc45e2862b00e9aa4cfe4c98daf71
   FirebaseCore: 97f48a3a567a72b8d4daa0f03c3aadb78df4e995
   FirebaseCoreInternal: 5eb3960335da5ea30115d57d39db6988c4ad06f3
   FirebaseFirestore: d1b97d497a6e6c31bb38dff714af8e606395b959
   FirebaseInstallations: 7f1c9ae6bd9df6abe9c74124b38fa8740aba5df4
+  FirebaseMessaging: 8916bf5edb1dbfac74665a181e4d1ab3a78a08a2
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   GoogleAppMeasurement: 7e48a3249792ac35d6f18f107f63f199a7e9d0ce
+  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
   GTMSessionFetcher: ffbb25ec00ebcb5201adab0a56d808f6f1902d9f
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431

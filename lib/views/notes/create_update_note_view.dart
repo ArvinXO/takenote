@@ -36,11 +36,12 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     }
 
     final text = _contentController.text;
+    final title = _titleController.text;
     await _notesService.updateNote(
       documentId: note.documentId,
       text: text,
       date: note.noteDate,
-      title: note.noteTitle,
+      title: title,
       archived: note.noteArchived,
       deleted: note.noteDeleted,
       color: note.noteColor,
@@ -74,21 +75,38 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     return newNote;
   }
 
+  //deleteNoteIfTextIsEmpty - If the note doesn't have a title or text, delete it
   void _deleteNoteIfTextIsEmpty() {
     final note = _note;
-    if (_contentController.text.isEmpty && note != null) {
+    if (note == null) {
+      return;
+    }
+    final text = _contentController.text;
+    final title = _titleController.text;
+    if (text.isEmpty && title.isEmpty) {
       _notesService.deleteNote(documentId: note.documentId);
     }
   }
+  // void _deleteNoteIfTextIsEmpty() {
+  //   final note = _note;
+  //   if (note != null &&
+  //       _contentController.text.isEmpty &&
+  //       _titleController.text.isEmpty) {
+  //     _notesService.deleteNote(documentId: note.documentId);
+  //   }
+  // }
 
-  void _saveNoteIfTextIsNotEmpty() async {
+  // void _saveNoteIfTextIsNotEmpty - If the note has a title or text, save it to the database
+  void _saveNoteIfTextIsNotEmpty() {
     final note = _note;
-    final content = _contentController.text;
+    final text = _contentController.text;
     final title = _titleController.text;
-    if (note != null && content.isNotEmpty) {
-      await _notesService.updateNote(
+    if (note == null) {
+      return;
+    } else if (note != text.isNotEmpty || title.isNotEmpty) {
+      _notesService.updateNote(
         documentId: note.documentId,
-        text: content,
+        text: text,
         date: note.noteDate,
         title: title,
         archived: note.noteArchived,
@@ -97,6 +115,22 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
       );
     }
   }
+  // void _saveNoteIfTextIsNotEmpty() async {
+  //   final note = _note;
+  //   final content = _contentController.text;
+  //   final title = _titleController.text;
+  //   if (note != null && content.isNotEmpty && title.isNotEmpty) {
+  //     await _notesService.updateNote(
+  //       documentId: note!.documentId,
+  //       text: content,
+  //       date: note.noteDate,
+  //       title: title,
+  //       archived: note.noteArchived,
+  //       deleted: note.noteDeleted,
+  //       color: note.noteColor,
+  //     );
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -126,31 +160,15 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
         actions: [
           //Save
           IconButton(
-            onPressed: () {
-              setState(() {
-                if (_contentController.text.isEmpty) {
-                  SnackBar(
-                    backgroundColor: kJungleGreen.withOpacity(0.8),
-                    content: Text(
-                      'Note is empty',
-                      textAlign: TextAlign.center,
-                    ),
-                    duration: const Duration(seconds: 2),
-                  );
-                  Navigator.pop(context);
-                } else {
-                  SnackBar(
-                    backgroundColor: kJungleGreen.withOpacity(0.8),
-                    content: Text(
-                      'Note saved',
-                      textAlign: TextAlign.center,
-                    ),
-                    duration: const Duration(seconds: 2),
-                  );
-                  _saveNoteIfTextIsNotEmpty();
-                  Navigator.pop(context);
-                }
-              });
+            onPressed: () async {
+              final text = _contentController.text;
+              final title = _titleController.text;
+              if (_note == null || (text.isEmpty && title.isEmpty)) {
+                Navigator.pop(context);
+              } else {
+                _saveNoteIfTextIsNotEmpty();
+                Navigator.pop(context);
+              }
             },
             icon: const Icon(Icons.save),
           ),

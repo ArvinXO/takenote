@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
+import 'package:takenote/utilities/dialogs/delete_all_dialog.dart';
 import 'package:takenote/widgets/animations/animated_scroll_view_item.dart';
 
 import '../../constants/k_constants.dart';
@@ -338,11 +339,16 @@ class _DeletedNotesListViewState extends State<DeletedNotesListView> {
                         borderRadius: BorderRadius.circular(15),
                         onTap: () {
                           // Delete Note Function
-                          _notesService.deleteAllNotes(
-                            ownerUserId: note.ownerUserId,
-                            deleted: 1,
-                          );
-                          Navigator.of(context).pop();
+                          showDeleteAllDialog(context).then((result) {
+                            if (result) {
+                              _notesService.deleteAllNotes(
+                                ownerUserId: note.ownerUserId,
+                                deleted: 1,
+                              );
+                              Navigator.of(context).pop();
+                            }
+                            //pop
+                          });
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
