@@ -24,6 +24,11 @@ class _SplashScreenState extends State<SplashScreen> {
     _loadRiveFile();
     super.initState();
   }
+  @override
+  void dispose() {
+    super.dispose();
+    _loadRiveFile().dispose();
+  }
 
   _loadRiveFile() async {
     // Load your Rive data
@@ -51,11 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _loadRiveFile().dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -7,9 +7,11 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="Android Studio java home" />
+        <option name="gradleJvm" value="openjdk-15" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-4.0.1/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-10.0.1/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_auth-4.0.1/android" />
@@ -21,8 +23,6 @@
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/shared_preferences_android-2.0.14/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.19/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/video_player_android-2.3.9/android" />
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
       </GradleProjectSettings>

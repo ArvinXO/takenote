@@ -5,20 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a865657-1f7a-40e6-aa55-d776567c3a5f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../lib/widgets/showOptions.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change afterPath="lib/widgets/showOptions.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/services/auth/auth_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/services/auth/auth_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/services/auth/auth_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/services/auth/auth_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/services/auth/auth_user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/services/auth/auth_user.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/services/auth/firebase_auth_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/services/auth/firebase_auth_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/views/notes/create_update_note_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/views/notes/create_update_note_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/views/notes/notes_grid_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/views/notes/notes_grid_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/views/notes_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/views/notes_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
+      <change beforePath=".flutter-plugins-dependencies" beforeDir="false" afterPath=".flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath=".idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath=".idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath=".idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath=".idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="lib/services/auth/auth_provider.dart" beforeDir="false" afterPath="lib/services/auth/auth_provider.dart" afterDir="false" />
+      <change beforePath="lib/services/auth/auth_service.dart" beforeDir="false" afterPath="lib/services/auth/auth_service.dart" afterDir="false" />
+      <change beforePath="lib/services/auth/auth_user.dart" beforeDir="false" afterPath="lib/services/auth/auth_user.dart" afterDir="false" />
+      <change beforePath="lib/services/auth/firebase_auth_provider.dart" beforeDir="false" afterPath="lib/services/auth/firebase_auth_provider.dart" afterDir="false" />
+      <change beforePath="lib/views/notes/create_update_note_view.dart" beforeDir="false" afterPath="lib/views/notes/create_update_note_view.dart" afterDir="false" />
+      <change beforePath="lib/views/notes/notes_grid_view.dart" beforeDir="false" afterPath="lib/views/notes/notes_grid_view.dart" afterDir="false" />
+      <change beforePath="lib/views/notes_view.dart" beforeDir="false" afterPath="lib/views/notes_view.dart" afterDir="false" />
+      <change beforePath="pubspec.yaml" beforeDir="false" afterPath="pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +111,6 @@
         <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
         <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
         <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
-        <option name="PROFILING_MODE" value="NOT_SET" />
       </Profilers>
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
