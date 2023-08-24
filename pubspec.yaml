@@ -30,10 +30,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.5
-  firebase_core: ^2.0.0
-  firebase_auth: ^4.0.1
-  cloud_firestore: ^4.0.1
-  firebase_analytics: ^10.0.1
+  firebase_core: ^2.15.1
+  firebase_auth: ^4.8.0
+  cloud_firestore: ^4.9.0
+  firebase_analytics: ^10.4.5
   flutter_svg: ^1.1.5
   path_provider: ^2.0.11
   path: ^1.8.2
@@ -60,7 +60,6 @@ dependencies:
 #  desktop_webview_auth: ^0.0.9
 
 #  Testing Pluggins
-  dragablegridview_flutter: ^0.2.5
   flutter_draggable_gridview: ^0.0.7
   cool_alert: ^1.1.0
   animated_notch_bottom_bar: ^0.0.6

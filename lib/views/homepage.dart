@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
-import 'package:takenote/views/notes/onboarding/forgot_password_view.dart';
 import 'package:takenote/views/notes/app_view.dart';
 import 'package:takenote/views/onboarding_view.dart';
-import 'package:takenote/views/notes/onboarding/register_view.dart';
-import 'package:takenote/views/notes/onboarding/verify_email_view.dart';
 
-import 'notes/onboarding/login_view.dart';
+import 'onboarding/forgot_password_view.dart';
+import 'onboarding/login_view.dart';
+import 'onboarding/register_view.dart';
+import 'onboarding/verify_email_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

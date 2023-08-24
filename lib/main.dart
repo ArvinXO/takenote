@@ -1,20 +1,19 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
 import 'package:takenote/services/auth/firebase_auth_provider.dart';
-import 'package:takenote/views/notes/onboarding/forgot_password_view.dart';
 import 'package:takenote/views/homepage.dart';
-import 'package:takenote/views/notes/onboarding/login_view.dart';
 import 'package:takenote/views/notes/create_update_archive_note_view.dart';
 import 'package:takenote/views/notes/create_update_note_view.dart';
 import 'package:takenote/views/onboarding_view.dart';
-import 'package:takenote/views/notes/onboarding/register_view.dart';
-import 'package:takenote/views/notes/onboarding/verify_email_view.dart';
 import 'constants/routes.dart';
 import 'helpers/loading/splash_screen.dart';
+import 'views/onboarding/forgot_password_view.dart';
+import 'views/onboarding/login_view.dart';
+import 'views/onboarding/register_view.dart';
+import 'views/onboarding/verify_email_view.dart';
 
 // theme button toggle
 // import 'package:flutter/material.dart';

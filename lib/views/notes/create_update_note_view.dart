@@ -158,7 +158,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                 ? const Text('Create a new note')
                 : const Text('Update your note'),
         actions: [
-          //Save
+          // Icon button for colors
           IconButton(
             onPressed: () async {
               final text = _contentController.text;

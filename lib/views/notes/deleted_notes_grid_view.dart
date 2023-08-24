@@ -16,7 +16,6 @@ class DeletedNotesGridView extends StatefulWidget {
   final Iterable<CloudNote> notes;
   final NoteCallBack onDeleteNote;
   final NoteCallBack onNoteTap;
-  final FirebaseCloudStorage _notesService;
 
   const DeletedNotesGridView({
     Key? key,
@@ -24,15 +23,13 @@ class DeletedNotesGridView extends StatefulWidget {
     required this.onDeleteNote,
     required this.onNoteTap,
     required FirebaseCloudStorage notesService,
-  })  : _notesService = notesService,
-        super(key: key);
+  }) : super(key: key);
 
   @override
   State<DeletedNotesGridView> createState() => _DeletedNotesGridViewState();
 }
 
 class _DeletedNotesGridViewState extends State<DeletedNotesGridView> {
-  CloudNote? _note;
   late final FirebaseCloudStorage _notesService;
 
   @override
@@ -95,7 +92,7 @@ class _DeletedNotesGridViewState extends State<DeletedNotesGridView> {
                                 child: InkWell(
                                   // onlongpress show optionsheet
                                   onLongPress: () {
-                                    _note = note;
+                                    widget.onNoteTap(note);
                                     showOptionsSheet(
                                       // show optionsheet
                                       context,

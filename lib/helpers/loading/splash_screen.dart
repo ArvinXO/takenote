@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:takenote/widgets/animations/fade_animation.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 
 import '../../services/auth/bloc/auth_bloc.dart';
@@ -24,10 +23,11 @@ class _SplashScreenState extends State<SplashScreen> {
     _loadRiveFile();
     super.initState();
   }
+
   @override
   void dispose() {
     super.dispose();
-    _loadRiveFile().dispose();
+    _artboard?.remove();
   }
 
   _loadRiveFile() async {
@@ -55,8 +55,6 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {

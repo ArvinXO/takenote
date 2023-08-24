@@ -17,7 +17,6 @@ class NotesListView extends StatefulWidget {
   final Iterable<CloudNote> notes;
   final NoteCallBack onDeleteNote;
   final NoteCallBack onNoteTap;
-  final FirebaseCloudStorage _notesService;
 
   const NotesListView({
     Key? key,
@@ -25,8 +24,7 @@ class NotesListView extends StatefulWidget {
     required this.onDeleteNote,
     required this.onNoteTap,
     required FirebaseCloudStorage notesService,
-  })  : _notesService = notesService,
-        super(key: key);
+  }) : super(key: key);
 
   @override
   State<NotesListView> createState() => _NotesListViewState();
