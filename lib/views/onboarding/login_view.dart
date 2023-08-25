@@ -9,7 +9,7 @@ import 'package:takenote/services/auth/bloc/auth_state.dart';
 import '../../../widgets/animations/background_colour_animate.dart';
 import '../../../widgets/animations/fade_animation.dart';
 import '../../../enums/login_field_control.dart';
-import '../../../services/Utils/utils.dart';
+import '../../utilities/utils.dart';
 import '../../../services/auth/auth_exceptions.dart';
 import '../../../services/auth/bloc/auth_event.dart';
 import '../../../utilities/dialogs/error_dialog.dart';

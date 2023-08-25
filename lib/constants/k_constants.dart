@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+// Colors
+const Color enabled = Color(0xFF827F8A);
+const Color enabledtxt = Colors.white;
+const Color deaible = Colors.grey;
+const Color forgotPassBackgroundColor = Color(0xFF1F1A30);
 const Color kJungleGreen = Color.fromRGBO(31, 171, 137, 1);
 const Color kJungleDarkGreen = Color(0xff01ECC0);
-
 const Color kRichBlackFogra = Color.fromRGBO(13, 27, 42, 1);
 const Color kOxfordBlue = Color.fromRGBO(27, 38, 59, 1);
 const Color kBdazalledBlue = Color.fromRGBO(65, 90, 119, 1);
 const Color kPlatinum = Color.fromRGBO(224, 225, 221, 1);
 const Color kTuscany = Color.fromRGBO(205, 162, 171, 1);
 
-final Color kGreenBackground =
-    const Color.fromRGBO(31, 171, 137, 0).withOpacity(0.65);
-
-final kBlueBackground = Colors.blue.withOpacity(
-  0.06,
-);
-
+// Background Colors
+final Color kGreenBackground = kJungleGreen.withOpacity(0.65);
+final kBlueBackground = Colors.blue.withOpacity(0.06);
 final kOrangeBackground = kTuscany.withOpacity(0.65);
 
+// Reusable Widget: Back to Login Button
 final kBackToLogin = Container(
   height: 50,
   width: 200,
@@ -49,6 +50,7 @@ final kBackToLogin = Container(
   ),
 );
 
+// Text Style: Register Text
 const kRegisterText = Text(
   'REGISTER',
   style: TextStyle(
@@ -59,6 +61,7 @@ const kRegisterText = Text(
   textAlign: TextAlign.left,
 );
 
+// BorderRadius for Cards
 const kCards = BorderRadius.only(
   bottomLeft: Radius.circular(5),
   bottomRight: Radius.circular(5),
@@ -66,6 +69,7 @@ const kCards = BorderRadius.only(
   topRight: Radius.circular(20),
 );
 
+// Text Field Style: Password
 const kTextFieldPass = TextField(
   enableSuggestions: false,
   autocorrect: false,
@@ -74,18 +78,19 @@ const kTextFieldPass = TextField(
   decoration: InputDecoration(),
 );
 
+// Box Shadows
 const kBoxShadowBlue = BoxShadow(
   color: kBdazalledBlue,
   blurRadius: 10,
   spreadRadius: 5,
 );
-
 const kBoxShadowGreen = BoxShadow(
   color: kJungleGreen,
   blurRadius: 10,
   spreadRadius: 5,
 );
 
+// Decoration for Gradient Button
 final BoxDecoration gradientButton = BoxDecoration(
   borderRadius: BorderRadius.circular(20),
   color: kJungleGreen,
@@ -94,6 +99,7 @@ final BoxDecoration gradientButton = BoxDecoration(
   ],
 );
 
+// Decoration for Text Fields
 const kFieldDecoration = InputDecoration(
   fillColor: kTuscany,
   filled: true,
@@ -112,6 +118,7 @@ const kFieldDecoration = InputDecoration(
   ),
 );
 
+// EdgeInsets Constants
 const k8pad = EdgeInsets.all(8.0);
 const k10pad = EdgeInsets.all(10.0);
 const k20pad = EdgeInsets.all(30.0);
@@ -120,9 +127,9 @@ const k10SizedBox = SizedBox(height: 10.0);
 const k20SizedBox = SizedBox(height: 20.0);
 const k24SizedBox = SizedBox(height: 24.0);
 
+// Container for Notes App Bar
 final NotesAppBarContainer = Container(
   decoration: BoxDecoration(
-    // rounded corners
     borderRadius: const BorderRadius.only(
       bottomLeft: Radius.circular(20),
       bottomRight: Radius.circular(20),
@@ -138,11 +145,13 @@ final NotesAppBarContainer = Container(
   ),
 );
 
+// Text Style for Buttons
 const kButtonTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 18.0,
 );
 
+// Container for Login Button
 final kLoginContainer = Container(
   height: 50,
   width: 120,
@@ -167,6 +176,7 @@ final kLoginContainer = Container(
   ),
 );
 
+// Container for Register Button
 final kRegisterContainer = Container(
   height: 50,
   width: 120,
@@ -191,6 +201,7 @@ final kRegisterContainer = Container(
   ),
 );
 
+// Text Field for Email Input
 const kEmailTextField = TextField(
   enableSuggestions: false,
   autocorrect: false,
@@ -198,11 +209,13 @@ const kEmailTextField = TextField(
   keyboardType: TextInputType.emailAddress,
   textAlign: TextAlign.center,
   decoration: InputDecoration(
-      prefixIcon: Icon(Icons.email),
-      labelText: 'Email',
-      hintText: 'Enter your email here'),
+    prefixIcon: Icon(Icons.email),
+    labelText: 'Email',
+    hintText: 'Enter your email here',
+  ),
 );
 
+// Container for Sending Email Verification
 final kSendEmailVerificationContainer = Container(
   height: 50,
   width: 200,
@@ -227,15 +240,13 @@ final kSendEmailVerificationContainer = Container(
   ),
 );
 
+// Container for Resending Verification
 final kSendVerificationContainer = Container(
   height: 50,
   width: 250,
   decoration: BoxDecoration(
-    // add icon to the button
-
     borderRadius: BorderRadius.circular(20),
     color: kBdazalledBlue,
-
     boxShadow: const [
       BoxShadow(
         color: kBdazalledBlue,
@@ -254,26 +265,22 @@ final kSendVerificationContainer = Container(
         ),
       ),
       SizedBox(width: 5),
-
       Icon(
         Icons.send_sharp,
         color: Colors.white,
         size: 20,
       ),
-      //space between the icon and the text
     ],
   ),
 );
 
+// Container for Restarting
 final kRestartContainer = Container(
   height: 50,
   width: 200,
   decoration: BoxDecoration(
-    // add icon to the button
-
     borderRadius: BorderRadius.circular(20),
     color: kBdazalledBlue,
-
     boxShadow: const [
       BoxShadow(
         color: kBdazalledBlue,
@@ -292,26 +299,22 @@ final kRestartContainer = Container(
         ),
       ),
       SizedBox(width: 5),
-
       Icon(
         Icons.refresh,
         color: Colors.white,
         size: 20,
       ),
-      //space between the icon and the text
     ],
   ),
 );
 
+// Container for Sending Password Reset
 final kSendPasswordResetContainer = Container(
   height: 50,
   width: 200,
   decoration: BoxDecoration(
-    // add icon to the button
-
     borderRadius: BorderRadius.circular(20),
     color: kBdazalledBlue,
-
     boxShadow: const [
       BoxShadow(
         color: kBdazalledBlue,
@@ -330,17 +333,16 @@ final kSendPasswordResetContainer = Container(
         ),
       ),
       SizedBox(width: 5),
-
       Icon(
         Icons.send_sharp,
         color: Colors.white,
         size: 20,
       ),
-      //space between the icon and the text
     ],
   ),
 );
 
+// Container for Sending Reset Link
 final kSendResetLinkContainer = Container(
   decoration: const BoxDecoration(
       // add icon to the button
@@ -356,17 +358,16 @@ final kSendResetLinkContainer = Container(
           fontWeight: FontWeight.bold,
         ),
       ),
-
       Icon(
         Icons.send_rounded,
         color: kPlatinum,
         size: 20,
       ),
-      //space between the icon and the text
     ],
   ),
 );
 
+// Container for Back to Login
 final kBackToLoginContainer = Container(
   height: 50,
   width: 200,
@@ -398,6 +399,7 @@ final kBackToLoginContainer = Container(
   ),
 );
 
+// Input Decoration for Forgot Password
 final kForgotPasswordContainerDecoration = InputDecoration(
   label: const Padding(
     padding: EdgeInsets.all(8.0),
@@ -425,9 +427,9 @@ final kForgotPasswordContainerDecoration = InputDecoration(
   ),
 );
 
+// Text Style for Logout Text
 const textLogoutStyle = Text(
-  textAlign: TextAlign.center,
-  'Log out',
+  'Logout',
   style: TextStyle(
     color: Colors.white,
     fontSize: 16,
@@ -435,11 +437,13 @@ const textLogoutStyle = Text(
   ),
 );
 
+// Grid Constants
 const gridCross = 1;
 const gridCross2 = 2;
 const gridCross3 = 3;
 const gridCross4 = 4;
 
+// Sliver Grid Delegate
 final twoBytwo = SliverQuiltedGridDelegate(
   crossAxisCount: 2,
   mainAxisSpacing: 2,

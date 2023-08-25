@@ -15,37 +15,33 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  //video controller
-  Artboard? _artboard;
+  Artboard? _artboard; // Holds the Rive animation artboard
 
   @override
   void initState() {
-    _loadRiveFile();
+    _loadRiveFile(); // Load Rive animation when the widget initializes
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _artboard?.remove();
+    _artboard
+        ?.remove(); // Dispose of the Rive animation when the widget is disposed
   }
 
+  // Load the Rive animation from the asset bundle
   _loadRiveFile() async {
-    // Load your Rive data
     final data = await rootBundle.load('assets/videos/notebook.riv');
-    // Create a RiveFile from the binary data
     final file = RiveFile.import(data);
-    // Get the artboard containing the animation you want to play
     final artboard = file.mainArtboard;
-    // Create a SimpleAnimation controller for the animation you want to play
-    // and attach it to the artboard
-    artboard.addController(SimpleAnimation('Animation 1'));
-    // Wrapped in setState so the widget knows the animation is ready to play
-    setState(() => _artboard = artboard);
-    // play for 3 seconds then bloc to login
+    artboard
+        .addController(SimpleAnimation('Animation 1')); // Play the animation
+    setState(() => _artboard = artboard); // Update the artboard state
+    // Delay for 2 seconds before triggering auth events
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
-        //AuthEventInitialize
+        // Check the auth state and trigger appropriate auth events
         if (BlocProvider.of<AuthBloc>(context).state
             is AuthStateUninitialized) {
           BlocProvider.of<AuthBloc>(context).add(const AuthEventInitializing());
@@ -61,7 +57,9 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: _artboard != null ? Rive(artboard: _artboard!) : Container(),
+        child: _artboard != null
+            ? Rive(artboard: _artboard!)
+            : Container(), // Display the Rive animation or an empty container
       ),
     );
   }

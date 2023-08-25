@@ -13,15 +13,18 @@ abstract class AuthState {
   });
 }
 
+// Represents the state when authentication is being initialized
 class AuthStateInitialize extends AuthState {
   const AuthStateInitialize() : super(isLoading: true);
 }
 
+// Represents the uninitialized authentication state
 class AuthStateUninitialized extends AuthState {
   const AuthStateUninitialized({required bool isLoading})
       : super(isLoading: isLoading);
 }
 
+// Represents the state when authentication initialization is in progress
 class AuthStateInitializing extends AuthState {
   final AuthUser user;
   const AuthStateInitializing({
@@ -30,13 +33,17 @@ class AuthStateInitializing extends AuthState {
   }) : super(isLoading: isLoading);
 }
 
+// Represents the state when user registration is in progress
 class AuthStateRegistering extends AuthState {
   final Exception? exception;
 
-  const AuthStateRegistering({required this.exception, required bool isLoading})
-      : super(isLoading: isLoading);
+  const AuthStateRegistering({
+    required this.exception,
+    required bool isLoading,
+  }) : super(isLoading: isLoading);
 }
 
+// Represents the state when password recovery is in progress
 class AuthStateForgotPassword extends AuthState {
   final Exception? exception;
   final bool hasSentEmail;
@@ -47,6 +54,7 @@ class AuthStateForgotPassword extends AuthState {
   }) : super(isLoading: isLoading);
 }
 
+// Represents the state when a user is successfully logged in
 class AuthStateLoggedIn extends AuthState {
   final AuthUser user;
   const AuthStateLoggedIn({
@@ -55,13 +63,16 @@ class AuthStateLoggedIn extends AuthState {
   }) : super(isLoading: isLoading);
 }
 
+// Represents the state when email verification is needed
 class AuthStateNeedsVerification extends AuthState {
   const AuthStateNeedsVerification({required bool isLoading})
       : super(isLoading: isLoading);
 }
 
+// Represents the state when a user is logged out
 class AuthStateLoggedOut extends AuthState with EquatableMixin {
   final Exception? exception;
+
   @override
   const AuthStateLoggedOut({
     required this.exception,

@@ -1,7 +1,9 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
+/// A utility class for managing note colors.
 class NoteColor {
+  /// Returns a color based on the provided code.
   static Color getColor(int code) {
     switch (code) {
       case 0:
@@ -25,6 +27,7 @@ class NoteColor {
     }
   }
 
+  /// Returns a code based on the provided color.
   static int getCode(Color color) {
     if (color == Colors.transparent) {
       return 0;

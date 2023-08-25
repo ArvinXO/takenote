@@ -10,7 +10,7 @@ import 'package:takenote/services/auth/bloc/auth_state.dart';
 import 'package:takenote/utilities/dialogs/error_dialog.dart';
 
 import '../../../constants/k_constants.dart';
-import '../../../services/Utils/utils.dart';
+import '../../utilities/utils.dart';
 import '../../../services/auth/bloc/auth_event.dart';
 import '../../../widgets/animations/background_colour_animate.dart';
 

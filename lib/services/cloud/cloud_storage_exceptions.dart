@@ -1,20 +1,19 @@
-//Firebase cloud storage exceptions
-
+/// Exception class for Cloud Storage related errors.
 class CloudStorageException implements Exception {
   const CloudStorageException();
 }
 
-//C-
+/// Exception thrown when creating a note in Cloud Storage fails.
 class CouldNotCreateNoteException extends CloudStorageException {}
 
-//R-
+/// Exception thrown when retrieving all notes from Cloud Storage fails.
 class CouldNotGetAllNotesException extends CloudStorageException {}
 
-//U-
+/// Exception thrown when updating a note in Cloud Storage fails.
 class CouldNotUpdateNoteException extends CloudStorageException {}
 
-//D-
+/// Exception thrown when deleting a specific note from Cloud Storage fails.
 class CouldNotDeleteNoteException extends CloudStorageException {}
 
-//D-
+/// Exception thrown when deleting all notes from Cloud Storage fails.
 class CouldNotDeleteAllNotesException extends CloudStorageException {}

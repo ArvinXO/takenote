@@ -20,15 +20,15 @@ class _AppViewState extends State<AppView> {
   bool isGridView = false;
   late PageController _pageController;
   int _page = 0;
+
   final _pageList = <Widget>[
     const NotesView(),
     const ArchivedView(),
     const DeleteView(),
   ];
+
   @override
   void initState() {
-    // _notesService.open();
-    //Ensure DB OPEN NEGATES THE EXTRA CALL
     _pageController = PageController();
     super.initState();
   }
@@ -40,8 +40,11 @@ class _AppViewState extends State<AppView> {
   }
 
   void navigationTapped(int page) {
-    _pageController.animateToPage(page,
-        duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    _pageController.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
   }
 
   @override
@@ -74,7 +77,6 @@ class _AppViewState extends State<AppView> {
           children: _pageList,
         ),
       ),
-      //BottomNavigationBar
       bottomNavigationBar: BottomNavigationBar(
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         backgroundColor: kOxfordBlue.withOpacity(0.9),
@@ -98,11 +100,6 @@ class _AppViewState extends State<AppView> {
             activeIcon: Icon(Iconsax.trash4),
             label: 'Deleted',
           ),
-
-          // BottomNavigationBarItem(
-          //   icon: Icon(Iconsax.menu),
-          //   label: 'Menu',
-          // ),
         ],
         currentIndex: _page,
         type: BottomNavigationBarType.fixed,
@@ -110,49 +107,49 @@ class _AppViewState extends State<AppView> {
         showUnselectedLabels: false,
         onTap: navigationTapped,
       ),
-      //FAB
-      floatingActionButton: _page == 1
-          ? FloatingActionButton(
-              tooltip: 'Add Archived Note',
-              //centered
-              backgroundColor: kJungleDarkGreen.withOpacity(0.6),
-              hoverColor: kBdazalledBlue,
-              splashColor: kBdazalledBlue,
-              shape: // square
-                  const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12.0)),
-              ),
-              elevation: 10,
-              focusElevation: 0,
-              hoverElevation: 0,
-              highlightElevation: 0,
-
-              onPressed: () {
-                Navigator.of(context).pushNamed(createOrUpdateArchiveNoteRoute);
-              },
-              child: const Icon(Iconsax.archive_add4, size: 30),
-            )
-          : _page == 0
-              ? FloatingActionButton(
-                  tooltip: 'Add Note',
-                  //centered
-                  backgroundColor: kJungleDarkGreen.withOpacity(0.6),
-                  hoverColor: kBdazalledBlue,
-                  splashColor: kBdazalledBlue,
-                  shape: // square
-                      const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                  ),
-                  elevation: 10,
-                  focusElevation: 0,
-                  hoverElevation: 0,
-                  highlightElevation: 0,
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
-                  },
-                  child: const Icon(Iconsax.pen_add, size: 30),
-                )
-              : const SizedBox(),
+      floatingActionButton: _buildFloatingActionButton(),
     );
+  }
+
+  Widget _buildFloatingActionButton() {
+    if (_page == 1) {
+      return FloatingActionButton(
+        tooltip: 'Add Archived Note',
+        backgroundColor: kJungleDarkGreen.withOpacity(0.6),
+        hoverColor: kBdazalledBlue,
+        splashColor: kBdazalledBlue,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        ),
+        elevation: 10,
+        focusElevation: 0,
+        hoverElevation: 0,
+        highlightElevation: 0,
+        onPressed: () {
+          Navigator.of(context).pushNamed(createOrUpdateArchiveNoteRoute);
+        },
+        child: const Icon(Iconsax.archive_add4, size: 30),
+      );
+    } else if (_page == 0) {
+      return FloatingActionButton(
+        tooltip: 'Add Note',
+        backgroundColor: kJungleDarkGreen.withOpacity(0.6),
+        hoverColor: kBdazalledBlue,
+        splashColor: kBdazalledBlue,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        ),
+        elevation: 10,
+        focusElevation: 0,
+        hoverElevation: 0,
+        highlightElevation: 0,
+        onPressed: () {
+          Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
+        },
+        child: const Icon(Iconsax.pen_add, size: 30),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 }

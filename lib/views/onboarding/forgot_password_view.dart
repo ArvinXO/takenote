@@ -8,8 +8,7 @@ import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_event.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
 import 'package:takenote/utilities/dialogs/error_dialog.dart';
-
-import '../../../services/Utils/utils.dart';
+import '../../utilities/utils.dart';
 import '../../../utilities/dialogs/password_reset_email_sent_dialog.dart';
 import '../../../widgets/animations/background_colour_animate.dart';
 
@@ -21,13 +20,14 @@ class ForgotPasswordView extends StatefulWidget {
 }
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
-  late final TextEditingController _controller;
+  final TextEditingController _controller = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
+  // Colors
+  Color enabled = const Color(0xFF827F8A);
+  Color enabledtxt = Colors.white;
+  Color deaible = Colors.grey;
+  Color backgroundColor = const Color(0xFF1F1A30);
+  ForgotPassField? selected;
 
   @override
   void dispose() {
@@ -35,16 +35,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     super.dispose();
   }
 
-  Color enabled = const Color(0xFF827F8A);
-  Color enabledtxt = Colors.white;
-  Color deaible = Colors.grey;
-  Color backgroundColor = const Color(0xFF1F1A30);
-  bool ispasswordev = true;
-  ForgotPassField? selected;
-
   @override
   Widget build(BuildContext context) {
-    //util size
     final Size size = Utils(context).size;
 
     return BlocListener<AuthBloc, AuthState>(
@@ -54,15 +46,9 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             _controller.clear();
             await showPasswordResetSentDialog(context);
           }
-          if (state.exception != null) {
-            if (!mounted) {
-              return;
-            }
+          if (state.exception != null && mounted) {
             await showErrorDialog(context,
                 'We could not process your request. Please make sure that you are a registered user. If not, please try again later.');
-            if (!mounted) {
-              return;
-            }
           }
         }
       },
@@ -77,10 +63,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      // back to login bloc
-                      context.read<AuthBloc>().add(
-                            const AuthEventLogOut(),
-                          );
+                      context.read<AuthBloc>().add(const AuthEventLogOut());
                     },
                     child: Container(
                       alignment: Alignment.topLeft,
@@ -93,9 +76,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
+                  SizedBox(height: size.height * 0.03),
                   FadeAnimation(
                     delay: 1,
                     child: Container(
@@ -138,7 +119,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                   FadeAnimation(
                     delay: 1,
                     child: Container(
-                      width: size.width * 0.88, //width of the TextField Widget
+                      width: size.width * 0.88,
                       height: size.height * 0.07,
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -196,15 +177,11 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                             horizontal: size.width * 0.07,
                             vertical: size.height * 0.01,
                           ),
-                          // Register button covers left and right 7% of screen
                           child: SizedBox(
                             width: size.width * 0.45,
                             height: size.height * 0.07,
-                            // curved edges
-
                             child: ElevatedButton(
-                              style: //oxford blue
-                                  ElevatedButton.styleFrom(
+                              style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     selected == ForgotPassField.Email
                                         ? kJungleDarkGreen.withOpacity(0.5)
@@ -213,7 +190,6 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              // if user doesnt enter email then keep the colour else change to orange
                               onPressed: () {
                                 final email = _controller.text;
                                 context
@@ -236,9 +212,6 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                                 );
                               },
                               child: Container(
-                                decoration: const BoxDecoration(
-                                    // add icon to the button
-                                    ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const <Widget>[
@@ -250,13 +223,11 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-
                                     Icon(
                                       Icons.send_rounded,
                                       color: kPlatinum,
                                       size: 20,
                                     ),
-                                    //space between the icon and the text
                                   ],
                                 ),
                               ),
@@ -285,24 +256,22 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                     ),
                   ),
                   SizedBox(height: size.height * 0.20),
-
-                  //Text button for back to login no container
                   TextButton(
-                      style: TextButton.styleFrom(),
-                      onPressed: () {
-                        if (!mounted) {
-                          return;
-                        }
-                        FocusScope.of(context).unfocus();
-                        context.read<AuthBloc>().add(const AuthEventLogOut());
-                      },
-                      child: Text(
-                        "Back to login",
-                        style: GoogleFonts.heebo(
-                          color: const Color(0xFF0DF5E4).withOpacity(0.9),
-                          letterSpacing: 0.5,
-                        ),
-                      )),
+                    onPressed: () {
+                      if (!mounted) {
+                        return;
+                      }
+                      FocusScope.of(context).unfocus();
+                      context.read<AuthBloc>().add(const AuthEventLogOut());
+                    },
+                    child: Text(
+                      "Back to login",
+                      style: GoogleFonts.heebo(
+                        color: const Color(0xFF0DF5E4).withOpacity(0.9),
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

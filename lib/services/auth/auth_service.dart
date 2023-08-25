@@ -3,11 +3,23 @@ import 'package:takenote/services/auth/firebase_auth_provider.dart';
 import 'auth_provider.dart';
 import 'auth_user.dart';
 
+/// A service class that acts as a bridge between the app and the authentication provider.
+///
+/// This class implements the [AuthProvider] interface and provides a high-level
+/// API for handling authentication-related operations.
 class AuthService implements AuthProvider {
   final AuthProvider provider;
+
+  /// Constructs an instance of [AuthService] with a specific [provider].
+  ///
+  /// The [provider] parameter should be an implementation of [AuthProvider]
+  /// that handles the actual authentication operations.
   const AuthService(this.provider);
 
-  //return instance of auth service
+  /// Factory constructor to create an instance of [AuthService] with Firebase authentication.
+  ///
+  /// Returns an [AuthService] instance that uses the [FirebaseAuthProvider]
+  /// as the underlying authentication provider.
   factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
 
   @override

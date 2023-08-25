@@ -18,14 +18,15 @@ class FirebaseAuthProvider implements AuthProvider {
     );
   }
 
-  // Check for authstate changes  and return the user if there is one or null if there is not one
-
+  /// Creates a new user with the provided [email], [password], [firstname], and [lastname].
+  ///
+  /// Returns the created [AuthUser] instance if successful, otherwise throws appropriate exceptions.
   @override
   Future<AuthUser> createUser({
     required String email,
     required String password,
-    required String? firstname,
-    required String? lastname,
+    required String firstname,
+    required String lastname,
   }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -39,24 +40,24 @@ class FirebaseAuthProvider implements AuthProvider {
         throw UserNotLoggedInAuthException();
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw WeakPasswordAuthException();
-      } else if (e.code == 'email-already-in-use') {
-        throw EmailAlreadyInUseAuthException();
-      } else if (e.code == 'weak-password') {
-        throw WeakPasswordAuthException();
-      } else if (e.code == 'invalid-email') {
-        throw InvalidEmailAuthException();
-      } else {
-        throw GenericAuthException();
+      switch (e.code) {
+        case 'user-not-found':
+        case 'email-already-in-use':
+        case 'weak-password':
+        case 'invalid-email':
+          throw AuthExceptionMapper.mapException(e);
+        default:
+          throw GenericAuthException();
       }
     } catch (_) {
       throw GenericAuthException();
     }
   }
 
+  /// Gets the currently logged-in [AuthUser], if available.
+  ///
+  /// Returns the [AuthUser] instance of the current user, or `null` if not logged in.
   @override
-  // If there is a user, return a firebase user otherwise null
   AuthUser? get currentUser {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -66,6 +67,9 @@ class FirebaseAuthProvider implements AuthProvider {
     }
   }
 
+  /// Logs in the user using the provided [email] and [password].
+  ///
+  /// Returns the logged-in [AuthUser] instance if successful, otherwise throws appropriate exceptions.
   @override
   Future<AuthUser> logIn({
     required String email,
@@ -83,57 +87,10 @@ class FirebaseAuthProvider implements AuthProvider {
         throw UserNotLoggedInAuthException();
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw UserNotFoundAuthException();
-      } else if (e.code == 'wrong-password') {
-        throw WrongPasswordAuthException();
-      } else {
-        throw GenericAuthException();
-      }
-    } catch (_) {
-      throw GenericAuthException();
-    }
-  }
-
-  @override
-  Future<void> logOut() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      FirebaseAuth.instance.signOut();
-    } else {
-      throw UserNotLoggedInAuthException();
-    }
-  }
-
-  @override
-  Future<void> sendEmailVerification() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null && user.emailVerified == false) {
-      try {
-        await user.sendEmailVerification();
-      } on FirebaseAuthException catch (e) {
-        switch (e.code) {
-          case 'firebase_auth/too-many-requests':
-            throw TooManyVerificationEmailRequests();
-        }
-      }
-    } else {
-      throw UserNotVerifiedAuthException();
-    }
-  }
-
-  @override
-  Future<void> sendPasswordResetEmail({required String toEmail}) async {
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: toEmail,
-      );
-    } on FirebaseAuthException catch (e) {
       switch (e.code) {
-        case 'firebase-auth/invalid-email':
-          throw InvalidEmailAuthException();
-        case 'firebase-auth/user-not-found':
-          throw UserNotFoundAuthException();
+        case 'user-not-found':
+        case 'wrong-password':
+          throw AuthExceptionMapper.mapException(e);
         default:
           throw GenericAuthException();
       }
@@ -141,22 +98,71 @@ class FirebaseAuthProvider implements AuthProvider {
       throw GenericAuthException();
     }
   }
+
+  /// Logs out the currently logged-in user.
+  ///
+  /// Signs out the user if logged in, otherwise throws [UserNotLoggedInAuthException].
+  @override
+  Future<void> logOut() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseAuth.instance.signOut();
+    } else {
+      throw UserNotLoggedInAuthException();
+    }
+  }
+
+  /// Sends an email verification to the current user's email.
+  ///
+  /// Throws [UserNotVerifiedAuthException] if the user is already verified, or
+  /// [TooManyVerificationEmailRequests] if there are too many requests to send verification emails.
+  @override
+  Future<void> sendEmailVerification() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.emailVerified == false) {
+      try {
+        await user.sendEmailVerification();
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'firebase_auth/too-many-requests') {
+          throw TooManyVerificationEmailRequests();
+        }
+      }
+    } else {
+      throw UserNotVerifiedAuthException();
+    }
+  }
+
+  /// Sends a password reset email to the provided [toEmail].
+  ///
+  /// Throws appropriate exceptions based on the error codes returned by Firebase.
+  @override
+  Future<void> sendPasswordResetEmail({required String toEmail}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: toEmail,
+      );
+    } on FirebaseAuthException catch (e) {
+      throw AuthExceptionMapper.mapException(e);
+    } catch (_) {
+      throw GenericAuthException();
+    }
+  }
 }
 
-// User not verified and too many requests to send verification email
-// @override
-// Future<void> sendEmailVerification() async {
-//   final user = FirebaseAuth.instance.currentUser;
-//   if (user != null && user.emailVerified == false) {
-//     try {
-//       await user.sendEmailVerification();
-//     } on FirebaseAuthException catch (e) {
-//       switch (e.code) {
-//         case 'firebase_auth/too-many-requests':
-//           throw TooManyVerificationEmailRequests();
-//       }
-//     }
-//   } else {
-//     throw UserNotVerifiedAuthException();
-//   }
-// }
+/// Maps Firebase authentication exceptions to custom exceptions.
+class AuthExceptionMapper {
+  static Exception mapException(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'user-not-found':
+        return UserNotFoundAuthException();
+      case 'email-already-in-use':
+        return EmailAlreadyInUseAuthException();
+      case 'weak-password':
+        return WeakPasswordAuthException();
+      case 'invalid-email':
+        return InvalidEmailAuthException();
+      default:
+        return GenericAuthException();
+    }
+  }
+}

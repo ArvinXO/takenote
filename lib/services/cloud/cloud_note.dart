@@ -1,8 +1,7 @@
-// 3 Properties - Identifier, TextField , OwnerUserId
 import 'package:cloud_firestore/cloud_firestore.dart';
-//cloud_storage_storage_constants import
 import 'package:takenote/services/cloud/cloud_storage_constants.dart';
 
+/// Represents a note in the cloud.
 class CloudNote {
   final String documentId;
   final String ownerUserId;
@@ -24,11 +23,11 @@ class CloudNote {
     this.noteColor,
   );
 
+  /// Creates a [CloudNote] from a Firestore [QueryDocumentSnapshot].
   CloudNote.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
       : documentId = snapshot.id,
         ownerUserId = snapshot.data()[ownerUserIdFieldName] as String,
         noteText = snapshot.data()[textFieldName] as String,
-        // noteDate format is dd/mm/yyyy hh:mm
         noteDate = snapshot.data()[dateFieldName] as String,
         noteTitle = snapshot.data()[titleFieldName] as String,
         noteArchived = snapshot.data()[archivedFieldName] as int,
@@ -36,7 +35,7 @@ class CloudNote {
         noteColor = snapshot.data()[colorFieldName] as int;
 }
 
-//CloudNote as a list
+/// Converts a [QuerySnapshot] of cloud notes to a list of [CloudNote] objects.
 List<CloudNote> cloudNotesFromSnapshot(
     QuerySnapshot<Map<String, dynamic>> snapshot) {
   return snapshot.docs.map((doc) {

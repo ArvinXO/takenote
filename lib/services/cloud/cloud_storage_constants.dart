@@ -1,3 +1,4 @@
+/// Field name constants used for Firestore document fields.
 const ownerUserIdFieldName = 'user_id';
 const textFieldName = 'text';
 const dateFieldName = 'date';
