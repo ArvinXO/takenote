@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// A widget that animates its child using a scale transition.
+///
+/// This widget applies a scale animation to its child when it's built,
+/// giving it an animated appearance.
 class AnimatedScrollViewItem extends StatefulWidget {
   const AnimatedScrollViewItem({
     Key? key,
@@ -20,11 +24,13 @@ class _AnimatedScrollViewItemState extends State<AnimatedScrollViewItem>
   @override
   void initState() {
     super.initState();
+    // Initialize the animation controller with a duration of 300 milliseconds.
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
-    )..forward();
+    )..forward(); // Start the animation immediately upon initialization.
 
+    // Create a scale animation using a Tween and CurvedAnimation for smoothness.
     _scaleAnimation = Tween<double>(begin: 1, end: 0.2).animate(
       CurvedAnimation(
         parent: _animationController,
@@ -41,13 +47,15 @@ class _AnimatedScrollViewItemState extends State<AnimatedScrollViewItem>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    super.build(
+        context); // Ensure the AutomaticKeepAliveClientMixin is satisfied.
     return ScaleTransition(
-      scale: _scaleAnimation,
-      child: widget.child,
+      scale: _scaleAnimation, // Apply the scale animation to the child.
+      child: widget.child, // The child widget that will be animated.
     );
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive =>
+      true; // Keep the state alive when scrolled off-screen.
 }
