@@ -16,11 +16,13 @@ class AppView extends StatefulWidget {
 }
 
 class _AppViewState extends State<AppView> {
+  // Get the current user's ID
   String get userId => AuthService.firebase().currentUser!.id;
   bool isGridView = false;
   late PageController _pageController;
   int _page = 0;
 
+  // List of views for the PageView
   final _pageList = <Widget>[
     const NotesView(),
     const ArchivedView(),
@@ -50,9 +52,11 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Set the floating action button location
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: kBdazalledBlue.withOpacity(0.95),
       body: Container(
+        // Apply gradient background
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -107,10 +111,12 @@ class _AppViewState extends State<AppView> {
         showUnselectedLabels: false,
         onTap: navigationTapped,
       ),
+      // Build the appropriate floating action button based on the current page
       floatingActionButton: _buildFloatingActionButton(),
     );
   }
 
+  // Build the floating action button based on the current page
   Widget _buildFloatingActionButton() {
     if (_page == 1) {
       return FloatingActionButton(
@@ -149,7 +155,7 @@ class _AppViewState extends State<AppView> {
         child: const Icon(Iconsax.pen_add, size: 30),
       );
     } else {
-      return const SizedBox();
+      return const SizedBox(); // Return an empty container for other pages
     }
   }
 }
