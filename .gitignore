@@ -21,3 +21,7 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+
+# Firebase configuration files
+/ios/Runner/GoogleService-Info.plist
+/android/app/google-services.json
