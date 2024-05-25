@@ -8,34 +8,13 @@ import 'package:takenote/views/homepage.dart';
 import 'package:takenote/views/notes/create_update_archive_note_view.dart';
 import 'package:takenote/views/notes/create_update_note_view.dart';
 import 'package:takenote/views/onboarding_view.dart';
+
 import 'constants/routes.dart';
 import 'helpers/loading/splash_screen.dart';
 import 'views/onboarding/forgot_password_view.dart';
 import 'views/onboarding/login_view.dart';
 import 'views/onboarding/register_view.dart';
 import 'views/onboarding/verify_email_view.dart';
-
-// theme button toggle
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:takenote/providers/theme_provider.dart';
-// import 'package:takenote/services/Utils/utils.dart';
-//
-// class ThemeButton extends StatelessWidget {
-//   const ThemeButton({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return IconButton(
-//       icon: Icon(
-//         Icons.brightness_4,
-//         color: Utils(context).getColor,
-//       ),
-//       onPressed: () {
-//         Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-//       },
-//     );
-//   }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

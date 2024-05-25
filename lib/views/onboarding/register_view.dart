@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:takenote/widgets/animations/fade_animation.dart';
 import 'package:takenote/enums/login_field_control.dart';
 import 'package:takenote/services/auth/auth_exceptions.dart';
 import 'package:takenote/services/auth/auth_service.dart';
 import 'package:takenote/services/auth/bloc/auth_bloc.dart';
 import 'package:takenote/services/auth/bloc/auth_state.dart';
 import 'package:takenote/utilities/dialogs/error_dialog.dart';
+import 'package:takenote/widgets/animations/fade_animation.dart';
 
 import '../../../constants/k_constants.dart';
-import '../../utilities/utils.dart';
 import '../../../services/auth/bloc/auth_event.dart';
 import '../../../widgets/animations/background_colour_animate.dart';
+import '../../utilities/utils.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   Color enabled = const Color(0xFF827F8A);
   Color enabledtxt = Colors.white;
-  Color deaible = Colors.grey;
+  Color disable = Colors.grey;
   Color backgroundColor = const Color(0xFF1F1A30);
   bool ispasswordev = true;
   RegisterFields? selected;
@@ -82,6 +82,7 @@ class _RegisterViewState extends State<RegisterView> {
                   GestureDetector(
                     onTap: () {
                       // back to login bloc
+
                       context.read<AuthBloc>().add(
                             const AuthEventLogOut(),
                           );
@@ -169,19 +170,19 @@ class _RegisterViewState extends State<RegisterView> {
                             Icons.perm_identity_sharp,
                             color: selected == RegisterFields.firstname
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                           ),
                           hintText: 'First name',
                           hintStyle: TextStyle(
                             color: selected == RegisterFields.firstname
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                           ),
                         ),
                         style: TextStyle(
                             color: selected == RegisterFields.firstname
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -222,19 +223,19 @@ class _RegisterViewState extends State<RegisterView> {
                             Icons.perm_identity_sharp,
                             color: selected == RegisterFields.lastname
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                           ),
                           hintText: 'Last name',
                           hintStyle: TextStyle(
                             color: selected == RegisterFields.lastname
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                           ),
                         ),
                         style: TextStyle(
                             color: selected == RegisterFields.lastname
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -275,19 +276,19 @@ class _RegisterViewState extends State<RegisterView> {
                             Icons.email_outlined,
                             color: selected == RegisterFields.Email
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                           ),
                           hintText: 'Email',
                           hintStyle: TextStyle(
                             color: selected == RegisterFields.Email
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                           ),
                         ),
                         style: TextStyle(
                             color: selected == RegisterFields.Email
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -328,7 +329,7 @@ class _RegisterViewState extends State<RegisterView> {
                               Icons.lock_open_outlined,
                               color: selected == RegisterFields.password
                                   ? enabledtxt
-                                  : deaible,
+                                  : disable,
                             ),
                             suffixIcon: IconButton(
                               icon: ispasswordev
@@ -336,13 +337,13 @@ class _RegisterViewState extends State<RegisterView> {
                                       Icons.visibility_off,
                                       color: selected == RegisterFields.password
                                           ? enabledtxt
-                                          : deaible,
+                                          : disable,
                                     )
                                   : Icon(
                                       Icons.visibility,
                                       color: selected == RegisterFields.password
                                           ? enabledtxt
-                                          : deaible,
+                                          : disable,
                                     ),
                               onPressed: () =>
                                   setState(() => ispasswordev = !ispasswordev),
@@ -351,12 +352,12 @@ class _RegisterViewState extends State<RegisterView> {
                             hintStyle: TextStyle(
                                 color: selected == RegisterFields.password
                                     ? enabledtxt
-                                    : deaible)),
+                                    : disable)),
                         obscureText: ispasswordev,
                         style: TextStyle(
                             color: selected == RegisterFields.password
                                 ? enabledtxt
-                                : deaible,
+                                : disable,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -398,11 +399,13 @@ class _RegisterViewState extends State<RegisterView> {
                                 if (!mounted) {
                                   return;
                                 }
+
                                 //if email or password is empty
                                 if (email.isEmpty || password.isEmpty) {
                                   await showErrorDialog(
                                       context, 'Email or password is empty');
                                   return;
+                                  // Snackbar
                                 } else {
                                   context.read<AuthBloc>().add(
                                         AuthEventRegister(

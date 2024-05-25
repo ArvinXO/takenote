@@ -96,7 +96,7 @@ class LoadingScreen {
       );
     });
 
-    state!.insert(overlay); // Insert the overlay into the overlay state
+    state.insert(overlay); // Insert the overlay into the overlay state
 
     return LoadingScreenController(
       close: () {

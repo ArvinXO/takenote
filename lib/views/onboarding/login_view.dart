@@ -155,6 +155,7 @@ class _LoginViewState extends State<LoginView> {
                               ? enabled
                               : backgroundColor),
                       child: TextFormField(
+                        autofillHints: const [AutofillHints.email],
                         controller: _email,
                         onTap: () {
                           setState(() {

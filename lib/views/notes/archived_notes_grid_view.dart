@@ -99,12 +99,8 @@ class _ArchivedNotesGridViewState extends State<ArchivedNotesGridView> {
                                 child: InkWell(
                                   // onlongpress show optionsheet
                                   onLongPress: () {
-                                    widget.onNoteTap(note);
-                                    showOptionsSheet(
-                                      // show optionsheet
-                                      context,
-                                      note,
-                                    );
+                                    //OptionsSheet(context, note);
+                                    showOptionsSheet(context, note);
                                   },
                                   onTap: () {
                                     widget.onNoteTap(note);
@@ -310,13 +306,15 @@ class _ArchivedNotesGridViewState extends State<ArchivedNotesGridView> {
                       borderRadius: BorderRadius.circular(15),
                       onTap: () {
                         // Delete Note Function
-                        showDeleteDialog(context).then((result) {
-                          if (result) {
-                            widget.onDeleteNote.call(note);
-                          }
-                          //pop
-                          Navigator.pop(context);
-                        });
+                        _notesService.unarchiveNote(
+                          documentId: note.documentId,
+                          archived: 0,
+                        );
+                        _notesService.softDeleteNote(
+                          documentId: note.documentId,
+                          deleted: 1,
+                        );
+                        Navigator.of(context).pop();
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -334,7 +332,6 @@ class _ArchivedNotesGridViewState extends State<ArchivedNotesGridView> {
                         ),
                       ),
                     ),
-
                     InkWell(
                       borderRadius: BorderRadius.circular(15),
                       // onTap: () {

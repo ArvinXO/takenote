@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
 import 'package:share_plus/share_plus.dart';
-import 'package:takenote/widgets/animations/fade_animation.dart';
 import 'package:takenote/services/cloud/cloud_note.dart';
 import 'package:takenote/services/cloud/firebase_cloud_storage.dart';
 import 'package:takenote/widgets/animations/animated_scroll_view_item.dart';
+import 'package:takenote/widgets/animations/fade_animation.dart';
 
 import '../../constants/k_constants.dart';
 import '../../utilities/color_pallette.dart';
@@ -147,23 +146,26 @@ class _NotesGridViewState extends State<NotesGridView> {
                                                 MainAxisAlignment.end,
                                             children: [
                                               // show date and time of note creation with border
-                                              SizedBox(
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(4),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: Colors.black,
-                                                      width: 1,
+                                              Expanded(
+                                                child: SizedBox(
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(4),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: Colors.black,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                  ),
-                                                  child: Text(
-                                                    note.noteDate,
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
+                                                    child: Text(
+                                                      note.noteDate,
+                                                      maxLines: 1,
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
